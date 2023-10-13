@@ -1,0 +1,32 @@
+server: # ?? ??
+  port: 80
+
+spring: # ??? ??
+  application:
+    name: spring-shop
+  jpa: # JPA ??
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy # ?????? ?????? ??
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect # MySQL 8.0
+    open-in-view: true # JPA ??? ????? View?? ??
+    properties:
+      hibernate:
+        format_sql: true # SQL ??? ??
+
+  datasource: # ?????? ?? ??
+    url: jdbc:mysql://localhost:3306/portfolio?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: portfolio
+    password: portfolio
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace # SQL ?? ??
