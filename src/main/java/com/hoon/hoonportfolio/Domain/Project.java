@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @Getter
 @Entity
@@ -21,7 +23,14 @@ public class Project {
     private String photo;
     private String githubLink;
 
+    private String mainPhoto;
+
     @ManyToOne
     @JoinColumn(name = "pid")
     private Portfolio portfolio;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderColumn
+    private List<Photo> photos;
+
 }
