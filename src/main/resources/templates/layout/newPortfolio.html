@@ -44,7 +44,7 @@
             <img id="previewImage" class="masthead-avatar mb-5" src="../bootstrap/assets/img/portfolio/people.png" alt="프로필 사진" />
 
             <!-- 파일 업로드 폼 -->
-            <form th:action="@{/upload(projectId=${1})}" method="post" enctype="multipart/form-data">
+            <form th:action="@{/user/uploadProfileImage}" method="post" enctype="multipart/form-data">
                 <!-- 파일 선택 input -->
                 <input type="file" id="fileInput" name="file" accept="image/*" required>
                 <!-- 파일 저장 버튼 -->

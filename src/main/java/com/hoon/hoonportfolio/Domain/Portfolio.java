@@ -35,5 +35,5 @@ public class Portfolio {
 
     @OneToOne
     @JoinColumn(name = "uid")
-    private UserEntity user;
+    private User user;
 }

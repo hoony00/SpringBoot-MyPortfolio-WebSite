@@ -1,7 +1,7 @@
 package com.hoon.hoonportfolio.CService;
 
 import com.hoon.hoonportfolio.DTO.UserDTO;
-import com.hoon.hoonportfolio.Domain.UserEntity;
+import com.hoon.hoonportfolio.Domain.User;
 import com.hoon.hoonportfolio.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +29,30 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    // 프로필 사진 저장
+    public void saveProfileImage(String eamil, byte[] imageBytes) {
+        Optional<User> userOptional = userRepository.findById(userRepository.findByEmail(eamil).get().getUid());
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setProfileImage(imageBytes);
+            userRepository.save(user);
+        }else{
+            // 사용자를 찾지 못한 경우 예외 발생
+            throw new IllegalStateException("회원 정보를 찾을 수 없습니다.");
+        }
+    }
+
+    public byte[] getProfileImage(String eamil) {
+        Optional<User> userOptional = userRepository.findById(userRepository.findByEmail(eamil).get().getUid());
+        // 사용자를 찾지 못한 경우 null 또는 기본 이미지 반환
+        return userOptional.map(User::getProfileImage).orElse(null);
+    }
+
 
     public byte[] getUserPhoto(String eamil) {
-        Optional<UserEntity> userOptional = userRepository.findById(userRepository.findByEmail(eamil).get().getUid());
+        Optional<User> userOptional = userRepository.findById(userRepository.findByEmail(eamil).get().getUid());
         // 사용자를 찾지 못한 경우 null 또는 기본 이미지 반환
-        return userOptional.map(UserEntity::getMyPhoto).orElse(null);
+        return userOptional.map(User::getProfileImage).orElse(null);
     }
 
 
@@ -62,7 +81,7 @@ public class UserService {
             throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
         }*/
 
-            UserEntity userEntity = UserEntity.builder()
+            User userEntity = User.builder()
                     .name(userDTO.getName())
                     .email(userDTO.getEmail())
                     .password(userDTO.getPassword())

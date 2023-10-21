@@ -11,10 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 @Slf4j // 로그를 위한 어노테이션
@@ -25,6 +25,36 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
+    //프로필 이미지 저장하기
+    @PostMapping("/user/uploadProfileImage")
+    public String uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
+            // MultipartFile을 바이트 배열로 변환하여 서비스로 전달
+            byte[] imageBytes = file.getBytes();
+            userService.saveProfileImage("nasi3611@naver.com", imageBytes); // 이메일 값을 적절히 전달
+
+            return "layout/newPortfolio"; // 파일 업로드 성공 시 리디렉션할 페이지
+        } catch (IOException e) {
+            // 파일 업로드 중 오류 발생 시 처리
+            e.printStackTrace(); // 오류 처리를 원하는 방식으로 수정
+            return "redirect:/error"; // 오류 발생 시 리디렉션할 페이지
+        }
+    }
+
+
+    // 프로필 사진 저장
+    @GetMapping("/user/profileImage/{eamil}")
+    public ResponseEntity<byte[]> getProfileImage(@PathVariable String eamil) {
+        byte[] image = userService.getProfileImage(eamil);
+        if (image != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG); // 이미지 유형에 따라 변경
+            return new ResponseEntity<>(image, headers, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
 
     @GetMapping("/photo/{eamil}")
     public ResponseEntity<byte[]> getUserPhoto(@PathVariable String eamil) {
