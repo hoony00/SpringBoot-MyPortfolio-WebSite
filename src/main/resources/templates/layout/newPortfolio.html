@@ -43,12 +43,43 @@
             <!-- 미리보기 이미지를 표시할 img 요소 -->
             <img id="previewImage" class="masthead-avatar mb-5" src="../bootstrap/assets/img/portfolio/people.png" alt="프로필 사진" />
 
+            <script>
+                // 사용자 이메일을 가져오는 방법에 따라 해당 이메일을 변수에 할당
+                var userEmail = 'nasi3611@naver.com'; // 이메일을 할당해야 합니다.
+
+                // 서버에서 프로필 이미지를 가져오는 함수
+                function loadProfileImage() {
+                    // 이메일을 사용하여 프로필 이미지 가져오기
+                    fetch('/user/profileImage/' + userEmail)
+                        .then(response => {
+                            if (response.ok) {
+                                return response.blob();
+                            } else {
+                                // 이미지가 없는 경우 기본 이미지 경로 설정
+                                document.getElementById('previewImage').src = '../bootstrap/assets/img/portfolio/people.png';
+                            }
+                        })
+                        .then(blob => {
+                            if (blob) {
+                                var url = URL.createObjectURL(blob);
+                                document.getElementById('previewImage').src = url;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error loading profile image:', error);
+                        });
+                }
+
+                // 프로필 이미지 로드 함수 호출
+                loadProfileImage();
+            </script>
+
             <!-- 파일 업로드 폼 -->
             <form th:action="@{/user/uploadProfileImage}" method="post" enctype="multipart/form-data">
                 <!-- 파일 선택 input -->
                 <input type="file" id="fileInput" name="file" accept="image/*" required>
                 <!-- 파일 저장 버튼 -->
-                <button type="submit"> 저장하기 </button>
+                <button type="submit"> Update </button>
             </form>
         </div>
 
@@ -171,7 +202,7 @@
         <!-- About Section Content-->
         <div class="row">
             <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
-                <!-- 경력 -->R
+                <!-- 경력 -->
                 <p class="lead">
                 <h2>Experience</h2>
                 <ul>
@@ -278,11 +309,11 @@
         <div class="row">
             <!-- Footer Location-->
             <div class="col-lg-4 mb-5 mb-lg-0">
-                <h4 class="text-uppercase mb-4">Location</h4>
+                <h4 class="text-uppercase mb-4">인하공업전문대학</h4>
                 <p class="lead mb-0">
-                    2215 John Daniel Drive
+                    2023 스프링프레임워크
                     <br />
-                    Clark, MO 65243
+                    컴퓨터시스템과 이상훈
                 </p>
             </div>
             <!-- Footer Social Icons-->
@@ -295,11 +326,9 @@
             </div>
             <!-- Footer About Text-->
             <div class="col-lg-4">
-                <h4 class="text-uppercase mb-4">About Freelancer</h4>
+                <h4 class="text-uppercase mb-4">깃허브 바로가기</h4>
                 <p class="lead mb-0">
-                    Freelance is a free to use, MIT licensed Bootstrap theme created by
-                    <a href="http://startbootstrap.com">Start Bootstrap</a>
-                    .
+                    <a href="https://github.com/hoony00/SpringBoot-MyPortfolio-WebSite">★Github★</a>
                 </p>
             </div>
         </div>

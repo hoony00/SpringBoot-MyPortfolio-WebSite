@@ -43,7 +43,7 @@ public class UserController {
     }
 
 
-    // 프로필 사진 저장
+    // 프로필 사진 조회
     @GetMapping("/user/profileImage/{eamil}")
     public ResponseEntity<byte[]> getProfileImage(@PathVariable String eamil) {
         byte[] image = userService.getProfileImage(eamil);
