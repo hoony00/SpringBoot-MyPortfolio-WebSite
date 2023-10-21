@@ -19,11 +19,11 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uid;
 
-    private String name;
     private String email;
+    private String name;
     private String password;
 
-    @Column(name = "explanation", length = 10)
+    @Column(name = "explanation")
     private String explanation;
 
     @OneToOne(mappedBy = "user")
@@ -32,9 +32,10 @@ public class UserEntity {
 
 
     @Builder
-    public UserEntity( String name, String email, String password) {
+    public UserEntity( String name, String email, String password, String explanation) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.explanation = explanation;
     }
 }

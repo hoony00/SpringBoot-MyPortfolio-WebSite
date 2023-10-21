@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko">
-    <head>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
@@ -28,170 +29,23 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <!-- 상단 네비게이션 목록 -->
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Portfolio</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">Introduce</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Search</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/user/join">login</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">login</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">login</a></li>
 
                     </ul>
                 </div>
             </div>
         </nav>
-        <!-- Masthead-->
-        <header class="masthead bg-warning text-white text-center">
-            <div class="container d-flex align-items-center flex-column">
-                <!-- Masthead Avatar Image-->
-                <img class="masthead-avatar mb-5" src="bootstrap/assets/img/portfolio/jap.JPG" alt="..." />
 
-                <!-- Masthead Heading-->
-                <h1 class="masthead-heading text-uppercase mb-0">이상훈의 Portfolio</h1>
-                <!-- Icon Divider-->
-                <div class="divider-custom divider-light">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
-                <!-- Masthead Subheading-->
-                <p class="masthead-subheading font-weight-light mb-0">안녕하세요! 학습의 집요함으로 더 좋은 코드를 만드는 개발자 이상훈입니다.</p>
-            </div>
-        </header>
+        <!-- join -->
 
-        <!-- Portfolio Section-->
-        <section class="page-section portfolio" id="portfolio">
-            <div class="container">
-                <!-- Portfolio Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Portfolio</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
-                <!-- Portfolio Grid Items-->
-                <div class="row justify-content-center">
-                    <!-- Portfolio Item 1-->
-                    <div class="col-md-6 col-lg-4 mb-5">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="bootstrap/assets/img/portfolio/haru.png" alt="..." />
-                        </div>
-                    </div>
-                    <!-- Portfolio Item 2-->
-                    <div class="col-md-6 col-lg-4 mb-5">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal2">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="bootstrap/assets/img/portfolio/carpoolM.png" alt="..." />
-                        </div>
-                    </div>
-                    <!-- Portfolio Item 3-->
-                    <div class="col-md-6 col-lg-4 mb-5">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal3">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="bootstrap/assets/img/portfolio/cane.png" alt="..." />
-                        </div>
-                    </div>
-                    <!-- Portfolio Item 4-->
-                    <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal4">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="bootstrap/assets/img/portfolio/snc.png" alt="..." />
-                        </div>
-                    </div>
-                    <!-- Portfolio Item 5-->
-                    <div class="col-md-6 col-lg-4 mb-5 mb-md-0">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal5">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="bootstrap/assets/img/portfolio/jsp.png" alt="..." />
-                        </div>
-                    </div>
-                    <!-- Portfolio Item 6-->
-                    <div class="col-md-6 col-lg-4">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal6">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="bootstrap/assets/img/portfolio/chat.png" alt="..." />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- About Section-->
-        <section class="page-section bg-info text-white mb-0" id="about">
-            <div class="container">
-                <!-- About Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-white">Introduce</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom divider-light">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
 
-                <!-- About Section Content-->
-                <div class="row">
-                    <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
-                        <!-- 경력 -->
-                        <p class="lead">
-                        <h2>Experience</h2>
-                        <ul>
-                            <li><h5>db에서 값1</h5></li>
-                            <li><h5>db에서 값2</h5></li>
-                            <li><h5>db에서 값3</h5></li>
-                        </ul>
-                        </p>
-                    </div>
 
-                    <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
-                        <!-- 기술스택 -->
-                        <p class="lead">
-                        <h2>Main Skills</h2>
-                        <ul>
-                            <li><h5>db에서 값1</h5></li>
-                            <li><h5>db에서 값2</h5></li>
-                            <li><h5>db에서 값3</h5></li>
-                        </ul>
-                        </p>
-                    </div>
-
-                    <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
-                        <!-- 학력 -->
-                        <p class="lead">
-                        <h2>Certificate</h2>
-                        <ul>
-                            <li><h5>db에서 값1</h5></li>
-                            <li><h5>db에서 값2</h5></li>
-                            <li><h5>db에서 값3</h5></li>
-                        </ul>
-                        </p>
-                    </div>
-                </div>
-
-                <!-- About Section Button (수정하기 버튼) -->
-                <div class="text-center mt-4">
-                    <a class="btn btn-xl btn-outline-light" href="https://startbootstrap.com/theme/freelancer/">
-                        <i class="fas fa-download me-2"></i>
-                        Update (자신거만보임)
-                    </a>
-                </div>
-            </div>
-
-        </section>
         <!-- Contact Section-->
         <section class="page-section" id="contact">
             <div class="container">
                 <!-- Contact Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Search User</h2>
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Sign Up</h2>
                 <!-- Icon Divider-->
                 <div class="divider-custom">
                     <div class="divider-custom-line"></div>
@@ -208,33 +62,54 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                            <!-- Name input-->
+                        <form action="/user/joinAction" method="post" th:object="${userDTO}">
+                            <!-- 에러 메시지 표시 -->
+                            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+                            <!-- email input -->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                <input class="form-control" id="email" type="text" placeholder="Enter your email..."
+                                       th:field="*{email}" />
+                                <label for="email">User email</label>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                            </div>
+
+                            <!-- Name input -->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="name" type="text" placeholder="Enter your name..."
+                                       th:field="*{name}" />
                                 <label for="name">User name</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                             </div>
-                            <!-- Submit success message-->
-                            <!---->
-                            <!-- This is what your users will see when the form-->
-                            <!-- has successfully submitted-->
-                            <div class="d-none" id="submitSuccessMessage">
-                                <div class="text-center mb-3">
-                                    <div class="fw-bolder">Form submission successful!</div>
-                                    To activate this form, sign up at
-                                    <br />
-                                    <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                                </div>
+
+                            <!-- Password input -->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="pw" type="password" placeholder="Enter your password..."
+                                       th:field="*{password}" />
+                                <label for="pw">Password</label>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                             </div>
-                            <!-- Submit error message-->
-                            <!---->
-                            <!-- This is what your users will see when there is-->
-                            <!-- an error submitting the form-->
-                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                            <!-- Submit Button-->
-                            <button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">search !</button>
+
+                            <!-- Password check input -->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="pwcheck" type="password" placeholder="Re-enter your password..."
+                                       th:field="*{pwcheck}" />
+                                <label for="pwcheck">Re-enter password</label>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('pwcheck')}" th:errors="*{pwcheck}"></div>
+                            </div>
+
+                            <!-- Explain input -->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="explain" type="text" placeholder="Enter an explanation..."
+                                       th:field="*{explanation}" />
+                                <label for="explain">Explain</label>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('explanation')}" th:errors="*{explanation}"></div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Register</button>
                         </form>
+
                     </div>
                 </div>
             </div>

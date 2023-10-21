@@ -1,6 +1,5 @@
 package com.hoon.hoonportfolio.Repository;
 
-import com.hoon.hoonportfolio.Domain.Career;
 import com.hoon.hoonportfolio.Domain.Skill;
 import org.springframework.data.jpa.repository.JpaRepository;
 

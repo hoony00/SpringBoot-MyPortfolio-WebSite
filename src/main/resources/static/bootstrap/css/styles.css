@@ -10831,6 +10831,7 @@ html {
 }
 
 .page-section {
+  margin-top: 75px; /* 네비게이션 바의 높이만큼 여백 추가 */
   padding: 6rem 0;
 }
 .page-section .page-section-heading {
@@ -10892,8 +10893,8 @@ html {
 }
 
 #mainNav {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-weight: 700;
 }

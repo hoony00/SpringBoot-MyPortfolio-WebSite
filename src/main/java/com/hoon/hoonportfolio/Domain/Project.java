@@ -1,9 +1,10 @@
 package com.hoon.hoonportfolio.Domain;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 
 @Getter
@@ -21,7 +22,12 @@ public class Project {
     private String photo;
     private String githubLink;
 
+    private byte[] mainPhoto;
+
     @ManyToOne
     @JoinColumn(name = "pid")
     private Portfolio portfolio;
+
+    @OneToMany(mappedBy = "project")
+    private List<Photo> photos;
 }
