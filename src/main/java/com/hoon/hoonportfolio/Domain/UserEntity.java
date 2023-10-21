@@ -23,6 +23,8 @@ public class UserEntity {
     private String name;
     private String password;
 
+    private byte[] myPhoto;
+
     @Column(name = "explanation")
     private String explanation;
 

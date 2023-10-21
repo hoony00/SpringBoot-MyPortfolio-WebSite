@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 /**
  * 유저 관련 기능을 담당하는 Service
  *
@@ -26,6 +28,14 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
+
+    public byte[] getUserPhoto(String eamil) {
+        Optional<UserEntity> userOptional = userRepository.findById(userRepository.findByEmail(eamil).get().getUid());
+        // 사용자를 찾지 못한 경우 null 또는 기본 이미지 반환
+        return userOptional.map(UserEntity::getMyPhoto).orElse(null);
+    }
+
 
     public void registerNewUser(UserDTO userDTO) throws IllegalStateException {
         if (userDTO.getName().isEmpty() || userDTO.getEmail().isEmpty() || userDTO.getPassword().isEmpty() || userDTO.getPwcheck().isEmpty() || userDTO.getExplanation().isEmpty()) {

@@ -4,11 +4,16 @@ import com.hoon.hoonportfolio.CService.UserService;
 import com.hoon.hoonportfolio.DTO.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -21,6 +26,19 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/photo/{eamil}")
+    public ResponseEntity<byte[]> getUserPhoto(@PathVariable String eamil) {
+        // userId에 해당하는 사용자의 프로필 사진을 데이터베이스에서 가져오는 로직을 userService에서 수행
+        byte[] photo = userService.getUserPhoto(eamil);
+        if(photo == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // 이미지 유형에 따라 변경
+
+        return new ResponseEntity<>(photo, headers, HttpStatus.OK);
+    }
 
     @GetMapping("/") // http://localhost
     public String index() { // 홈
