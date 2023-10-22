@@ -22,12 +22,14 @@ public class Project {
     private String photo;
     private String githubLink;
 
-    private byte[] mainPhoto;
+    private String mainPhoto;
 
     @ManyToOne
     @JoinColumn(name = "pid")
     private Portfolio portfolio;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderColumn
     private List<Photo> photos;
+
 }
