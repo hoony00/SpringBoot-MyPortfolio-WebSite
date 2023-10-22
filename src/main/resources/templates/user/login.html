@@ -29,19 +29,22 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <!-- 상단 네비게이션 목록 -->
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="login">login</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="join">Join</a></li>
 
                     </ul>
                 </div>
             </div>
         </nav>
 
+        <!-- join -->
+
+
 
         <!-- Contact Section-->
         <section class="page-section" id="contact">
             <div class="container">
                 <!-- Contact Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Join</h2>
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Login</h2>
                 <!-- Icon Divider-->
                 <div class="divider-custom">
                     <div class="divider-custom-line"></div>
@@ -70,14 +73,6 @@
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                             </div>
 
-                            <!-- Name input -->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..."
-                                       th:field="*{name}" />
-                                <label for="name">User name</label>
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-                            </div>
-
                             <!-- Password input -->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="pw" type="password" placeholder="Enter your password..."
@@ -86,24 +81,8 @@
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                             </div>
 
-                            <!-- Password check input -->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="pwcheck" type="password" placeholder="Re-enter your password..."
-                                       th:field="*{pwcheck}" />
-                                <label for="pwcheck">Re-enter password</label>
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('pwcheck')}" th:errors="*{pwcheck}"></div>
-                            </div>
-
-                            <!-- Explain input -->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="explain" type="text" placeholder="Enter an explanation..."
-                                       th:field="*{explanation}" />
-                                <label for="explain">Explain</label>
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('explanation')}" th:errors="*{explanation}"></div>
-                            </div>
-
                             <!-- Submit Button -->
-                            <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Register</button>
+                            <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Login</button>
                         </form>
 
                     </div>

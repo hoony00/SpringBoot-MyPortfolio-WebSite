@@ -1,6 +1,7 @@
 package com.hoon.hoonportfolio.Controller;
 
 import com.hoon.hoonportfolio.CService.UserService;
+import com.hoon.hoonportfolio.DTO.ExplanationRequestDTO;
 import com.hoon.hoonportfolio.DTO.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
+
 
 
     // 이름과 자기소개 가져오기
@@ -85,13 +88,19 @@ public class UserController {
         return "index";
     }
 
-
+    @GetMapping("/user/login") // 회원가입 폼을 표시
+    public String showLoginForm(Model model) {
+        // UserDTO 객체를 사용하여 회원가입 폼을 초기화
+        model.addAttribute("userDTO", new UserDTO());
+        return "user/login";
+    }
     @GetMapping("/user/join") // 회원가입 폼을 표시
     public String showRegistrationForm(Model model) {
         // UserDTO 객체를 사용하여 회원가입 폼을 초기화
         model.addAttribute("userDTO", new UserDTO());
         return "user/join";
     }
+
 
     @PostMapping("/user/joinSuccess")
     public String registerUser(@ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model) {

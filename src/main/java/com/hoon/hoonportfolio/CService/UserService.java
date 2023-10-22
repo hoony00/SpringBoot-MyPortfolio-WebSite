@@ -29,6 +29,20 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    //updateExplanation
+    public void updateExplanation(String email, String explanation) {
+        // 사용자를 찾아서 자기소개 업데이트
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setExplanation(explanation);
+            userRepository.save(user);
+        }else{
+            // 사용자를 찾지 못한 경우 예외 발생
+            throw new IllegalStateException("회원 정보를 찾을 수 없습니다.");
+        }
+    }
+
     // 이름과 자기소개 가져오기
     public UserDTO getNameAndExplanation(String email) {
         if(userRepository.findByEmail(email).isPresent()){

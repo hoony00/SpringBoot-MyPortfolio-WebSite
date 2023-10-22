@@ -21,7 +21,7 @@
 <!-- Top Navigation-->
 <nav class="navbar navbar-expand-lg bg-success text-uppercase fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand" href="#page-top">포토폴리오 작성하기</a>
+        <a class="navbar-brand" href="#page-top">우리의 포토폴리오</a>
         <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars"></i>
@@ -30,7 +30,6 @@
             <!-- 상단 네비게이션 목록 -->
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Portfolio</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">Introduce</a></li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Search</a></li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="user/join">login</a></li>
 
@@ -43,49 +42,7 @@
     <div class="container d-flex align-items-center flex-column">
         <!-- Masthead Avatar Image-->
 
-        <div class="col-md-6 col-lg-4 mb-5">
-            <!-- 미리보기 이미지를 표시할 img 요소 -->
-            <img id="previewImage" class="masthead-avatar mb-5" src="../bootstrap/assets/img/portfolio/people.png" alt="프로필 사진" />
 
-            <script>
-                // 사용자 이메일을 가져오는 방법에 따라 해당 이메일을 변수에 할당
-                var userEmail = 'nasi36121@naver.com'; // 이메일을 할당해야 합니다.
-
-                // 서버에서 프로필 이미지를 가져오는 함수
-                function loadProfileImage() {
-                    // 이메일을 사용하여 프로필 이미지 가져오기
-                    fetch('/user/profileImage/' + userEmail)
-                        .then(response => {
-                            if (response.ok) {
-                                return response.blob();
-                            } else {
-                                // 이미지가 없는 경우 기본 이미지 경로 설정
-                                document.getElementById('previewImage').src = '../bootstrap/assets/img/portfolio/people.png';
-                            }
-                        })
-                        .then(blob => {
-                            if (blob) {
-                                var url = URL.createObjectURL(blob);
-                                document.getElementById('previewImage').src = url;
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error loading profile image:', error);
-                        });
-                }
-
-                // 프로필 이미지 로드 함수 호출
-                loadProfileImage();
-            </script>
-
-            <!-- 파일 업로드 폼 -->
-            <form th:action="@{/user/uploadProfileImage}" method="post" enctype="multipart/form-data">
-                <!-- 파일 선택 input -->
-                <input type="file" id="fileInput" name="file" accept="image/*" required>
-                <!-- 파일 저장 버튼 -->
-                <button type="submit"> Update </button>
-            </form>
-        </div>
 
         <!-- JavaScript 코드 -->
         <script>
@@ -107,7 +64,7 @@
         </script>
 
         <!-- Masthead Heading-->
-        <h1 class="masthead-heading text-uppercase mb-0">이상훈의 Portfolio</h1>
+        <h1 class="masthead-heading text-uppercase mb-0">우리의 Portfolio</h1>
         <!-- Icon Divider-->
         <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>
@@ -115,7 +72,16 @@
             <div class="divider-custom-line"></div>
         </div>
         <!-- Masthead Subheading-->
-        <p class="masthead-subheading font-weight-light mb-0">안녕하세요! 학습의 집요함으로 더 좋은 코드를 만드는 개발자 이상훈입니다.</p>
+        <p class="masthead-subheading font-weight-light mb-0">안녕하세요! 학생들끼리 포토폴리오를 공유하는 공간, 우리의 포토폴리오 입니다.</p>
+        <p class="masthead-subheading font-weight-light mb-0">회원가입 후 진행해 주세요!</p>
+        <!-- About Section Button (수정하기 버튼) -->
+        <div class="text-center mt-4">
+            <a class="btn btn-xl btn-outline-light" href="user/join">
+                <i class="fas fa-download me-2"></i>
+                회원가입
+            </a>
+            </a>
+        </div>
     </div>
 </header>
 
@@ -124,6 +90,11 @@
     <div class="container">
         <!-- Portfolio Section Heading-->
         <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Portfolio</h2>
+        <p></p>
+        <h4 class="text-center">자신만의 포토폴리오를 올려보세요!</h4>
+
+
+
         <!-- Icon Divider-->
         <div class="divider-custom">
             <div class="divider-custom-line"></div>
@@ -190,69 +161,7 @@
     </div>
 </section>
 
-
-<!-- Introduce Section-->
-<section class="page-section bg-info text-white mb-0" id="about">
-    <div class="container">
-        <!-- About Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-white">Introduce</h2>
-        <!-- Icon Divider-->
-        <div class="divider-custom divider-light">
-            <div class="divider-custom-line"></div>
-            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-            <div class="divider-custom-line"></div>
-        </div>
-
-        <!-- About Section Content-->
-        <div class="row">
-            <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
-                <!-- 경력 -->
-                <p class="lead">
-                <h2>Experience</h2>
-                <ul>
-                    <li><h5>db에서 값1</h5></li>
-                    <li><h5>db에서 값2</h5></li>
-                    <li><h5>db에서 값3</h5></li>
-                </ul>
-                </p>
-            </div>
-
-            <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
-                <!-- 기술스택 -->
-                <p class="lead">
-                <h2>Main Skills</h2>
-                <ul>
-                    <li><h5>db에서 값1</h5></li>
-                    <li><h5>db에서 값2</h5></li>
-                    <li><h5>db에서 값3</h5></li>
-                </ul>
-                </p>
-            </div>
-
-            <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
-                <!-- 학력 -->
-                <p class="lead">
-                <h2>Certificate</h2>
-                <ul>
-                    <li><h5>db에서 값1</h5></li>
-                    <li><h5>db에서 값2</h5></li>
-                    <li><h5>db에서 값3</h5></li>
-                </ul>
-                </p>
-            </div>
-        </div>
-
-        <!-- About Section Button (수정하기 버튼) -->
-        <div class="text-center mt-4">
-            <a class="btn btn-xl btn-outline-light" href="https://startbootstrap.com/theme/freelancer/">
-                <i class="fas fa-download me-2"></i>
-                Update (자신거만보임)
-            </a>
-        </div>
-    </div>
-</section>
-
-
+<hr>
 <!-- Search Section-->
 <section class="page-section" id="contact">
     <div class="container">
