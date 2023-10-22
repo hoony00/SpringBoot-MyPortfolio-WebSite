@@ -1,15 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>회원가입 성공</title>
 </head>
 <body>
+<input type="hidden" id="email" th:attr="value=${userExplanation}" />
+<!-- model로 받은 email 값 저장하기  -->
 <script>
-  // 회원가입 성공 시 알림창 표시
-  alert("회원가입이 성공적으로 완료되었습니다.");
-  // 리다이렉트
-  window.location.href = "/portfolio/save";
+  // email 변수로 사용
+  var email = document.getElementById('email').value;
+
+  // 이메일 값을 확인하고 리다이렉트
+  if (email) {
+    alert("회원가입이 성공적으로 완료되었습니다.");
+    console.log(email);
+    window.location.href = "/user/getNameAndExplanation/" + email;
+  }
 </script>
+
 </body>
 </html>

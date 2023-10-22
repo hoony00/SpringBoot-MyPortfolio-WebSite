@@ -29,6 +29,26 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    // 이름과 자기소개 가져오기
+    public UserDTO getNameAndExplanation(String email) {
+        if(userRepository.findByEmail(email).isPresent()){
+            User user = userRepository.findByEmail(email).get();
+            return UserDTO.builder()
+                    .name(user.getName())
+                    .explanation(user.getExplanation())
+                    .email(email)
+                    .build();
+        }else{
+            // 사용자를 찾지 못한 경우 예외 발생
+            if(email == null){
+                throw new IllegalStateException("이메일을 입력해주세요.");
+            }else{
+                throw new IllegalStateException(email + "은 존재하지 않는 이메일입니다.");
+            }
+        }
+
+    }
+
     // 프로필 사진 저장
     public void saveProfileImage(String eamil, byte[] imageBytes) {
         Optional<User> userOptional = userRepository.findById(userRepository.findByEmail(eamil).get().getUid());
@@ -89,9 +109,6 @@ public class UserService {
                     .build();
 
             userRepository.save(userEntity);
-
-            log.info("회원가입 완료");
-
 
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -7,7 +7,7 @@
     <meta name="author" content="" />
     <title>포토폴리오 관리 사이트</title>
     <!-- Favicon--> <!-- 경로 수정 -->
-    <link rel="icon" type="image/x-icon" href="/bootstrap/assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="../bootstrap/assets/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -17,6 +17,7 @@
     <link href="/bootstrap/css/styles.css" rel="stylesheet" />
 </head>
 <body id="page-top">
+
 <!-- Top Navigation-->
 <nav class="navbar navbar-expand-lg bg-success text-uppercase fixed-top" id="mainNav">
     <div class="container">
@@ -39,13 +40,25 @@
     <div class="container d-flex align-items-center flex-column">
         <!-- Masthead Avatar Image-->
 
+        <!-- userExplanation 값 받아오기 -->
+        <div id="userExplanation" data-user-explanation="${userExplanation}"></div>
+
         <div class="col-md-6 col-lg-4 mb-5">
             <!-- 미리보기 이미지를 표시할 img 요소 -->
             <img id="previewImage" class="masthead-avatar mb-5" src="../bootstrap/assets/img/portfolio/people.png" alt="프로필 사진" />
 
             <script>
+                var userExplanation = document.getElementById('userExplanation').getAttribute('data-user-explanation');
+
+                var userEmail = "nasi3611@naver.com";
+
+
                 // 사용자 이메일을 가져오는 방법에 따라 해당 이메일을 변수에 할당
-                var userEmail = 'nasi3611@naver.com'; // 이메일을 할당해야 합니다.
+
+
+
+                console.log("userEmail : " + userEmail);
+
 
                 // 서버에서 프로필 이미지를 가져오는 함수
                 function loadProfileImage() {
@@ -115,8 +128,8 @@
             });
         </script>
 
+        <h1 class="masthead-heading text-uppercase mb-0" th:text="${userExplanation.name}"></h1>
         <!-- Masthead Heading-->
-        <h1>이상훈의 Portfolio</h1>
         <!-- Icon Divider-->
         <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>
@@ -124,7 +137,9 @@
             <div class="divider-custom-line"></div>
         </div>
         <!-- Masthead Subheading-->
-        <p class="masthead-subheading font-weight-light mb-0">안녕하세요! 학습의 집요함으로 더 좋은 코드를 만드는 개발자 이상훈입니다.</p>
+        <p class="masthead-subheading font-weight-light mb-0" th:text="${userExplanation.explanation}"></p>
+
+
     </div>
 </header>
 
@@ -371,7 +386,7 @@
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="assets/img/portfolio/cabin.png" alt="..." />
+                            <img class="img-fluid rounded mb-5" src="../bootstrap/assets/img/portfolio/cane.png" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
@@ -403,7 +418,7 @@
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="assets/img/portfolio/cake.png" alt="..." />
+                            <img class="img-fluid rounded mb-5" src="../assets/img/portfolio/people.png" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
@@ -435,7 +450,7 @@
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="assets/img/portfolio/circus.png" alt="..." />
+                            <img class="img-fluid rounded mb-5" src="../bootstrap/aassets/img/portfolio/people.png" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
@@ -467,7 +482,7 @@
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="assets/img/portfolio/game.png" alt="..." />
+                            <img class="img-fluid rounded mb-5" src="../bootstrap/assets/img/portfolio/people.png" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
@@ -499,7 +514,7 @@
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="assets/img/portfolio/safe.png" alt="..." />
+                            <img class="img-fluid rounded mb-5" src="../bootstrap/aassets/img/portfolio/safe.png" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
@@ -531,7 +546,7 @@
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="assets/img/portfolio/submarine.png" alt="..." />
+                            <img class="img-fluid rounded mb-5" src="../bootstrap/assets/img/portfolio/people.png" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
@@ -548,7 +563,6 @@
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
-<script src="js/scripts.js"></script>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <!-- * *                               SB Forms JS                               * *-->
 <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->

@@ -62,7 +62,7 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form action="/user/joinAction" method="post" th:object="${userDTO}">
+                        <form action="/user/joinSuccess" method="post" th:object="${userDTO}">
                             <!-- 에러 메시지 표시 -->
                             <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
 
