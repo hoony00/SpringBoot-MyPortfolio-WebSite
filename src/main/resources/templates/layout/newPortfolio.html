@@ -48,28 +48,22 @@
             <img id="previewImage" class="masthead-avatar mb-5" src="../bootstrap/assets/img/portfolio/people.png" alt="프로필 사진" />
 
             <script>
-                var userExplanation = document.getElementById('userExplanation').getAttribute('data-user-explanation');
-
-                var userEmail = "nasi3611@naver.com";
-
-
-                // 사용자 이메일을 가져오는 방법에 따라 해당 이메일을 변수에 할당
-
-
-
-                console.log("userEmail : " + userEmail);
-
+                var userEmail = '[[${email}]]';
+                console.log(" new포폴에서 userEmail : " + userEmail);
 
                 // 서버에서 프로필 이미지를 가져오는 함수
                 function loadProfileImage() {
                     // 이메일을 사용하여 프로필 이미지 가져오기
                     fetch('/user/profileImage/' + userEmail)
                         .then(response => {
+                            console.log("response : " + response);
                             if (response.ok) {
                                 return response.blob();
                             } else {
+                                console.error('Error loading profile image:', response.status, response.statusText);
                                 // 이미지가 없는 경우 기본 이미지 경로 설정
-                                document.getElementById('previewImage').src = '../bootstrap/assets/img/portfolio/people.png';
+                                document.getElementById('previewImage').src = '../../bootstrap/assets/img/portfolio/people.png';
+
                             }
                         })
                         // 가져온 프로필 이미지를 미리보기 이미지로 표시
@@ -91,10 +85,13 @@
 
             <!-- 파일 업로드 폼 -->
             <form th:action="@{/user/uploadProfileImage}" method="post" enctype="multipart/form-data">
+
                 <!-- 파일 선택 input -->
                 <input type="file" id="fileInput" name="file" accept="image/*" required>
                 <!-- 파일 저장 버튼 -->
                 <button type="submit"> Update </button>
+
+
             </form>
             <div id="errorMessage" class="text-danger"></div>
 
@@ -162,7 +159,7 @@
                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                         <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
-                    <img class="img-fluid" src="../bootstrap/assets/img/portfolio/haru.png" alt="..." />
+                    <img class="img-fluid" src="../../bootstrap/assets/img/portfolio/haru.png" alt="..." />
                 </div>
             </div>
             <!-- Portfolio Item 2-->
@@ -171,7 +168,7 @@
                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                         <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
-                    <img class="img-fluid" src="../bootstrap/assets/img/portfolio/carpoolM.png" alt="..." />
+                    <img class="img-fluid" src="../../bootstrap/assets/img/portfolio/carpoolM.png" alt="..." />
                 </div>
             </div>
             <!-- Portfolio Item 3-->
