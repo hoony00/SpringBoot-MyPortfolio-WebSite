@@ -59,12 +59,14 @@
                                 document.getElementById('previewImage').src = '../bootstrap/assets/img/portfolio/people.png';
                             }
                         })
+                        // 가져온 프로필 이미지를 미리보기 이미지로 표시
                         .then(blob => {
                             if (blob) {
                                 var url = URL.createObjectURL(blob);
                                 document.getElementById('previewImage').src = url;
                             }
                         })
+                        // 에러가 발생한 경우
                         .catch(error => {
                             console.error('Error loading profile image:', error);
                         });
@@ -81,6 +83,8 @@
                 <!-- 파일 저장 버튼 -->
                 <button type="submit"> Update </button>
             </form>
+            <div id="errorMessage" class="text-danger"></div>
+
         </div>
 
         <!-- JavaScript 코드 -->
@@ -91,6 +95,15 @@
                 var previewImage = document.getElementById('previewImage');
 
                 if (fileInput.files && fileInput.files[0]) {
+                    var fileSize = fileInput.files[0].size; // 파일 크기 (바이트)
+                    var maxSize = 1048576; // 1MB 제한 (1048576 바이트)
+
+                    if (fileSize > maxSize) {
+                        errorMessage.textContent = '파일 크기가 너무 큽니다. 1MB 이하의 파일을 업로드해 주세요.';
+                        fileInput.value = ''; // 파일 선택 취소
+                    } else {
+                        errorMessage.textContent = ''; // 에러 메시지 초기화
+                    }
                     var reader = new FileReader();
 
                     reader.onload = function (e) {
@@ -103,7 +116,7 @@
         </script>
 
         <!-- Masthead Heading-->
-        <h1 class="masthead-heading text-uppercase mb-0">이상훈의 Portfolio</h1>
+        <h1>이상훈의 Portfolio</h1>
         <!-- Icon Divider-->
         <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>

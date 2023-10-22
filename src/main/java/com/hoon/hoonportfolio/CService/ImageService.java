@@ -26,7 +26,7 @@ public class ImageService {
 
         if(project.isPresent()){
             Project p = project.get();
-            p.setMainPhoto(imageBytes);
+            p.setMainImage(imageBytes);
             projectRepository.save(p);
         }else{
             System.out.println("uploadMainPhoto");

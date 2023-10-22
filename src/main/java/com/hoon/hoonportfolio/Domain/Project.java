@@ -22,7 +22,8 @@ public class Project {
     private String photo;
     private String githubLink;
 
-    private String mainPhoto;
+    @Lob
+    private byte[] mainImage;
 
     @ManyToOne
     @JoinColumn(name = "pid")
