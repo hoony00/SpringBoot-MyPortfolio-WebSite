@@ -1,6 +1,5 @@
 package com.hoon.hoonportfolio.Domain;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,5 +35,5 @@ public class Portfolio {
 
     @OneToOne
     @JoinColumn(name = "uid")
-    private UserEntity user;
+    private User user;
 }

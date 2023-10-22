@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>이미지 업로드</title>
+</head>
+<body>
+<form th:action="@{/upload(projectId=${1})}" method="post" enctype="multipUploadControllerart/form-data">
+  <input type="file" name="file" accept="image/*" required>
+  <button type="submit">업로드</button>
+</form>
+
+<div th:if="${param.successMessage}" class="success" th:text="${param.successMessage}"></div>
+<div th:if="${param.errorMessage}" class="error" th:text="${param.errorMessage}"></div>
+</body>
+</html>

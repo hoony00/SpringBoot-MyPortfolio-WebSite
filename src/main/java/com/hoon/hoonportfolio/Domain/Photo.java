@@ -9,12 +9,12 @@ import lombok.Setter;
 @Entity
 @Setter
 @NoArgsConstructor
-@Table(name = "Project")
+@Table(name = "photo")
 public class Photo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long phid;
+    private Long photoId;
 
     @Lob
     private byte[] photoData; // 사진의 BLOB 데이터
@@ -24,3 +24,5 @@ public class Photo {
     private Project project;
 
 }
+
+

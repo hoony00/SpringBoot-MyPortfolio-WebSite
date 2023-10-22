@@ -13,17 +13,19 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name = "user")
-public class UserEntity {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uid;
 
-    private String name;
     private String email;
+    private String name;
     private String password;
 
-    @Column(name = "explanation", length = 10)
+    private byte[] profileImage;
+
+    @Column(name = "explanation")
     private String explanation;
 
     @OneToOne(mappedBy = "user")
@@ -32,9 +34,10 @@ public class UserEntity {
 
 
     @Builder
-    public UserEntity( String name, String email, String password) {
+    public User(String name, String email, String password, String explanation) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.explanation = explanation;
     }
 }
