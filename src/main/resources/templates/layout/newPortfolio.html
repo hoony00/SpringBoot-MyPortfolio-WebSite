@@ -377,7 +377,7 @@
 <section class="page-section" id="contact">
     <div class="container">
         <!-- Contact Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Search User</h2>
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Search Email</h2>
         <!-- Icon Divider-->
         <div class="divider-custom">
             <div class="divider-custom-line"></div>
@@ -394,12 +394,12 @@
                 <!-- To make this form functional, sign up at-->
                 <!-- https://startbootstrap.com/solution/contact-forms-->
                 <!-- to get an API token!-->
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                <form id="contactForm" th:action="@{/user/uploadProfileImage}" >
                     <!-- Name input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                        <label for="name">User name</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        <input class="form-control" id="userEmail" name="userEmail" type="text" placeholder="Enter User Email..." data-sb-validations="required" />
+                        <label for="userEmail">User Email</label>
+                        <div class="invalid-feedback" data-sb-feedback="name:required">A Email is required.</div>
                     </div>
                     <!-- Submit success message-->
                     <!---->
@@ -419,8 +419,36 @@
                     <!-- an error submitting the form-->
                     <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
                     <!-- Submit Button-->
-                    <button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">search !</button>
+                    <button class="btn btn-primary btn-xl " id="SearchButton" type="submit">search </button>
                 </form>
+
+                <script>
+                    document.getElementById('SearchButton').addEventListener('click', function(e) {
+                        e.preventDefault(); // 기본 동작인 폼 제출을 방지
+
+                        // 입력된 이메일 값을 가져오기
+                        var email = document.getElementById('userEmail').value;
+
+                        // 이메일을 사용하여 API 호출
+                        fetch('/user/checkUser?email=' + email, {
+                            method: 'GET'
+                        })
+                            .then(response => response.text())
+                            .then(result => {
+                                if (result === 'success') {
+                                    // 사용자가 존재하는 경우
+                                    window.location.href = "/user/getNameAndExplanation/" + email;
+                                } else {
+                                    // 사용자가 존재하지 않는 경우
+                                    alert("사용자가 존재하지 않습니다.");
+                                }
+                            })
+                            .catch(error => {
+                                console.error('오류 발생:', error);
+                            });
+                    });
+                </script>
+
             </div>
         </div>
     </div>

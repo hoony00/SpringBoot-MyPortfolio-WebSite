@@ -2,7 +2,6 @@ package com.hoon.hoonportfolio.Controller;
 
 import com.hoon.hoonportfolio.CService.UserService;
 import com.hoon.hoonportfolio.DTO.ExplanationRequestDTO;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +11,11 @@ import java.util.Map;
 
 @RestController
 @Slf4j // 로그를 위한 어노테이션
-public class UserUpdateController {
+public class UserRestController {
     private final UserService userService;
 
     @Autowired
-    public UserUpdateController(UserService userService) {
+    public UserRestController(UserService userService) {
         this.userService = userService;
     }
 
