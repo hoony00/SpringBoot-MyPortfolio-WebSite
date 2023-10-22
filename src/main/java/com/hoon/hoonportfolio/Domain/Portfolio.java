@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Setter
 @NoArgsConstructor
-@Table(name = "Portfolio")
+@Table(name = "portfolio")
 public class Portfolio {
 
     @Id

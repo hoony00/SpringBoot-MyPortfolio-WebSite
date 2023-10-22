@@ -9,7 +9,7 @@ import lombok.Setter;
 @Entity
 @Setter
 @NoArgsConstructor
-@Table(name = "Skill")
+@Table(name = "skill")
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
