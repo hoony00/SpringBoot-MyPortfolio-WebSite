@@ -50,8 +50,10 @@ public class UserService {
     }
 
     // 프로필 사진 저장
-    public void saveProfileImage(String eamil, byte[] imageBytes) {
-        Optional<User> userOptional = userRepository.findById(userRepository.findByEmail(eamil).get().getUid());
+    public void saveProfileImage(String email, byte[] imageBytes) {
+        System.out.println("사진 업데이트 이메일: " + email);
+        // 사용자를 찾아서 프로필 사진을 저장
+        Optional<User> userOptional = userRepository.findById(userRepository.findByEmail(email).get().getUid());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setProfileImage(imageBytes);
@@ -62,15 +64,10 @@ public class UserService {
         }
     }
 
-    public byte[] getProfileImage(String eamil) {
-        Optional<User> userOptional = userRepository.findById(userRepository.findByEmail(eamil).get().getUid());
-        // 사용자를 찾지 못한 경우 null 또는 기본 이미지 반환
-        return userOptional.map(User::getProfileImage).orElse(null);
-    }
-
-
-    public byte[] getUserPhoto(String eamil) {
-        Optional<User> userOptional = userRepository.findById(userRepository.findByEmail(eamil).get().getUid());
+    public byte[] getProfileImage(String email) {
+        System.out.println("사진 조회 시작");
+        System.out.println("getProfileImage 이메일: " + email);
+        Optional<User> userOptional = userRepository.findById(userRepository.findByEmail(email).get().getUid());
         // 사용자를 찾지 못한 경우 null 또는 기본 이미지 반환
         return userOptional.map(User::getProfileImage).orElse(null);
     }

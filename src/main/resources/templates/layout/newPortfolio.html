@@ -45,7 +45,7 @@
 
         <div class="col-md-6 col-lg-4 mb-5">
             <!-- 미리보기 이미지를 표시할 img 요소 -->
-            <img id="previewImage" class="masthead-avatar mb-5" src="../bootstrap/assets/img/portfolio/people.png" alt="프로필 사진" />
+            <img id="previewImage" class="masthead-avatar mb-5" src="../../bootstrap/assets/img/portfolio/people.png" alt="프로필 사진" />
 
             <script>
                 var userEmail = '[[${email}]]';
@@ -58,6 +58,7 @@
                         .then(response => {
                             console.log("response : " + response);
                             if (response.ok) {
+                                console.log("로그인 이메일 : " + userEmail);
                                 return response.blob();
                             } else {
                                 console.error('Error loading profile image:', response.status, response.statusText);
@@ -83,17 +84,47 @@
                 loadProfileImage();
             </script>
 
-            <!-- 파일 업로드 폼 -->
-            <form th:action="@{/user/uploadProfileImage}" method="post" enctype="multipart/form-data">
-
+            <form id="uploadForm" th:action="@{/user/uploadProfileImage}" method="post" enctype="multipart/form-data" style="display: flex; align-items: center;">
                 <!-- 파일 선택 input -->
-                <input type="file" id="fileInput" name="file" accept="image/*" required>
+                <input type="file" id="fileInput" name="file" accept="image/*" required style="flex: 1;">
+                <!-- 이메일을 숨겨진 필드로 추가 -->
+                <input type="hidden" id="email" name="email" th:value="${email}" required>
                 <!-- 파일 저장 버튼 -->
-                <button type="submit"> Update </button>
-
-
+                <button type="submit" id="uploadButton" style="flex: 0;">Update</button>
             </form>
+
+
             <div id="errorMessage" class="text-danger"></div>
+
+
+            <script>
+                // 파일 업로드 폼 제출 이벤트 감지
+                document.getElementById('uploadForm').addEventListener('submit', function (e) {
+                    e.preventDefault(); // 기본 동작인 페이지 새로고침을 방지
+
+                    var form = e.target;
+                    var formData = new FormData(form);
+
+                    // 파일을 업로드하고 성공적으로 완료되면 이미지를 다시 로드
+                    fetch('/user/uploadProfileImage', {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(function(response) {
+                            if (response.status === 200) {
+                                alert('파일 업로드가 성공적으로 완료되었습니다.');
+                                // 이미지를 다시 로드 (이미지를 보여주는 <img> 엘리먼트의 src 속성을 업데이트)
+                                var email = document.getElementById('email').value;
+                                console.log("파일 업로드 후 이메일 : " + email);
+                            } else {
+                                alert('파일 업로드 실패');
+                            }
+                        })
+                        .catch(function(error) {
+                            alert('오류가 발생했습니다: ' + error);
+                        });
+                });
+            </script>
 
         </div>
 
@@ -177,7 +208,7 @@
                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                         <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
-                    <img class="img-fluid" src="../bootstrap/assets/img/portfolio/cane.png" alt="..." />
+                    <img class="img-fluid" src="../../bootstrap/assets/img/portfolio/cane.png" alt="..." />
                 </div>
             </div>
             <!-- Portfolio Item 4-->
@@ -186,7 +217,7 @@
                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                         <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
-                    <img class="img-fluid" src="../bootstrap/assets/img/portfolio/snc.png" alt="..." />
+                    <img class="img-fluid" src="../../bootstrap/assets/img/portfolio/snc.png" alt="..." />
                 </div>
             </div>
             <!-- Portfolio Item 5-->
@@ -195,7 +226,7 @@
                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                         <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
-                    <img class="img-fluid" src="../bootstrap/assets/img/portfolio/jsp.png" alt="..." />
+                    <img class="img-fluid" src="../../bootstrap/assets/img/portfolio/jsp.png" alt="..." />
                 </div>
             </div>
             <!-- Portfolio Item 6-->
@@ -204,7 +235,7 @@
                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                         <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
-                    <img class="img-fluid" src="../bootstrap/assets/img/portfolio/chat.png" alt="..." />
+                    <img class="img-fluid" src="../../bootstrap/assets/img/portfolio/chat.png" alt="..." />
                 </div>
             </div>
         </div>
@@ -383,7 +414,7 @@
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="../bootstrap/assets/img/portfolio/cane.png" alt="..." />
+                            <img class="img-fluid rounded mb-5" src="../../bootstrap/assets/img/portfolio/people.png" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
@@ -415,7 +446,7 @@
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="../assets/img/portfolio/people.png" alt="..." />
+                            <img class="img-fluid rounded mb-5" src="../../bootstrap/assets/img/portfolio/people.png" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
@@ -447,7 +478,7 @@
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="../bootstrap/aassets/img/portfolio/people.png" alt="..." />
+                            <img class="img-fluid rounded mb-5" src="../../bootstrap/assets/img/portfolio/people.png" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
@@ -479,7 +510,7 @@
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="../bootstrap/assets/img/portfolio/people.png" alt="..." />
+                            <img class="img-fluid rounded mb-5" src="../../bootstrap/assets/img/portfolio/people.png" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
@@ -511,7 +542,7 @@
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="../bootstrap/aassets/img/portfolio/safe.png" alt="..." />
+                            <img class="img-fluid rounded mb-5" src="../../bootstrap/assets/img/portfolio/people.png" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
@@ -543,7 +574,7 @@
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="../bootstrap/assets/img/portfolio/people.png" alt="..." />
+                            <img class="img-fluid rounded mb-5" src="../../bootstrap/assets/img/portfolio/jap.png" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">

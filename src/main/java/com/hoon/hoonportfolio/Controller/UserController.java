@@ -37,39 +37,46 @@ public class UserController {
     }
 
 
-    //프로필 이미지 저장하기
+    // 이미지 업로드 API
     @PostMapping("/user/uploadProfileImage")
-    public void uploadFile(@RequestParam("file") MultipartFile file, @ModelAttribute("userExplanation") String userExplanation, Model model) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("email") String email) {
         try {
+            if (email == null) {
+                throw new IllegalStateException("이메일을 입력해주세요.");
+            }
+            System.out.println("사진 업데이트 이메일: " + email);
             // MultipartFile을 바이트 배열로 변환하여 서비스로 전달
             byte[] imageBytes = file.getBytes();
-            userService.saveProfileImage("nasi3611@naver.com", imageBytes); // 이메일 값을 적절히 전달
+            userService.saveProfileImage(email, imageBytes); // 이메일 값을 적절히 전달
 
-            model.addAttribute("userExplanation", userExplanation);
+            // 이미지 업로드가 성공했을 때, 이미지 URL을 클라이언트로 반환
+            String imageUrl = "/user/profileImage/" + email;
 
+            return new ResponseEntity<>(imageUrl, HttpStatus.OK);
         } catch (IOException e) {
             // 파일 업로드 중 오류 발생 시 처리
             e.printStackTrace(); // 오류 처리를 원하는 방식으로 수정
+            // 오류 상태를 클라이언트에게 알림
+            return new ResponseEntity<>("파일 업로드 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-
-    // 프로필 사진 조회
+    // 프로필 사진 조회 API
     @GetMapping("/user/profileImage/{email}")
-    public ResponseEntity<byte[]> getProfileImage(@PathVariable String email, Model model) {
+    public ResponseEntity<byte[]> getProfileImage(@PathVariable String email) {
+        System.out.println("사진 조회 시작");
         byte[] image = userService.getProfileImage(email);
         if (image != null) {
+            System.out.println("사진 조회 성공");
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG); // 이미지 유형에 따라 변경
 
-            // 프로필 사진을 바이트 배열로 변환하여 모델에 추가
-            model.addAttribute("userExplanation", userService.getNameAndExplanation(email));
-
-
             return new ResponseEntity<>(image, headers, HttpStatus.OK);
         }
+        System.out.println("사진 조회 실패");
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
+
 
 
     @GetMapping("/") // http://localhost
@@ -108,7 +115,6 @@ public class UserController {
             return "user/join";
         }
     }
-
 
 
     // 로그아웃
