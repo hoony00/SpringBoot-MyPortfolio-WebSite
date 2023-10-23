@@ -257,8 +257,13 @@
 
         <script>
             document.getElementById("selectProto").addEventListener("click", function () {
-
                 fetchProjects();
+            });
+
+            // 프로젝트 생성 버튼 클릭 이벤트 핸들러
+            document.getElementById("createProjectButton").addEventListener("click", function () {
+                var myModal = new bootstrap.Modal(document.getElementById('createProjectModal'));
+                myModal.show();
             });
 
         </script>
@@ -479,7 +484,7 @@
                 <i class="fas fa-download me-2"></i>
                 Update (자신거만보임)
             </a>
-        </div>만
+        </div>
     </div>
 </section>
 
@@ -812,12 +817,12 @@
     </div>
 </div>
 <!-- Bootstrap core JS-->
-<script> // src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <!-- * *                               SB Forms JS                               * *-->
 <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-<script> // src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+<script  src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 </html>
