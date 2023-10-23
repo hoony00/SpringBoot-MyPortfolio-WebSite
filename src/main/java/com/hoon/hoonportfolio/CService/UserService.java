@@ -51,11 +51,33 @@ public class UserService {
 
     // 이름과 자기소개 가져오기
     public UserDTO getNameAndExplanation(String email) {
+        System.out.println("getNameAndExplanation 이메일: " + email);
         if(userRepository.findByEmail(email).isPresent()){
-            User user = userRepository.findByEmail(email).get();
+            Optional<User> user = userRepository.findById(email);
             return UserDTO.builder()
-                    .name(user.getName())
-                    .explanation(user.getExplanation())
+                    .name(user.get().getName())
+                    .explanation(user.get().getExplanation())
+                    .email(email)
+                    .build();
+        }else{
+            // 사용자를 찾지 못한 경우 예외 발생
+            if(email == null){
+                throw new IllegalStateException("이메일을 입력해주세요.");
+            }else{
+                throw new IllegalStateException(email + "은 존재하지 않는 이메일입니다.");
+            }
+        }
+
+    }
+
+    public UserDTO getSelect(String email) {
+        System.out.println("getSelect 이메일: " + email);
+
+        if(userRepository.findByEmail(email).isPresent()){
+            Optional<User> user = userRepository.findById(email);
+            return UserDTO.builder()
+                    .name(user.get().getName())
+                    .explanation(user.get().getExplanation())
                     .email(email)
                     .build();
         }else{
@@ -71,9 +93,8 @@ public class UserService {
 
     // 프로필 사진 저장
     public void saveProfileImage(String email, byte[] imageBytes) {
-        System.out.println("사진 업데이트 이메일: " + email);
         // 사용자를 찾아서 프로필 사진을 저장
-        Optional<User> userOptional = userRepository.findById(userRepository.findByEmail(email).get().getUid());
+        Optional<User> userOptional = userRepository.findById(userRepository.findById(email).get().getEmail());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setProfileImage(imageBytes);
@@ -85,12 +106,13 @@ public class UserService {
     }
 
     public byte[] getProfileImage(String email) {
-        System.out.println("사진 조회 시작");
         System.out.println("getProfileImage 이메일: " + email);
-        Optional<User> userOptional = userRepository.findById(userRepository.findByEmail(email).get().getUid());
+        Optional<User> userOptional = userRepository.findById(userRepository.findByEmail(email).get().getEmail());
         // 사용자를 찾지 못한 경우 null 또는 기본 이미지 반환
         return userOptional.map(User::getProfileImage).orElse(null);
     }
+
+
 
 
     public void registerNewUser(UserDTO userDTO) throws IllegalStateException {
@@ -118,14 +140,14 @@ public class UserService {
             throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
         }*/
 
-            User userEntity = User.builder()
+            User user = User.builder()
                     .name(userDTO.getName())
                     .email(userDTO.getEmail())
                     .password(userDTO.getPassword())
                     .explanation(userDTO.getExplanation())
                     .build();
 
-            userRepository.save(userEntity);
+            userRepository.save(user);
 
     }
 

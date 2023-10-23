@@ -18,6 +18,6 @@ public class Career {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "uid")
+    @JoinColumn(name = "email")
     private User user;
 }

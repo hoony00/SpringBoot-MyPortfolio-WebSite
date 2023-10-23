@@ -18,6 +18,6 @@ public class Certification {
     private String cerName;
 
     @ManyToOne
-    @JoinColumn(name = "uid")
+    @JoinColumn(name = "email")
     private User user;
 }

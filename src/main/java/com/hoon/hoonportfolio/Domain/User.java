@@ -17,16 +17,14 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long uid;
-
     private String email;
+
     private String name;
     private String password;
 
+
     private byte[] profileImage;
 
-    @Column(name = "explanation")
     private String explanation;
 
     @OneToMany(mappedBy = "user")
