@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @Getter
 @Entity
@@ -17,7 +19,7 @@ public class Photo {
     private Long photoId;
 
     @Lob
-    private byte[] photoData; // 사진의 BLOB 데이터
+    private List<byte[]> photoData; // 사진의 BLOB 데이터
 
     @ManyToOne
     @JoinColumn(name = "proid")

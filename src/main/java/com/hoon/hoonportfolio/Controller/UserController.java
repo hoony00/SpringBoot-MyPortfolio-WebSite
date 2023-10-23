@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @SessionAttributes("userExplanation")
 @Controller
@@ -34,10 +36,20 @@ public class UserController {
     // 이름과 자기소개 가져오기
     @GetMapping("/user/getNameAndExplanation/{email}")
     public String getNameAndExplanation(@PathVariable String email, Model model) {
+        System.out.println("가져온 이메일: " + email);
         model.addAttribute("userExplanation", userService.getNameAndExplanation(email));
 
         return "layout/newPortfolio";
     }
+
+    @GetMapping("/user/new/{email}")
+    public String getSelect(@PathVariable String email, Model model) {
+        System.out.println("새로운 계정 이메일: " + email);
+        model.addAttribute("userExplanation", userService.getNameAndExplanation(email));
+
+        return "layout/newPortfolio";
+    }
+
 
 
     // 이미지 업로드 API
@@ -47,7 +59,6 @@ public class UserController {
             if (email == null) {
                 throw new IllegalStateException("이메일을 입력해주세요.");
             }
-            System.out.println("사진 업데이트 이메일: " + email);
             // MultipartFile을 바이트 배열로 변환하여 서비스로 전달
             byte[] imageBytes = file.getBytes();
             userService.saveProfileImage(email, imageBytes); // 이메일 값을 적절히 전달
@@ -117,8 +128,6 @@ public class UserController {
 
     @PostMapping("/user/joinSuccess")
     public String registerUser(@ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model) {
-        log.info("회원가입 폼에서 전달받은 데이터 : " + userDTO.toString());
-
         if (bindingResult.hasErrors()) {
             // 폼 유효성 검사 오류가 있는 경우 회원가입 폼으로 다시 이동
             log.info("회원가입 폼에 유효성 검사 오류가 있습니다.");
@@ -144,6 +153,23 @@ public class UserController {
     public String logout() {
 
         return "redirect:/";
+    }
+
+    @PostMapping("user/updateExplanation")
+    public ResponseEntity<Map<String, String>> updateExplanation(@RequestBody ExplanationRequestDTO request) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            String email = request.getEmail();
+            String explanation = request.getExplanation();
+
+            // 이메일을 사용하여 사용자의 자기소개 업데이트
+            userService.updateExplanation(email, explanation);
+            response.put("result", "success");
+        } catch (Exception e) {
+            response.put("result", "error");
+        }
+
+        return ResponseEntity.ok(response);
     }
 
 
