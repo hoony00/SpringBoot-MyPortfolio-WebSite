@@ -26,8 +26,8 @@ public class Project {
     private byte[] mainImage;
 
     @ManyToOne
-    @JoinColumn(name = "pid")
-    private Portfolio portfolio;
+    @JoinColumn(name = "uid")
+    private User user;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderColumn

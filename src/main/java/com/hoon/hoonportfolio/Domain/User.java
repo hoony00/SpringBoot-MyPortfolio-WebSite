@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 
 
 @Getter
@@ -28,8 +29,17 @@ public class User {
     @Column(name = "explanation")
     private String explanation;
 
-    @OneToOne(mappedBy = "user")
-    private Portfolio portfolio;
+    @OneToMany(mappedBy = "user")
+    private List<Project> projects;
+
+    @OneToMany(mappedBy = "user")
+    private List<Career> careers;
+
+    @OneToMany(mappedBy = "user")
+    private List<Skill> skills;
+
+    @OneToMany(mappedBy = "user")
+    private List<Certification> certifications;
 
 
 

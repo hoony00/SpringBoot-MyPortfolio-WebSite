@@ -18,6 +18,6 @@ public class Skill {
     private String skillName;
 
     @ManyToOne
-    @JoinColumn(name = "pid")
-    private Portfolio portfolio;
+    @JoinColumn(name = "uid")
+    private User user;
 }

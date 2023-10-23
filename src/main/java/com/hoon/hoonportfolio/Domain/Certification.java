@@ -18,6 +18,6 @@ public class Certification {
     private String cerName;
 
     @ManyToOne
-    @JoinColumn(name = "pid")
-    private Portfolio portfolio;
+    @JoinColumn(name = "uid")
+    private User user;
 }

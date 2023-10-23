@@ -15,9 +15,9 @@ public class Career {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cid;
 
-    private String carrerName;
+    private String name;
 
     @ManyToOne
-    @JoinColumn(name = "pid")
-    private Portfolio portfolio;
+    @JoinColumn(name = "uid")
+    private User user;
 }

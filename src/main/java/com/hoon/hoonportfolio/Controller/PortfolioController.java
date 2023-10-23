@@ -21,11 +21,7 @@ public class PortfolioController {
     }
 
 
-    @GetMapping("/portfolio/save") // http://localhost
-    public String save() { // 홈
-
-        return "layout/newPortfolio"; // 회원가입 성공 시 로그인 페이지로 리다이렉트
-    }
+    // 이메일을 받아서
 
 
 
