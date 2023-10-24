@@ -48,7 +48,7 @@
 <!-- 첫번쨰 섹션 ----------------------------------------->
 <!-- Masthead-->
 <header class="masthead bg-hoon2 text-white text-center">
-    <style>
+ <!--   <style>
         /* CSS로 <header> 태그의 배경 이미지 설정 */
         header {
             background-image: url("../../bootstrap/assets/img/portfolio/header.png"); /* 배경 이미지 경로 설정 */
@@ -59,52 +59,19 @@
             color: white; /* 텍스트 색상 설정 (배경 이미지 위에 텍스트가 잘 보이게) */
             text-align: center; /* 텍스트 가운데 정렬 */
         }
-    </style>
+    </style>-->
+    <script>
+        // 현재 프로필의 이메일을 전역 변수로 설정
+        userEmail = '[[${userExplanation.email}]]';
+        console.log("현재 프로필의 이메일 : " + userEmail);
+    </script>
+
     <div class="container d-flex align-items-center flex-column">
-        <!-- Masthead Avatar Image-->
-
-        <!-- userExplanation 값 받아오기 -->
         <div id="userExplanation" data-user-explanation="${userExplanation}"></div>
-
         <div class="col-md-6 col-lg-4 mb-5">
             <!-- 미리보기 이미지를 표시할 img 요소 -->
             <img id="previewImage" class="masthead-avatar mb-5" src="../../bootstrap/assets/img/portfolio/people.png"
                  alt="프로필 사진"/>
-
-            <script>
-                userEmail = '[[${userExplanation.email}]]';
-                console.log("현재 프로필의 이메일 : " + userEmail);
-
-                // 서버에서 프로필 이미지를 가져오는 함수
-                function loadProfileImage() {
-                    // 이메일을 사용하여 프로필 이미지 가져오기
-                    fetch('/user/profileImage/' + userEmail)
-                        .then(response => {
-                            if (response.ok) {
-                                return response.blob();
-                            } else {
-                                console.error('Error loading profile image:', response.status, response.statusText);
-                                // 이미지가 없는 경우 기본 이미지 경로 설정
-                                document.getElementById('previewImage').src = '../../bootstrap/assets/img/portfolio/people.png';
-
-                            }
-                        })
-                        // 가져온 프로필 이미지를 미리보기 이미지로 표시
-                        .then(blob => {
-                            if (blob) {
-                                var url = URL.createObjectURL(blob);
-                                document.getElementById('previewImage').src = url;
-                            }
-                        })
-                        // 에러가 발생한 경우
-                        .catch(error => {
-                            console.error('Error loading profile image:', error);
-                        });
-                }
-
-                // 프로필 이미지 로드 함수 호출
-                loadProfileImage();
-            </script>
 
             <form id="uploadForm" th:action="@{/user/uploadProfileImage}" method="post" enctype="multipart/form-data"
                   style="display: flex; align-items: center;">
@@ -115,38 +82,12 @@
                 <!-- 파일 저장 버튼 -->
                 <button type="submit" id="uploadButton" style="flex: 0;">Update</button>
             </form>
-
-
             <div id="errorMessage" class="text-danger"></div>
 
 
             <script>
                 // 파일 업로드 폼 제출 이벤트 감지
-                document.getElementById('uploadForm').addEventListener('submit', function (e) {
-                    e.preventDefault(); // 기본 동작인 페이지 새로고침을 방지
 
-                    var form = e.target;
-                    var formData = new FormData(form);
-
-                    // 파일을 업로드하고 성공적으로 완료되면 이미지를 다시 로드
-                    fetch('/user/uploadProfileImage', {
-                        method: 'POST',
-                        body: formData
-                    })
-                        .then(function (response) {
-                            if (response.status === 200) {
-                                alert('파일 업로드가 성공적으로 완료되었습니다.');
-                                // 이미지를 다시 로드 (이미지를 보여주는 <img> 엘리먼트의 src 속성을 업데이트)
-                                var email = document.getElementById('email').value;
-                                console.log("파일 업로드 후 이메일 : " + email);
-                            } else {
-                                alert('파일 업로드 실패');
-                            }
-                        })
-                        .catch(function (error) {
-                            alert('오류가 발생했습니다: ' + error);
-                        });
-                });
             </script>
 
         </div>
@@ -785,9 +726,67 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 <script>
+    function loadProfileImage() {
+        // 이메일을 사용하여 프로필 이미지 가져오기
+        fetch('/user/profileImage/' + userEmail)
+            .then(response => {
+                if (response.ok) {
+                    return response.blob();
+                } else {
+                    console.error('Error loading profile image:', response.status, response.statusText);
+                    // 이미지가 없는 경우 기본 이미지 경로 설정
+                    document.getElementById('previewImage').src = '../../bootstrap/assets/img/portfolio/people.png';
+
+                }
+            })
+            // 가져온 프로필 이미지를 미리보기 이미지로 표시
+            .then(blob => {
+                if (blob) {
+                    var url = URL.createObjectURL(blob);
+                    document.getElementById('previewImage').src = url;
+                }
+            })
+            // 에러가 발생한 경우
+            .catch(error => {
+                console.error('Error loading profile image:', error);
+            });
+    }
+
+
+    document.getElementById('uploadForm').addEventListener('submit', function (e) {
+        e.preventDefault(); // 기본 동작인 페이지 새로고침을 방지
+
+        var form = e.target;
+        var formData = new FormData(form);
+
+        // 파일을 업로드하고 성공적으로 완료되면 이미지를 다시 로드
+        fetch('/user/uploadProfileImage', {
+            method: 'POST',
+            body: formData
+        })
+            .then(function (response) {
+                if (response.status === 200) {
+                    alert('파일 업로드가 성공적으로 완료되었습니다.');
+                    // 이미지를 다시 로드 (이미지를 보여주는 <img> 엘리먼트의 src 속성을 업데이트)
+                    var email = document.getElementById('email').value;
+                    console.log("파일 업로드 후 이메일 : " + email);
+                } else {
+                    alert('파일 업로드 실패');
+                }
+            })
+            .catch(function (error) {
+                alert('오류가 발생했습니다: ' + error);
+            });
+    });
+
+
+
+
     window.onload = function () {
         // fetchProjects 함수 호출
         fetchProjects();
+        loadProfileImage();
+
     };
 </script>
 
