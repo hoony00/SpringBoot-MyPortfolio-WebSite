@@ -51,6 +51,7 @@ public class ProjectService {
                 .title(project.getTitle())
                 .description(project.getDescription())
                 .github(project.getGithubLink())
+                .email(project.getUser().getEmail())
                 .build();
     }
 

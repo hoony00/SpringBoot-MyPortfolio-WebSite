@@ -415,9 +415,10 @@
 
                     if (infoResponse.ok) {
                         const anotherData = await infoResponse.json();
-                        console.log('프로젝트 정보 조회 성공!');
+  /*                      console.log('프로젝트 정보 조회 성공!');
                         console.log('프로젝트 정보 개수:', anotherData.length);
                         console.log('프로젝트 제목:', anotherData[0].title);
+                        console.log('프로젝트 이메일:', anotherData[7].email);*/
 
                         // 프로젝트 목록을 표시할 요소
                         const projectList = document.getElementById('projectList');
@@ -487,6 +488,12 @@
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Close Window
                             </button>
+
+                            <button onclick="window.location.href = '${projectGithub}'" class="btn btn-primary" data-bs-dismiss="modal">
+                                <i class="fab fa-github"></i>
+                                Visit GitHub
+                            </button>
+
                         </div>
                     </div>
                 </div>

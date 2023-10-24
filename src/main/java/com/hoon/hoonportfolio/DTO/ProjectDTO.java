@@ -11,12 +11,14 @@ public class ProjectDTO {
     private String title;
     private String description;
     private String github;
+    private String email;
 
     @Builder
-    public ProjectDTO(String title, String description, String github) {
+    public ProjectDTO(String title, String description, String github, String email) {
         this.title = title;
         this.description = description;
         this.github = github;
+        this.email = email;
     }
 }
 
