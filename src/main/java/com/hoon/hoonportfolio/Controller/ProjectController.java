@@ -4,7 +4,9 @@ import com.hoon.hoonportfolio.CService.ProjectService;
 import com.hoon.hoonportfolio.DTO.ProjectDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,24 +29,14 @@ public class ProjectController {
 
 
     // 이메일을 받아서 프로젝트 리스트 리턴
-/*    @GetMapping("/projects/select")
-    public ResponseEntity<List<String>> getProjectsImagesUrlsByEmail(String email) {
-        List<Project> projects = projectService.getProjectsByEmail(email);
+    @GetMapping("/projects/selectInfo")
+    public ResponseEntity<List<ProjectDTO>> getProjectsInfoByEmail(String email) {
+        List<ProjectDTO> projects = projectService.getProjectsByEmail(email);
         if (projects.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Collections.emptyList());
         }
-
-        List<String> imageUrls = new ArrayList<>();
-        for (Project project : projects) {
-            // 이미지의 URL을 가져와서 리스트에 추가
-            imageUrls.add(project.getMainImage().);
-        }
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        return new ResponseEntity<>(imageUrls, headers, HttpStatus.OK);
-    }*/
+        return ResponseEntity.status(HttpStatus.OK).body(projects);
+    }
 
     @GetMapping("/projects/select")
     public ResponseEntity<List<String>> getProjectsByEmail(String email) {
