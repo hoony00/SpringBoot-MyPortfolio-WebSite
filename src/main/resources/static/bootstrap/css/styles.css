@@ -8130,6 +8130,37 @@ textarea.form-control-lg {
   background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
 }
 
+.bg-hoon1 {
+  --bs-bg-opacity: 1;
+  background-color: #021933
+}
+
+.bg-hoon2 {
+  --bs-bg-opacity: 1;
+  background-color: #365088
+}
+
+.bg-hoon3 {
+  --bs-bg-opacity: 1;
+  background-color: #FBEAFF;
+}
+
+
+.bg-hoon4 {
+  --bs-bg-opacity: 1;
+  background-color: #1a4352
+}
+
+.bg-hoon5 {
+  --bs-bg-opacity: 1;
+  background-color: #845EC2
+}
+
+.bg-hoon10 {
+  --bs-bg-opacity: 1;
+  background-color: #146c43;
+}
+
 .bg-secondary {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
@@ -8140,7 +8171,7 @@ textarea.form-control-lg {
   background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
 }
 
-.bg-info {
+.bg-info  {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-info-rgb), var(--bs-bg-opacity)) !important;
 }
