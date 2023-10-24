@@ -19,5 +19,5 @@ public class Certification {
 
     @ManyToOne
     @JoinColumn(name = "email")
-    private User user;
+    private UserEntity user;
 }

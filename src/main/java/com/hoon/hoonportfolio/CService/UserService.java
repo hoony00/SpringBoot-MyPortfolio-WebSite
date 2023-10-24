@@ -1,13 +1,12 @@
 package com.hoon.hoonportfolio.CService;
 
 import com.hoon.hoonportfolio.DTO.UserDTO;
-import com.hoon.hoonportfolio.Domain.User;
+import com.hoon.hoonportfolio.Domain.UserEntity;
 import com.hoon.hoonportfolio.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Optional;
 
@@ -38,9 +37,9 @@ public class UserService {
     //updateExplanation
     public void updateExplanation(String email, String explanation) {
         // 사용자를 찾아서 자기소개 업데이트
-        Optional<User> userOptional = userRepository.findByEmail(email);
+        Optional<UserEntity> userOptional = userRepository.findByEmail(email);
         if (userOptional.isPresent()) {
-            User user = userOptional.get();
+            UserEntity user = userOptional.get();
             user.setExplanation(explanation);
             userRepository.save(user);
         }else{
@@ -53,7 +52,7 @@ public class UserService {
     public UserDTO getNameAndExplanation(String email) {
         System.out.println("getNameAndExplanation 이메일: " + email);
         if(userRepository.findByEmail(email).isPresent()){
-            Optional<User> user = userRepository.findById(email);
+            Optional<UserEntity> user = userRepository.findById(email);
             return UserDTO.builder()
                     .name(user.get().getName())
                     .explanation(user.get().getExplanation())
@@ -64,7 +63,7 @@ public class UserService {
             if(email == null){
                 throw new IllegalStateException("이메일을 입력해주세요.");
             }else{
-                throw new IllegalStateException(email + "은 존재하지 않는 이메일입니다.");
+                throw new IllegalStateException("UserService getNameAndExplantion) : "+ email + "은 존재하지 않는 이메일입니다.");
             }
         }
 
@@ -74,7 +73,7 @@ public class UserService {
         System.out.println("getSelect 이메일: " + email);
 
         if(userRepository.findByEmail(email).isPresent()){
-            Optional<User> user = userRepository.findById(email);
+            Optional<UserEntity> user = userRepository.findById(email);
             return UserDTO.builder()
                     .name(user.get().getName())
                     .explanation(user.get().getExplanation())
@@ -93,10 +92,11 @@ public class UserService {
 
     // 프로필 사진 저장
     public void saveProfileImage(String email, byte[] imageBytes) {
+        System.out.println("saveProfileImage 이메일: " + email);
         // 사용자를 찾아서 프로필 사진을 저장
-        Optional<User> userOptional = userRepository.findById(userRepository.findById(email).get().getEmail());
+        Optional<UserEntity> userOptional = userRepository.findById(userRepository.findById(email).get().getEmail());
         if (userOptional.isPresent()) {
-            User user = userOptional.get();
+            UserEntity user = userOptional.get();
             user.setProfileImage(imageBytes);
             userRepository.save(user);
         }else{
@@ -107,9 +107,9 @@ public class UserService {
 
     public byte[] getProfileImage(String email) {
         System.out.println("getProfileImage 이메일: " + email);
-        Optional<User> userOptional = userRepository.findById(userRepository.findByEmail(email).get().getEmail());
+        Optional<UserEntity> userOptional = userRepository.findById(userRepository.findByEmail(email).get().getEmail());
         // 사용자를 찾지 못한 경우 null 또는 기본 이미지 반환
-        return userOptional.map(User::getProfileImage).orElse(null);
+        return userOptional.map(UserEntity::getProfileImage).orElse(null);
     }
 
 
@@ -140,7 +140,7 @@ public class UserService {
             throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
         }*/
 
-            User user = User.builder()
+            UserEntity user = UserEntity.builder()
                     .name(userDTO.getName())
                     .email(userDTO.getEmail())
                     .password(userDTO.getPassword())

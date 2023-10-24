@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Table(name = "user")
-public class User {
+public class UserEntity {
 
     @Id
     private String email;
@@ -42,7 +42,7 @@ public class User {
 
 
     @Builder
-    public User(String name, String email, String password, String explanation) {
+    public UserEntity(String name, String email, String password, String explanation) {
         this.name = name;
         this.email = email;
         this.password = password;

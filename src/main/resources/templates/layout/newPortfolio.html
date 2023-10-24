@@ -51,7 +51,8 @@
             <img id="previewImage" class="masthead-avatar mb-5" src="../../bootstrap/assets/img/portfolio/people.png" alt="프로필 사진" />
 
             <script>
-                var userEmail = '[[${email}]]';
+                userEmail = '[[${userExplanation.email}]]';
+                console.log("현재 프로필의 이메일 : " + userEmail);
 
                 // 서버에서 프로필 이미지를 가져오는 함수
                 function loadProfileImage() {
@@ -88,7 +89,7 @@
                 <!-- 파일 선택 input -->
                 <input type="file" id="fileInput" name="file" accept="image/*" required style="flex: 1;">
                 <!-- 이메일을 숨겨진 필드로 추가 -->
-                <input type="hidden" id="email" name="email" th:value="${email}" required>
+                <input type="hidden" id="email" name="email" th:value="${userExplanation.email}" required>
                 <!-- 파일 저장 버튼 -->
                 <button type="submit" id="uploadButton" style="flex: 0;">Update</button>
             </form>

@@ -2,22 +2,18 @@ package com.hoon.hoonportfolio.CService;
 
 
 import com.hoon.hoonportfolio.DTO.ProjectDTO;
-import com.hoon.hoonportfolio.Domain.Photo;
 import com.hoon.hoonportfolio.Domain.Project;
-import com.hoon.hoonportfolio.Domain.User;
+import com.hoon.hoonportfolio.Domain.UserEntity;
 import com.hoon.hoonportfolio.Repository.ProjectRepository;
 import com.hoon.hoonportfolio.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *     프로젝트 관련 기능을 담당하는 Service
@@ -72,7 +68,7 @@ public class ProjectService {
 
     //프로젝트 저장
     public void saveProject(String email, ProjectDTO projectDTO, MultipartFile image) throws IOException {
-        User user = userRepository.findById(email).orElseThrow(() -> new IllegalStateException("회원 정보를 찾을 수 없습니다."));
+        UserEntity user = userRepository.findById(email).orElseThrow(() -> new IllegalStateException("회원 정보를 찾을 수 없습니다."));
 
         Project project = Project.builder()
                 .title(projectDTO.getTitle())

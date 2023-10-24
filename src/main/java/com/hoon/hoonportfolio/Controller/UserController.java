@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping("/user/new/{email}")
-    public String getSelect(@PathVariable String email, Model model) {
+    public String getSelect(@RequestParam String email, Model model) {
         System.out.println("새로운 계정 이메일: " + email);
         model.addAttribute("userExplanation", userService.getNameAndExplanation(email));
 

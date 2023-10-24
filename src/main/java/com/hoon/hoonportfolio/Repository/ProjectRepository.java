@@ -1,7 +1,6 @@
 package com.hoon.hoonportfolio.Repository;
 
 import com.hoon.hoonportfolio.Domain.Project;
-import com.hoon.hoonportfolio.Domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

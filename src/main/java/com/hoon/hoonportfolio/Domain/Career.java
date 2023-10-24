@@ -19,5 +19,5 @@ public class Career {
 
     @ManyToOne
     @JoinColumn(name = "email")
-    private User user;
+    private UserEntity user;
 }

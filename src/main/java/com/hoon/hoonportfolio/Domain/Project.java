@@ -31,14 +31,14 @@ public class Project {
 
     @ManyToOne
     @JoinColumn(name = "email")
-    private User user;
+    private UserEntity user;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderColumn
     private List<Photo> photos;
 
     @Builder
-    public Project(String title, String imageUrl, String description, String githubLink, byte[] mainImage, User user, List<Photo> photos) {
+    public Project(String title, String imageUrl, String description, String githubLink, byte[] mainImage, UserEntity user, List<Photo> photos) {
         this.title = title;
         this.description = description;
         this.githubLink = githubLink;

@@ -1,11 +1,9 @@
 package com.hoon.hoonportfolio.Repository;
 
 
-import com.hoon.hoonportfolio.Domain.Project;
-import com.hoon.hoonportfolio.Domain.User;
+import com.hoon.hoonportfolio.Domain.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -15,10 +13,10 @@ import java.util.Optional;
  *   @author           이상훈
  */
 
-public interface UserRepository extends JpaRepository<User, String> {
+public interface UserRepository extends JpaRepository<UserEntity, String> {
 
 
 
-    Optional<User> findByEmail(String email);
+    Optional<UserEntity> findByEmail(String email);
 
 }
