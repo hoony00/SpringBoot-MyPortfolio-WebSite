@@ -5286,7 +5286,7 @@ textarea.form-control-lg {
   transform: none;
 }
 .modal.modal-static .modal-dialog {
-  transform: scale(1.02);
+  transform: scale(1.32);
 }
 
 .modal-dialog-scrollable {
