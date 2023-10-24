@@ -2,6 +2,7 @@ package com.hoon.hoonportfolio.CService;
 
 
 import com.hoon.hoonportfolio.DTO.ProjectDTO;
+import com.hoon.hoonportfolio.DTO.UserDTO;
 import com.hoon.hoonportfolio.Domain.Project;
 import com.hoon.hoonportfolio.Domain.UserEntity;
 import com.hoon.hoonportfolio.Repository.ProjectRepository;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *     프로젝트 관련 기능을 담당하는 Service
@@ -31,32 +33,38 @@ public class ProjectService {
     @Autowired
     private UserRepository userRepository;
 
-    // 프로젝트 조화
-    public byte[] getProjectsPhotoByEmail(String email) {
-        // 사용자의 이메일로 프로젝트 목록을 조회
+    // 프로젝트 정보 조회
+    public List<ProjectDTO> getProjectsByEmail(String email) {
         List<Project> projects = projectRepository.findByUserEmail(email);
-        // 프로젝트가 없는 경우 null 반환
+
         if (projects.isEmpty()) {
-            return null;
+            return Collections.emptyList();
         }
-        // 프로젝트가 있는 경우 프로젝트의 이미지를 반환
-        return projects.get(0).getMainImage();
+
+        return projects.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
-/*    public byte[] getProfileImage(String email) {
-        System.out.println("getProfileImage 이메일: " + email);
-        Optional<User> userOptional = userRepository.findById(email);
-        // 사용자를 찾지 못한 경우 null 또는 기본 이미지 반환
-        return userOptional.map(User::getProfileImage).orElse(null);
-    }*/
+    private ProjectDTO convertToDTO(Project project) {
+        return ProjectDTO.builder()
+                .title(project.getTitle())
+                .description(project.getDescription())
+                .github(project.getGithubLink())
+                .build();
+    }
 
-    public List<byte[]> getProjectsByEmail(String email) {
+
+
+
+    // 프로젝트 이미지 조회
+    public List<byte[]> getProjectImagesByEmail(String email) {
         List<Project> projects = projectRepository.findByUserEmail(email);
         if (projects.isEmpty()) {
             System.out.println("프로젝트가 없습니다.");
             return Collections.emptyList(); // 이미지가 없을 경우 빈 리스트 반환
         }
-
+        System.out.println(email + "님의 조회된 프로젝트 개수 : " + projects.size());
         List<byte[]> images = new ArrayList<>();
         for (Project project : projects) {
             images.add(project.getMainImage());
@@ -66,7 +74,7 @@ public class ProjectService {
 
 
 
-    //프로젝트 저장
+    /// 프로젝트 저장
     public void saveProject(String email, ProjectDTO projectDTO, MultipartFile image) throws IOException {
         UserEntity user = userRepository.findById(email).orElseThrow(() -> new IllegalStateException("회원 정보를 찾을 수 없습니다."));
 
@@ -78,16 +86,7 @@ public class ProjectService {
                 .mainImage(image.getBytes())
                 .build();
 
-
-
-        Project project1 = projectRepository.save(project);
-
-
+      projectRepository.save(project);
     }
-
-
-
-
-
 
 }

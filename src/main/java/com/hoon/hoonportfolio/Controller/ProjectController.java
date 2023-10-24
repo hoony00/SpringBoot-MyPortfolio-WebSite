@@ -2,12 +2,9 @@ package com.hoon.hoonportfolio.Controller;
 
 import com.hoon.hoonportfolio.CService.ProjectService;
 import com.hoon.hoonportfolio.DTO.ProjectDTO;
-import com.hoon.hoonportfolio.Domain.Project;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -50,8 +47,8 @@ public class ProjectController {
     }*/
 
     @GetMapping("/projects/select")
-    public ResponseEntity<List<byte[]>> getProjectsByEmail(String email) {
-        List<byte[]> images = projectService.getProjectsByEmail(email);
+    public ResponseEntity<List<String>> getProjectsByEmail(String email) {
+        List<byte[]> images = projectService.getProjectImagesByEmail(email);
         // 리턴 내용 찍어보기
         System.out.println(email + "의 프로젝트를 조회합니다.");
 
@@ -59,29 +56,14 @@ public class ProjectController {
             System.out.println("프로젝트가 없습니다.");
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Collections.emptyList());
         }
-
-        // images를 리턴
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        System.out.println("프로젝트 조회 성공");
-        return new ResponseEntity<>(images, headers, HttpStatus.OK);
-    }
-/*    @GetMapping("/projects/select")
-    public  ResponseEntity<byte[]>  getProjectsByEmail(@RequestParam("email") String email) {
-        byte[] projects = projectService.getProjectsPhotoByEmail(email);
-        if(projects == null){
-            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        List<String> base64Images = new ArrayList<>();
+        for (byte[] image : images) {
+            // 이미지의 URL을 가져와서 리스트에 추가
+            base64Images.add(java.util.Base64.getEncoder().encodeToString(image));
         }
-        System.out.println("프로젝트 사진 조회 성공");
-        System.out.println("프로젝트 사진 길이: " + projects.length);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG); // 이미지 유형에 따라 변경
+        return ResponseEntity.status(HttpStatus.OK).body(base64Images);
 
-        return new ResponseEntity<>(projects, headers, HttpStatus.OK);
-    }*/
-
-
+    }
 
 
 
