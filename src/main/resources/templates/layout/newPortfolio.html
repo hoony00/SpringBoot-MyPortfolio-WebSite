@@ -441,7 +441,12 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
                             <!-- Portfolio Modal - Title -->
-                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">${projectTitle}</h2>
+                            <div id="textContainer">
+                                 <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">${projectTitle}</h2>
+                                  <textarea class="form-control" id="description" style="height: auto" name="projectDTO.description" readonly>
+                                     ${projectTitle}
+                                     </textarea>
+                            </div>
                             <!-- Icon Divider -->
                             <div class="divider-custom">
                                 <div class="divider-custom-line"></div>
@@ -452,15 +457,17 @@
                             <img class="img-fluid rounded mb-5" src="${projectImage.src}" id="PortfolioInput" />
                             <!-- Portfolio Modal - Text -->
                             <p class="mb-4">
+                             <textarea class="form-control" id="description" style="height: auto" name="projectDTO.description" readonly>
                                 ${projectDescription}
+                            </textarea>
                             </p>
-                            <button class="btn btn-primary" data-bs-dismiss="modal">
-                                <i class="fas fa-xmark fa-fw"></i>
-                                Close Window
+                            <button class="btn btn-warning" data-bs-dismiss="modal" style="margin-right: 20px;">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                                수정하기
                             </button>
 
                             <button onclick="window.location.href = '${projectGithub}'" class="btn btn-primary" data-bs-dismiss="modal">
-                                <i class="fab fa-github"></i>
+                                <i class="fa-brands fa-github"></i>
                                 Visit GitHub
                             </button>
 
