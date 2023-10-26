@@ -2,6 +2,7 @@ package com.hoon.hoonportfolio.Controller;
 
 import com.hoon.hoonportfolio.CService.ProjectService;
 import com.hoon.hoonportfolio.DTO.ProjectDTO;
+import com.hoon.hoonportfolio.Domain.Project;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -55,6 +56,20 @@ public class ProjectController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(base64Images);
 
+    }
+
+    @PostMapping("/project/update")
+    public ResponseEntity<String> updateProject(String proid, String des){
+        try {
+            // 업데이트 작업 수행
+            projectService.updateProject(proid, des);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            return ResponseEntity.ok().headers(headers).body("업데이트에 성공했습니다.");
+        } catch (Exception e) {
+            // 업데이트 작업 실패
+            return ResponseEntity.badRequest().body("업데이트에 실패했습니다. 실패 이유: " + e.getMessage());
+        }
     }
 
 

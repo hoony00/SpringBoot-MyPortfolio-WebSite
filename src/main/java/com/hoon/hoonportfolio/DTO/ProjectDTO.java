@@ -12,13 +12,15 @@ public class ProjectDTO {
     private String description;
     private String github;
     private String email;
+    private String proid;
 
     @Builder
-    public ProjectDTO(String title, String description, String github, String email) {
+    public ProjectDTO(String title, String description, String github, String email, String proid) {
         this.title = title;
         this.description = description;
         this.github = github;
         this.email = email;
+        this.proid = proid;
     }
 }
 

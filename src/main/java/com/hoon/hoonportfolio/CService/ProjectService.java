@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -52,8 +53,20 @@ public class ProjectService {
                 .description(project.getDescription())
                 .github(project.getGithubLink())
                 .email(project.getUser().getEmail())
+                .proid(String.valueOf(project.getProid()))
                 .build();
     }
+
+    //프로젝트 내용 업데이트
+    public void updateProject(String proid, String des){
+        Optional<Project> project = projectRepository.findById(Long.parseLong(proid));
+           project.ifPresent(selectProject -> {
+                selectProject.setDescription(des);
+                projectRepository.save(selectProject);
+            });
+
+    }
+
 
 
 

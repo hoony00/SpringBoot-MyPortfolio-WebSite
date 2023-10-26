@@ -381,10 +381,6 @@
 
                     if (infoResponse.ok) {
                         const anotherData = await infoResponse.json();
-  /*                      console.log('프로젝트 정보 조회 성공!');
-                        console.log('프로젝트 정보 개수:', anotherData.length);
-                        console.log('프로젝트 제목:', anotherData[0].title);
-                        console.log('프로젝트 이메일:', anotherData[7].email);*/
 
                         // 프로젝트 목록을 표시할 요소
                         const projectList = document.getElementById('projectList');
@@ -401,6 +397,7 @@
                             const projectTitle = anotherData[modalCounter].title;
                             const projectDescription = anotherData[modalCounter].description;
                             const projectGithub = anotherData[modalCounter].github;
+                            const proid = anotherData[modalCounter].proid;
 
                             // 모달을 생성
                             const modalId = 'portfolioModal' + modalCounter;
@@ -474,6 +471,7 @@
                                 <i class="fa-brands fa-github"></i>
                                 Visit GitHub
                             </button>
+                            <div id="${modalCounter}" style="display: none" >${proid}</div>
 
                         </div>
                     </div>
@@ -483,12 +481,6 @@
     </div>
 </div>
             `;
-                            console.log("모달 번호 : " + modalCounter);
-                            console.log("수정하기 번호 : " + editButtonId);
-                            console.log("제목 번호 : " + projectTitle);
-
-
-
                             // 모달을 HTML에 추가
                             document.body.insertAdjacentHTML('beforeend', modalContent);
 
@@ -509,6 +501,11 @@
             function edit(modalCounter) {
                 // 수정하기 버튼의 모달 ID를 생성
                 const modalId = 'portfolioModal' + modalCounter;
+
+                // 프로젝트 id 값 받기
+                const div = document.getElementById(modalCounter); // 해당 div 요소를 가져옵니다.
+                const proid = div.textContent; // div의 내부 텍스트 값을 가져옵니다.
+
 
                 // 모달 내의 요소를 조작
                 const modal = document.getElementById(modalId);
@@ -536,6 +533,36 @@
 
                 // TODO: 수정 내용 저장 기능 구현
                 saveButton.addEventListener('click', function () {
+                    // proid 는 프로젝트 번호
+                    // descriptionTextarea.value 는 수정된 내용
+                    console.log("내용" +descriptionTextarea.value);
+                    console.log("번호" + proid);
+
+                    // API 엔드포인트 정의
+                    const apiUrl = '/project/update'; // 실제 API 엔드포인트로 대체해야 합니다
+
+                    // 요청 데이터 생성
+                    const requestData = new FormData();
+                    requestData.append('proid', proid);
+                    requestData.append('des', descriptionTextarea.value);
+
+                    // API에 POST 요청 보내기
+                    fetch(apiUrl, {
+                        method: 'POST',
+                        body: requestData,
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                console.log("프로젝트 수정 성공!");
+                                location.reload();
+                            } else {
+                                throw new Error("프로젝트 수정 실패.");
+                            }
+                        }).catch((error) => {
+                        alert("오류 발생: " + error);
+                    });
+
+
 
 
 
@@ -746,48 +773,6 @@
 <div class="copyright py-4 text-center text-white">
     <div class="container"><small>Copyright &copy; Your Website 2023</small></div>
 </div>
-<!-- Portfolio Modals-->
-
-<!-- Portfolio Modal 1-->
-<!--
-<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1"
-     aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header border-0">
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center pb-5">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            &lt;!&ndash; Portfolio Modal - Title&ndash;&gt;
-                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">모달 1bin</h2>
-                            &lt;!&ndash; Icon Divider&ndash;&gt;
-                            <div class="divider-custom">
-                                <div class="divider-custom-line"></div>
-                                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                <div class="divider-custom-line"></div>
-                            </div>
-                            &lt;!&ndash; Portfolio Modal - Image&ndash;&gt;
-                            <img class="img-fluid rounded mb-5" src="../../bootstrap/assets/img/portfolio/people.png"
-                                 alt="..."/>
-                            &lt;!&ndash; Portfolio Modal - Text&ndash;&gt;
-                            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque
-                                assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit
-                                asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                            <button class="btn btn-primary" data-bs-dismiss="modal">
-                                <i class="fas fa-xmark fa-fw"></i>
-                                Close Window
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
--->
 
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
