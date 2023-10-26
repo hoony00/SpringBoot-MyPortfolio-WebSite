@@ -337,9 +337,12 @@
 
             // 모달이 닫힐 때 입력 필드를 초기화
             document.getElementById("createProjectModal").addEventListener("hidden.bs.modal", function () {
-                document.getElementById("projectTitle").value = "";
-                document.getElementById("projectDescription").value = "";
-                document.getElementById("projectImage").value = "";
+                document.getElementById("title").value = "";
+                document.getElementById("description").value = "";
+                document.getElementById("github").value = "";
+                document.getElementById("projectImage").files[0] = null;
+                var myModal = new bootstrap.Modal(document.getElementById('createProjectModal'));
+                myModal.hide();
             });
 
 
