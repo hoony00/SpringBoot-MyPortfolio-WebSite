@@ -1,6 +1,8 @@
 package com.hoon.hoonportfolio.Controller;
 
 import com.hoon.hoonportfolio.CService.CareerService;
+import com.hoon.hoonportfolio.CService.CertificationService;
+import com.hoon.hoonportfolio.CService.SkillService;
 import com.hoon.hoonportfolio.CService.UserService;
 import com.hoon.hoonportfolio.DTO.ExplanationRequestDTO;
 import com.hoon.hoonportfolio.DTO.UserDTO;
@@ -32,6 +34,12 @@ public class UserController {
 
     @Autowired
     private final CareerService careerService;
+
+    @Autowired
+    private final CertificationService certificationService;
+
+    @Autowired
+    private final SkillService skillService;
 
 
 
@@ -140,6 +148,8 @@ public class UserController {
         try {
             userService.registerNewUser(userDTO);
             careerService.saveCareer(userDTO.getEmail());
+            certificationService.saveCertification(userDTO.getEmail());
+            skillService.saveSkill(userDTO.getEmail());
             // 회원가입 성공 시 로그인 페이지로 리다이렉트
             model.addAttribute("userExplanation", userDTO.getEmail());
             System.out.println("회원가입 성공 -> 이메일 : " + userDTO.getEmail());

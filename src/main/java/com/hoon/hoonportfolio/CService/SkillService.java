@@ -1,10 +1,9 @@
 package com.hoon.hoonportfolio.CService;
 
-import com.hoon.hoonportfolio.Domain.Career;
+import com.hoon.hoonportfolio.Domain.Skill;
 import com.hoon.hoonportfolio.Domain.UserEntity;
-import com.hoon.hoonportfolio.Repository.CareerRepository;
+import com.hoon.hoonportfolio.Repository.SkillRepository;
 import com.hoon.hoonportfolio.Repository.UserRepository;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 /**
- * 경력 관련 기능을 담당하는 Service
+ * 기술스택 관련 기능을 담당하는 Service
  *
  * @author
  * @version 1.00    2023.10.14
@@ -24,25 +23,25 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CareerService {
+public class SkillService {
     @Autowired
-    private final CareerRepository careerRepository;
+    private final SkillRepository skillRepository;
 
     @Autowired
     private final UserRepository userRepository;
 
 
 
-    public void saveCareer(String email) {
+    public void saveSkill(String email) {
        Optional<UserEntity> user = userRepository.findByEmail(email);
 
        //자격증 저장 3번 반복
         for(int i=0; i<3; i++){
-            Career career = Career.builder()
+            Skill career = Skill.builder()
                     .user(user.get())
-                    .name(" ")
+                    .skillName(" ")
                     .build();
-            careerRepository.save(career);
+            skillRepository.save(career);
         }
 
     }
