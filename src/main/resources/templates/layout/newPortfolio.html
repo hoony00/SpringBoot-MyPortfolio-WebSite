@@ -220,10 +220,6 @@
       <P> </P>
 
         <script>
-            document.getElementById("selectProto").addEventListener("click", function () {
-                fetchProjects();
-            });
-
             // 프로젝트 생성 버튼 클릭 이벤트 핸들러
             document.getElementById("createProjectButton").addEventListener("click", function () {
                 var myModal = new bootstrap.Modal(document.getElementById('createProjectModal'));
@@ -408,6 +404,11 @@
 
                             // 모달을 생성
                             const modalId = 'portfolioModal' + modalCounter;
+                            const editButtonId = 'editDes' + modalCounter;
+                            const saveButtonId = 'mydessaveButton' + modalCounter;
+                            const cancelButtonId = 'mydescancelButton' + modalCounter;
+                            const descriptionTextareaId = 'mydescription' + modalCounter;
+                            const gitButton = 'mygitButton' + modalCounter;
                             const projectModal = document.createElement('div');
                             projectModal.className = 'portfolio-item mx-auto';
                             projectModal.setAttribute('data-bs-toggle', 'modal');
@@ -441,12 +442,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
                             <!-- Portfolio Modal - Title -->
-                            <div id="textContainer">
-                                 <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">${projectTitle}</h2>
-                                  <textarea class="form-control" id="description" style="height: auto" name="projectDTO.description" readonly>
-                                     ${projectTitle}
-                                     </textarea>
-                            </div>
+                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">${projectTitle}</h2>
                             <!-- Icon Divider -->
                             <div class="divider-custom">
                                 <div class="divider-custom-line"></div>
@@ -457,16 +453,24 @@
                             <img class="img-fluid rounded mb-5" src="${projectImage.src}" id="PortfolioInput" />
                             <!-- Portfolio Modal - Text -->
                             <p class="mb-4">
-                             <textarea class="form-control" id="description" style="height: auto" name="projectDTO.description" readonly>
-                                ${projectDescription}
-                            </textarea>
-                            </p>
-                            <button class="btn btn-warning" data-bs-dismiss="modal" style="margin-right: 20px;">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                                수정하기
+                                <textarea class="form-control" id="${descriptionTextareaId}" style="height: auto" name="projectDTO.description" readonly>
+                                    ${projectDescription}
+                                </textarea>
+                                </p>
+                          <button id="${editButtonId}" class="btn btn-warning des-edit" style="margin-right: 20px;"  onclick="edit('${modalCounter}')">
+                                 <i class="fa-regular fa-pen-to-square"></i>
+                                   수정하기
+                           </button>
+                           <button id="${saveButtonId}" class="btn btn-success" style="display: none; margin-right: 20px;">
+                                 <i class="fa-regular fa-check-square"></i>
+                                    저장하기
                             </button>
+                               <button id="${cancelButtonId}" class="btn btn-danger edit-des" style="display: none;">
+                                 <i class="fa-regular fa-times-circle"></i>
+                                    취소
+                                 </button>
 
-                            <button onclick="window.location.href = '${projectGithub}'" class="btn btn-primary" data-bs-dismiss="modal">
+                            <button id ="${gitButton}" onclick="window.location.href = '${projectGithub}'" class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fa-brands fa-github"></i>
                                 Visit GitHub
                             </button>
@@ -479,6 +483,12 @@
     </div>
 </div>
             `;
+                            console.log("모달 번호 : " + modalCounter);
+                            console.log("수정하기 번호 : " + editButtonId);
+                            console.log("제목 번호 : " + projectTitle);
+
+
+
                             // 모달을 HTML에 추가
                             document.body.insertAdjacentHTML('beforeend', modalContent);
 
@@ -489,8 +499,60 @@
                     console.error('프로젝트 조회 오류:', error);
                 }
             }
-
         </script>
+<!-- 작업공간 ----------------------------------->
+<!-- 작업공간 ----------------------------------->
+<!-- 작업공간 ----------------------------------->
+<!-- 작업공간 ----------------------------------->
+        <script>
+            // 수정하기 버튼 클릭 시
+            function edit(modalCounter) {
+                // 수정하기 버튼의 모달 ID를 생성
+                const modalId = 'portfolioModal' + modalCounter;
+
+                // 모달 내의 요소를 조작
+                const modal = document.getElementById(modalId);
+                const editButton = document.getElementById('editDes' + modalCounter);
+                const saveButton = document.getElementById('mydessaveButton' + modalCounter);
+                const cancelButton = document.getElementById('mydescancelButton' + modalCounter);
+                const descriptionTextarea = document.getElementById('mydescription' + modalCounter);
+                const gitButton = document.getElementById('mygitButton'+modalCounter);
+
+                // 텍스트 에리어 수정 가능하도록 변경
+                descriptionTextarea.readOnly = false;
+
+                // 버튼 표시/숨김 조작
+                editButton.style.display = 'none';
+                saveButton.style.display = 'inline';
+                cancelButton.style.display = 'inline';
+                gitButton.style.display = 'none';
+
+                // 수정하기 버튼 클릭 시 저장 기능 추가
+                saveButton.addEventListener('click', function () {
+                    // TODO: 수정 내용 저장 기능 구현
+
+                    // 저장 후 작업 (예: 수정 완료 후 버튼 변경, 텍스트 에리어 읽기 전용으로 변경 등)
+                    // ...
+
+                    // 예시로 모달을 숨기는 코드
+                    const bootstrapModal = new bootstrap.Modal(modal);
+                    bootstrapModal.hide();
+                });
+
+                // 취소 버튼 클릭 시 원래 상태로 복구
+                cancelButton.addEventListener('click', function () {
+                    descriptionTextarea.readOnly = true;
+
+                    // 버튼 표시/숨김 조작
+                    editButton.style.display = 'inline';
+                    saveButton.style.display = 'none';
+                    cancelButton.style.display = 'none';
+                    gitButton.style.display = 'inline';
+
+                });
+            }
+        </script>
+
     </div>
 </section>
 
