@@ -219,14 +219,6 @@
 
       <P> </P>
 
-        <script>
-            // 프로젝트 생성 버튼 클릭 이벤트 핸들러
-            document.getElementById("createProjectButton").addEventListener("click", function () {
-                var myModal = new bootstrap.Modal(document.getElementById('createProjectModal'));
-                myModal.show();
-            });
-
-        </script>
 
 
         <!-- 프젝 추가 모달 ----- 프젝 추가 모달 ----------- 프젝 추가 모달 ----------- 프젝 추가 모달 ----------- 프젝 추가 모달 ----------- 프젝 추가 모달 ------------------->
@@ -277,7 +269,19 @@
             </div>
         </div>
 
+
+
+<!-- 모달을 위한 자바스크립트 ----------------->
+<!-- 모달을 위한 자바스크립트 ----------------->
+<!-- 모달을 위한 자바스크립트 ----------------->
         <script>
+            // 프로젝트 추가 모달을 표시
+            document.getElementById("createProjectButton").addEventListener("click", function () {
+                var myModal = new bootstrap.Modal(document.getElementById('createProjectModal'));
+                myModal.show();
+            });
+
+            // 파일 크기를 체크하는 함수
             function checkFileSize(input) {
                 var maxSize = 1048576; // 1MB 제한 (바이트)
                 var fileSize = input.files[0].size;
@@ -289,10 +293,7 @@
                     document.getElementById('fileSizeError').style.display = 'none';
                 }
             }
-        </script>
 
-
-        <script>
             // 새 프로젝트를 저장하기 위한 이벤트 처리
             document.getElementById("saveProjectButton").addEventListener("click", function () {
                 // 폼 데이터를 수집
@@ -341,8 +342,12 @@
                 document.getElementById("description").value = "";
                 document.getElementById("github").value = "";
                 document.getElementById("projectImage").files[0] = null;
-                var myModal = new bootstrap.Modal(document.getElementById('createProjectModal'));
-                myModal.hide();
+                document.getElementById('fileSizeError').style.display = 'none';
+
+                var backdrop = document.querySelector('.modal-backdrop');
+                if (backdrop) {
+                    backdrop.remove();
+                }
             });
 
 
