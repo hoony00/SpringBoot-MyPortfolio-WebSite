@@ -25,8 +25,11 @@ public class CertificationController {
         List<String> certification = certificationService.findCertificationByEmail(email);
         if(certification.isEmpty()){
             return ResponseEntity.noContent().build();
+        }else{
+            int maxCount = Math.min(3, certification.size());
+            List<String> selectedCertifications = certification.subList(0, maxCount);
+        return ResponseEntity.ok(selectedCertifications);
         }
-        return ResponseEntity.ok(certification);
 
     }
 
