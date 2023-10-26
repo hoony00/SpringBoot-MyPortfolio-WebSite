@@ -527,16 +527,19 @@
                 cancelButton.style.display = 'inline';
                 gitButton.style.display = 'none';
 
-                // 수정하기 버튼 클릭 시 저장 기능 추가
+                //커서 이동
+                descriptionTextarea.focus();
+                const textLength = descriptionTextarea.value.length;
+                descriptionTextarea.setSelectionRange(textLength, textLength);
+
+                console.log("수정하기 버튼 클릭")
+
+                // TODO: 수정 내용 저장 기능 구현
                 saveButton.addEventListener('click', function () {
-                    // TODO: 수정 내용 저장 기능 구현
+
+
 
                     // 저장 후 작업 (예: 수정 완료 후 버튼 변경, 텍스트 에리어 읽기 전용으로 변경 등)
-                    // ...
-
-                    // 예시로 모달을 숨기는 코드
-                    const bootstrapModal = new bootstrap.Modal(modal);
-                    bootstrapModal.hide();
                 });
 
                 // 취소 버튼 클릭 시 원래 상태로 복구
