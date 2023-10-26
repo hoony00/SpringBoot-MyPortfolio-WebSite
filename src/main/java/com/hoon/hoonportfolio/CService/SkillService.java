@@ -48,7 +48,7 @@ public class SkillService {
 
     }
 
-    //email로 자격증 조회
+    //email로 기술스택 조회
     public List<String> findSkillByEmail(String email) {
         List<Skill> skillList = skillRepository.findAllByUserEmail(email);
         List<String> skillNameList = new ArrayList<>();

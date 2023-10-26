@@ -2,6 +2,7 @@ package com.hoon.hoonportfolio.CService;
 
 import com.hoon.hoonportfolio.Domain.Career;
 import com.hoon.hoonportfolio.Domain.Certification;
+import com.hoon.hoonportfolio.Domain.Skill;
 import com.hoon.hoonportfolio.Domain.UserEntity;
 import com.hoon.hoonportfolio.Repository.CareerRepository;
 import com.hoon.hoonportfolio.Repository.CertificationRepository;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -45,6 +48,18 @@ public class CertificationService {
                     .build();
             certificationRepository.save(career);
         }
+
+    }
+
+    //email로 certificate 조회
+    public List<String> findCertificationByEmail(String email) {
+        List<Certification> cerficationList = certificationRepository.findAllByUserEmail(email);
+        List<String> CerNameList = new ArrayList<>();
+        for (Certification certification : cerficationList) {
+            CerNameList.add(certification.getCerName());
+        }
+
+        return CerNameList;
 
     }
 

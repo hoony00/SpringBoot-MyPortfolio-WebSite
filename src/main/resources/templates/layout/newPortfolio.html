@@ -611,16 +611,40 @@
         <!-- About Section Content-->
         <div class="row">
             <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
-                <!-- 경력 -->
+                <!-- 자격증 -->
                 <p class="lead">
-                <h2>Experience</h2>
-                <ul>
-                    <li><h5></h5></li>
-                    <li><h5>db에서 값2</h5></li>
-                    <li><h5>db에서 값3</h5></li>
+                <h2>Certificate</h2>
+                <ul id="cerList">
+                    <!-- 스킬 목록은 여기에 동적으로 추가될 것입니다 -->
                 </ul>
                 </p>
             </div>
+
+            <script>
+                fetch(`/certification/select?email=${userEmail}`)
+                    .then(response => response.json()) // JSON 응답 파싱
+                    .then(data => {
+                        const skillsList = document.getElementById('cerList');
+
+                        if (data && data.length > 0) {
+                            // 받아온 스킬 리스트를 ul 요소에 추가
+                            skillsList.innerHTML = '';
+                            data.forEach(skill => {
+                                const li = document.createElement('li');
+                                const h5 = document.createElement('h5');
+                                h5.textContent = skill;
+                                li.appendChild(h5);
+                                skillsList.appendChild(li);
+                            });
+                        } else {
+                            // 스킬 리스트가 비어있는 경우 메시지 표시
+                            skillsList.innerHTML = '<li>No certificate found.</li>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            </script>
 
             <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
                 <!-- 기술스택 -->
@@ -633,10 +657,6 @@
             </div>
 
             <script>
-                // 페이지가 로드될 때 실행할 함수
-                window.addEventListener('DOMContentLoaded', function() {
-                    // 사용자 이메일
-
                     // AJAX를 사용하여 "/skill/select" 엔드포인트로 요청을 보냅니다.
                     fetch(`/skill/select?email=${userEmail}`)
                         .then(response => response.json()) // JSON 응답 파싱
@@ -661,13 +681,12 @@
                         .catch(error => {
                             console.error('Error:', error);
                         });
-                });
             </script>
 
 <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
                 <!-- 학력 -->
                 <p class="lead">
-                <h2>Certificate</h2>
+                <h2>Education</h2>
                 <ul>
                     <li><h5>db에서 값1</h5></li>
                     <li><h5>db에서 값2</h5></li>
