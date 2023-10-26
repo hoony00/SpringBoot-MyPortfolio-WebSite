@@ -1,16 +1,17 @@
 package com.hoon.hoonportfolio.CService;
 
-import com.hoon.hoonportfolio.Domain.Career;
+import com.hoon.hoonportfolio.Domain.Education;
 import com.hoon.hoonportfolio.Domain.UserEntity;
-import com.hoon.hoonportfolio.Repository.CareerRepository;
+import com.hoon.hoonportfolio.Repository.EducationRepository;
 import com.hoon.hoonportfolio.Repository.UserRepository;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,28 +25,41 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CareerService {
+public class EducationService {
     @Autowired
-    private final CareerRepository careerRepository;
+    private final EducationRepository educationRepository;
 
     @Autowired
     private final UserRepository userRepository;
 
 
 
-    public void saveCareer(String email) {
+    public void saveEducation(String email) {
        Optional<UserEntity> user = userRepository.findByEmail(email);
 
        //자격증 저장 3번 반복
         for(int i=0; i<3; i++){
-            Career career = Career.builder()
+            Education education = Education.builder()
                     .user(user.get())
                     .name(" ")
                     .build();
-            careerRepository.save(career);
+            educationRepository.save(education);
         }
 
     }
+
+    //email로 certificate 조회
+    public List<String> findEducationByEmail(String email) {
+        List<Education> cerficationList = educationRepository.findAllByUserEmail(email);
+        List<String> list = new ArrayList<>();
+        for (Education education : cerficationList) {
+            list.add(education.getName());
+        }
+
+        return list;
+
+    }
+
 
 
 

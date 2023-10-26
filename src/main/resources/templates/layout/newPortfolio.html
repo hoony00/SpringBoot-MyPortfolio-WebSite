@@ -684,17 +684,42 @@
             </script>
 
 <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
-                <!-- 학력 -->
-                <p class="lead">
-                <h2>Education</h2>
-                <ul>
-                    <li><h5>db에서 값1</h5></li>
-                    <li><h5>db에서 값2</h5></li>
-                    <li><h5>db에서 값2</h5></li>
-                </ul>
-                </p>
+    <!-- 핛력 -->
+    <p class="lead">
+    <h2>Main Skills</h2>
+    <ul id="eduList">
+    </ul>
+    </p>
+</div>
             </div>
         </div>
+
+        <script>
+            // AJAX를 사용하여 "/skill/select" 엔드포인트로 요청을 보냅니다.
+            fetch(`/education/select?email=${userEmail}`)
+                .then(response => response.json()) // JSON 응답 파싱
+                .then(data => {
+                    const skillsList = document.getElementById('eduList');
+
+                    if (data && data.length > 0) {
+                        // 받아온 스킬 리스트를 ul 요소에 추가
+                        skillsList.innerHTML = '';
+                        data.forEach(skill => {
+                            const li = document.createElement('li');
+                            const h5 = document.createElement('h5');
+                            h5.textContent = skill;
+                            li.appendChild(h5);
+                            skillsList.appendChild(li);
+                        });
+                    } else {
+                        // 스킬 리스트가 비어있는 경우 메시지 표시
+                        skillsList.innerHTML = '<li>No skills found.</li>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        </script>
 
         <!-- About Section Button (수정하기 버튼) -->
         <div class="text-center mt-4">

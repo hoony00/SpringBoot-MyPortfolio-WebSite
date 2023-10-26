@@ -1,10 +1,7 @@
 package com.hoon.hoonportfolio.CService;
 
-import com.hoon.hoonportfolio.Domain.Career;
 import com.hoon.hoonportfolio.Domain.Certification;
-import com.hoon.hoonportfolio.Domain.Skill;
 import com.hoon.hoonportfolio.Domain.UserEntity;
-import com.hoon.hoonportfolio.Repository.CareerRepository;
 import com.hoon.hoonportfolio.Repository.CertificationRepository;
 import com.hoon.hoonportfolio.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;

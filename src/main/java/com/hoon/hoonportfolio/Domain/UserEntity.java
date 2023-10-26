@@ -31,7 +31,7 @@ public class UserEntity {
     private List<Project> projects;
 
     @OneToMany(mappedBy = "user")
-    private List<Career> careers;
+    private List<Education> careers;
 
     @OneToMany(mappedBy = "user")
     private List<Skill> skills;

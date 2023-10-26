@@ -10,11 +10,11 @@ import lombok.Setter;
 @Entity
 @Setter
 @NoArgsConstructor
-@Table(name = "career")
-public class Career {
+@Table(name = "education")
+public class Education {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cid;
+    private Long eid;
 
     private String name;
 
@@ -23,7 +23,7 @@ public class Career {
     private UserEntity user;
 
     @Builder
-    public Career(String name, UserEntity user) {
+    public Education(String name, UserEntity user) {
         this.name = name;
         this.user = user;
     }
