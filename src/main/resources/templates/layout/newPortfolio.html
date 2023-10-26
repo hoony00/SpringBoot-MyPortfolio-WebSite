@@ -1,3 +1,11 @@
+<!-- 프젝 가로 1150 세로 770 -->
+<!-- 이력서 가로 1350 세로 1800 -->
+<script>
+    /// todo : 가로세로 비율 맞춰서 자동으로 올라가게 기능 만들기 (가로 1150 세로 770) 가로 1350 세로 1800
+    /// todo : 프로젝트 수정, 삭제 만들기
+    /// todo : 시큐리티 공부
+    
+</script>
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -70,8 +78,9 @@
         <div id="userExplanation" data-user-explanation="${userExplanation}"></div>
         <div class="col-md-6 col-lg-4 mb-5">
             <!-- 미리보기 이미지를 표시할 img 요소 -->
-            <img id="previewImage" class="masthead-avatar mb-5" src="../../bootstrap/assets/img/portfolio/people.png"
+            <img id="previewImage" onclick="getImageSize()" class="masthead-avatar mb-5" src="../../bootstrap/assets/img/portfolio/people.png"
                  alt="프로필 사진"/>
+
 
             <form id="uploadForm" th:action="@{/user/uploadProfileImage}" method="post" enctype="multipart/form-data"
                   style="display: flex; align-items: center;">
@@ -92,12 +101,25 @@
 
         </div>
 
+        <script>
+            function getImageSize(img) {
+                console.log(img);
+                var image = document.getElementById(img);
+
+            }
+        </script>
         <!-- JavaScript 코드 -->
         <script>
+
             // 파일 입력란 변경 이벤트 감지
             document.getElementById('fileInput').addEventListener('change', function () {
                 var fileInput = this;
                 var previewImage = document.getElementById('previewImage');
+                var width = previewImage.naturalWidth; // 이미지의 원본 가로 크기
+                var height = previewImage.naturalHeight; // 이미지의 원본 가로 크기
+
+                console.log('이미지의 가로 크기: ' + width + 'px');
+                console.log('이미지의 세로 크기: ' + height + 'px');
 
                 if (fileInput.files && fileInput.files[0]) {
                     var fileSize = fileInput.files[0].size; // 파일 크기 (바이트)
@@ -416,6 +438,7 @@
                             const cancelButtonId = 'mydescancelButton' + modalCounter;
                             const descriptionTextareaId = 'mydescription' + modalCounter;
                             const gitButton = 'mygitButton' + modalCounter;
+                            const PortfolioInput = 'PortfolioInput' + modalCounter;
                             const projectModal = document.createElement('div');
                             projectModal.className = 'portfolio-item mx-auto';
                             projectModal.setAttribute('data-bs-toggle', 'modal');
@@ -425,6 +448,7 @@
                             const projectImage = document.createElement('img');
                             projectImage.className = 'img-fluid';
                             projectImage.src = 'data:image/jpeg;base64,' + base64Image;
+
 
                             // 모달 창에 내용 추가
                             projectModal.appendChild(projectImage);
@@ -457,7 +481,7 @@
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image -->
-                            <img class="img-fluid rounded mb-5" src="${projectImage.src}" id="PortfolioInput" />
+                            <img class="img-fluid rounded mb-5" src="${projectImage.src}" id="${PortfolioInput}" />
                             <!-- Portfolio Modal - Text -->
                             <p class="mb-4">
                                 <textarea class="form-control" id="${descriptionTextareaId}" style="height: auto" name="projectDTO.description" readonly>
@@ -502,6 +526,7 @@
                 }
             }
         </script>
+
 <!-- 작업공간 ----------------------------------->
 <!-- 작업공간 ----------------------------------->
 <!-- 작업공간 ----------------------------------->
