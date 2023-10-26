@@ -3,6 +3,7 @@ package com.hoon.hoonportfolio.CService;
 import com.hoon.hoonportfolio.DTO.UserDTO;
 import com.hoon.hoonportfolio.Domain.UserEntity;
 import com.hoon.hoonportfolio.Repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +21,13 @@ import java.util.Optional;
 @Slf4j // 로그를 위한 어노테이션
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserService {
 
+    @Autowired
     private final UserRepository userRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+
 
     //이메일 존재확인
     public boolean isEmailExist(String email) {

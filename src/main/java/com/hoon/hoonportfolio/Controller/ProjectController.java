@@ -3,6 +3,7 @@ package com.hoon.hoonportfolio.Controller;
 import com.hoon.hoonportfolio.CService.ProjectService;
 import com.hoon.hoonportfolio.DTO.ProjectDTO;
 import com.hoon.hoonportfolio.Domain.Project;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,13 +21,12 @@ import java.util.List;
 
 @Controller
 @Slf4j // 로그를 위한 어노테이션
+@RequiredArgsConstructor
 public class ProjectController {
-    private final ProjectService projectService;
 
     @Autowired
-    public ProjectController(ProjectService projectService) {
-        this.projectService = projectService;
-    }
+    private final ProjectService projectService;
+
 
 
     // 이메일을 받아서 프로젝트 리스트 리턴

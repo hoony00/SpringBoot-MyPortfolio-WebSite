@@ -7,8 +7,11 @@ import com.hoon.hoonportfolio.Domain.Project;
 import com.hoon.hoonportfolio.Domain.UserEntity;
 import com.hoon.hoonportfolio.Repository.ProjectRepository;
 import com.hoon.hoonportfolio.Repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -25,7 +28,10 @@ import java.util.stream.Collectors;
  *   @author
  */
 
+@Slf4j // 로그를 위한 어노테이션
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class ProjectService {
 
     @Autowired

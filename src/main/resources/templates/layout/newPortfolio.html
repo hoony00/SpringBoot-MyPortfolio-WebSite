@@ -615,7 +615,7 @@
                 <p class="lead">
                 <h2>Experience</h2>
                 <ul>
-                    <li><h5>db에서 값1</h5></li>
+                    <li><h5></h5></li>
                     <li><h5>db에서 값2</h5></li>
                     <li><h5>db에서 값3</h5></li>
                 </ul>
@@ -641,7 +641,7 @@
                 <ul>
                     <li><h5>db에서 값1</h5></li>
                     <li><h5>db에서 값2</h5></li>
-                    <li><h5>db에서 값3</h5></li>
+                    <li><h5>db에서 값2</h5></li>
                 </ul>
                 </p>
             </div>
@@ -649,7 +649,7 @@
 
         <!-- About Section Button (수정하기 버튼) -->
         <div class="text-center mt-4">
-            <a class="btn btn-xl btn-outline-light" href="https://startbootstrap.com/theme/freelancer/">
+            <a class="btn btn-xl btn-outline-light" onclick="editIntro(userEmail)">
                 <i class="fas fa-download me-2"></i>
                 Update (자신거만보임)
             </a>
@@ -657,6 +657,11 @@
     </div>
 </section>
 
+<script>
+    function editIntro(userEmail) {
+        console.log("editIntro  눌림"+ userEmail);
+    }
+</script>
 
 <!-- --------------------------      Search Section---------------------------------------------------->
 <!-- --------------------------      Search Section---------------------------------------------------->

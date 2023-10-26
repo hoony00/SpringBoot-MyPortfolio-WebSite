@@ -1,5 +1,6 @@
 package com.hoon.hoonportfolio.Domain;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,4 +21,10 @@ public class Career {
     @ManyToOne
     @JoinColumn(name = "email")
     private UserEntity user;
+
+    @Builder
+    public Career(String name, UserEntity user) {
+        this.name = name;
+        this.user = user;
+    }
 }

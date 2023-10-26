@@ -1,8 +1,10 @@
 package com.hoon.hoonportfolio.Controller;
 
+import com.hoon.hoonportfolio.CService.CareerService;
 import com.hoon.hoonportfolio.CService.UserService;
 import com.hoon.hoonportfolio.DTO.ExplanationRequestDTO;
 import com.hoon.hoonportfolio.DTO.UserDTO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -22,13 +24,15 @@ import java.util.Map;
 @SessionAttributes("userExplanation")
 @Controller
 @Slf4j // 로그를 위한 어노테이션
+@RequiredArgsConstructor
 public class UserController {
+
+    @Autowired
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private final CareerService careerService;
+
 
 
 
@@ -135,6 +139,7 @@ public class UserController {
         }
         try {
             userService.registerNewUser(userDTO);
+            careerService.saveCareer(userDTO.getEmail());
             // 회원가입 성공 시 로그인 페이지로 리다이렉트
             model.addAttribute("userExplanation", userDTO.getEmail());
             System.out.println("회원가입 성공 -> 이메일 : " + userDTO.getEmail());
