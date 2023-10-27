@@ -64,6 +64,12 @@ public class EducationService {
 
     }
 
+    public void updateEducation(String eid, String eName) {
+        Optional<Education> education = educationRepository.findById(Long.valueOf(eid));
+        education.get().setName(eName);
+        educationRepository.save(education.get());
+    }
+
 
 
 

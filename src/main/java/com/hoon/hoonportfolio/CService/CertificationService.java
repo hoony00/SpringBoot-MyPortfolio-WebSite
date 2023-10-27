@@ -64,6 +64,13 @@ public class CertificationService {
 
     }
 
+    // cid 와 cname을 받아서 cname을 수정하는 메소드
+    public void updateCertification(String cid, String cname) {
+        Optional<Certification> certification = certificationRepository.findById(Long.valueOf(cid));
+        certification.get().setCerName(cname);
+        certificationRepository.save(certification.get());
+    }
+
 
 
 

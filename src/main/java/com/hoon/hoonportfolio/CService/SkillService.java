@@ -62,6 +62,12 @@ public class SkillService {
     }
 
     // sid와 skillName으로 skill 업데이트
+    public void updateSkill(String sid, String skillName) {
+        Optional<Skill> skill = skillRepository.findById(Long.valueOf(sid));
+        System.out.println("서비스에서 skill.get().getSkillName() = " + skill.get().getSkillName());
+        skill.get().setSkillName(skillName);
+        skillRepository.save(skill.get());
+    }
 
 
 

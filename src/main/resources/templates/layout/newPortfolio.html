@@ -600,7 +600,7 @@
             </div>
 
             <script>
-                var certificates = [];
+                var cName = [];
                 var cid = [];
 
                 const certificationList = document.getElementById('cerList');
@@ -616,21 +616,14 @@
                                 const li = document.createElement('li');
                                 const h5 = document.createElement('h5');
 
-                                certificates[i] = certification.slice(0, -1);
+                                cName[i] = certification.slice(0, -1);
                                 cid[i] = certification.slice(-1)
 
-                                h5.textContent = certificates[i];
+                                h5.textContent = cName[i];
                                 li.appendChild(h5);
                                 certificationList.appendChild(li);
 
-
-                                //null이거나 빈 문자열 처리
-                                if (certificates[i] == null || certificates[i] == "") {
-                                    certificates[i] = "null";
-                                    console.log(certifications[i] + "null");
-                                }
-
-                                document.getElementById('certificateInput' + i).value = certificates[i];
+                                document.getElementById('certificateInput' + i).value = cName[i];
                                 i++;
                             });
                         } else {
@@ -654,7 +647,7 @@
             </div>
 
             <script>
-                var skills = [];
+                var sName = [];
                 var sid = [];
                 // AJAX를 사용하여 "/skill/select" 엔드포인트로 요청을 보냅니다.
                 const skillsList = document.getElementById('skillsList');
@@ -669,19 +662,15 @@
                                 const li = document.createElement('li');
                                 const h5 = document.createElement('h5');
 
-                                skills[i] = skill.slice(0, -1);
+                                sName[i] = skill.slice(0, -1);
                                 sid[i] = skill.slice(-1)
-                                //null이거나 빈 문자열 처리
-                                if (skills[i] == null || skills[i] == "") {
-                                    skills[i] = "null";
-                                    console.log(skills[i] + "null");
-                                }
 
-                                h5.textContent = skills[i];
+
+                                h5.textContent = sName[i];
                                 li.appendChild(h5);
                                 skillsList.appendChild(li);
 
-                                document.getElementById('Main Skills' + i).value = skills[i];
+                                document.getElementById('Main Skills' + i).value = sName[i];
                                 i++;
                             });
                         } else {
@@ -707,7 +696,7 @@
 
     <script>
         var eid = [];
-        var educations = [];
+        var eName = [];
         // AJAX를 사용하여 "/education/select" 엔드포인트로 요청을 보냅니다.
         const educationList = document.getElementById('eduList');
         fetch(`/education/select?email=${userEmail}`)
@@ -721,19 +710,14 @@
                         const li = document.createElement('li');
                         const h5 = document.createElement('h5');
 
-                        educations[i] = education.slice(0, -1);
+                        eName[i] = education.slice(0, -1);
                         eid[i] = education.slice(-1)
-                        //null이거나 빈 문자열 처리
-                        if (educations[i] == null || educations[i] == "") {
-                            educations[i] = "null";
-                            console.log(educations[i] + "null");
-                        }
 
-                        h5.textContent = educations[i];
+                        h5.textContent = eName[i];
                         li.appendChild(h5);
                         educationList.appendChild(li);
 
-                        document.getElementById('Education' + i).value = educations[i];
+                        document.getElementById('Education' + i).value = eName[i];
                         i++;
 
 
@@ -836,23 +820,70 @@
     }
 
     function saveIntro() {
-        // 수정된 정보를 포문으로 배열로 가져오기
-
-
+        // 사용자가 입력한 데이터를 JavaScript 변수에 저장
         for (var i = 0; i < 3; i++) {
             console.log("saveIntro  눌림" + i);
-            console.log(sid[i] + " : " + skills[i]);
-            console.log(cid[i] + " : " + certificates[i]);
-            console.log(eid[i] + " : " + educations[i]);
+            console.log("sid"+ sid[i] + "번 : " + sName[i]);
+            console.log("cid"+cid[i] + "번 : " + cName[i]);
+            console.log("eid"+eid[i] + "번 : " + eName[i]);
         }
 
+        for (var i = 0; i < 3; i++) {
+            var certificateInput = document.getElementById('certificateInput' + i).value;
+            var mainSkillsInput = document.getElementById('Main Skills' + i).value;
+            var educationInput = document.getElementById('Education' + i).value;
 
-
-        // 이후 저장 로직을 추가하세요.
-
-        // 모달을 닫기
-        //      location.reload();
-
+            // sName, cName, eName 배열에 값 추가
+            cName[i] = certificateInput;
+            sName[i] = mainSkillsInput;
+            eName[i] = educationInput;
+        }
+        // 데이터를 서버로 전송
+        fetch('/user/updateIntroduce', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify([
+                {
+                    "sid": sid[0],
+                    "skillName": sName[0], // 빈 문자열로 초기화
+                    "cid": cid[0],
+                    "certificationName": cName[0], // 빈 문자열로 초기화
+                    "eid": eid[0],
+                    "educationName": eName[0] // 빈 문자열로 초기화
+                },
+                {
+                    "sid": sid[1],
+                    "skillName": sName[1], // 빈 문자열로 초기화
+                    "cid": cid[1],
+                    "certificationName": cName[1], // 빈 문자열로 초기화
+                    "eid": eid[1],
+                    "educationName": eName[1] // 빈 문자열로 초기화
+                },
+                {
+                    "sid": sid[2],
+                    "skillName": sName[2], // 빈 문자열로 초기화
+                    "cid": cid[2],
+                    "certificationName": cName[2], // 빈 문자열로 초기화
+                    "eid": eid[2],
+                    "educationName": eName[2] // 빈 문자열로 초기화
+                }
+            ])
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === 'success') {
+                    alert('저장되었습니다.');
+                    location.reload();
+                    // 성공적으로 업데이트되었을 때의 동작
+                } else {
+                    // 에러가 발생했을 때의 동작
+                }
+            })
+            .catch(error => {
+                // 요청 실패 처리
+            });
     }
 </script>
 

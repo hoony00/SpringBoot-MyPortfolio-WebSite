@@ -5,6 +5,7 @@ import com.hoon.hoonportfolio.CService.CertificationService;
 import com.hoon.hoonportfolio.CService.SkillService;
 import com.hoon.hoonportfolio.CService.UserService;
 import com.hoon.hoonportfolio.DTO.ExplanationRequestDTO;
+import com.hoon.hoonportfolio.DTO.IntroduceDTO;
 import com.hoon.hoonportfolio.DTO.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @SessionAttributes("userExplanation")
@@ -42,9 +44,6 @@ public class UserController {
     private final SkillService skillService;
 
 
-
-
-
     // 이름과 자기소개 가져오기
     @GetMapping("/user/getNameAndExplanation/{email}")
     public String getNameAndExplanation(@PathVariable String email, Model model) {
@@ -61,7 +60,6 @@ public class UserController {
 
         return "layout/newPortfolio";
     }
-
 
 
     // 이미지 업로드 API
@@ -104,7 +102,6 @@ public class UserController {
     }
 
 
-
     @GetMapping("/") // http://localhost
     public String index() { // 홈
 
@@ -117,6 +114,7 @@ public class UserController {
         model.addAttribute("userDTO", new UserDTO());
         return "user/login";
     }
+
     @GetMapping("/user/join") // 회원가입 폼을 표시
     public String showRegistrationForm(Model model) {
         // UserDTO 객체를 사용하여 회원가입 폼을 초기화
@@ -187,22 +185,29 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+
+    //객체를 받아서 업데이트
     @PostMapping("user/updateIntroduce")
-    public ResponseEntity<Map<String, String>> updateIntroduce(@RequestBody ExplanationRequestDTO request) {
+    public ResponseEntity<Map<String, String>> updateIntroduce(@RequestBody List<IntroduceDTO> introduceDto) {
         Map<String, String> response = new HashMap<>();
         try {
-            String email = request.getEmail();
-            String introduce = request.getExplanation();
-
-            // 이메일을 사용하여 사용자의 자기소개 업데이트
-            userService.updateExplanation(email, introduce);
+            for (IntroduceDTO dto : introduceDto) {
+                System.out.println("dto = " + dto);
+                if (dto.getSkillName() == null) {
+                    continue;
+                }
+                System.out.println("introduceDto = " + dto);
+                skillService.updateSkill(dto.getSid(), dto.getSkillName());
+                certificationService.updateCertification(dto.getCid(), dto.getCertificationName());
+                educationService.updateEducation(dto.getEid(), dto.getEducationName());
+            }
             response.put("result", "success");
         } catch (Exception e) {
             response.put("result", "error");
         }
-
         return ResponseEntity.ok(response);
     }
+
 
 
 }
