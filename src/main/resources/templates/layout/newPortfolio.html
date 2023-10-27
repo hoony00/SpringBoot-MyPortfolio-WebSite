@@ -85,7 +85,7 @@
             <form id="uploadForm" th:action="@{/user/uploadProfileImage}" method="post" enctype="multipart/form-data"
                   style="display: flex; align-items: center;">
                 <!-- 파일 선택 input -->
-                <input type="file" id="fileInput" name="file" accept="image/*" required style="flex: 1;">
+                <input type="file" id="fileInput" name="file" accept="image/*" required style="flex: 1;" onchange="fileInput()">
                 <!-- 이메일을 숨겨진 필드로 추가 -->
                 <input type="hidden" id="email" name="email" th:value="${userExplanation.email}" required>
                 <!-- 파일 저장 버튼 -->
@@ -99,6 +99,9 @@
             function getImageSize(img) {
                 console.log(img);
                 var image = document.getElementById(img);
+
+            }
+            function fileInput (){
 
             }
             // 파일 입력란 변경 이벤트 감지
@@ -146,22 +149,41 @@
             <p class="masthead-subheading font-weight-light mb-0" id="explanationText"
                th:text="${userExplanation.explanation}"></p>
         </div>
-        <button id="editButton">수정하기</button>
 
-        <div id="explanationForm" style="display: none;">
-            <form id="updateForm">
-                <div class="form-floating mb-3">
-                    <input class="form-control" id="explanationInput" type="text" size="30"
-                           th:value="${userExplanation.explanation}"/>
-                    <label for="explanationInput">Explain</label>
-                </div>
-                <button type="button" id="cancelButton">취소</button>
-                <button type="button" id="updateButton">저장</button>
-            </form>
+        <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
+
+            <!-- About Section Button (수정하기 버튼) -->
+            <div class="text-center mt-4" id="editButton">
+                <a class="btn btn-xl btn-outline-light" onclick="editExplain()">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    자기소개 수정
+                </a>
+            </div>
+            <div id="explanationForm" style="display: none;">
+                <form id="updateForm">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="explanationInput" type="text" size="30"
+                               th:value="${userExplanation.explanation}"/>
+                        <label for="explanationInput">Explain</label>
+                    </div>
+                    <a class="btn btn-xl btn-outline-light" onclick="cancelButton()">
+                        취소</a>
+                    <a class="btn btn-xl btn-outline-light" onclick="updateButton()">
+                        저장</a>
+                </form>
+            </div>
         </div>
 
 
+
+
         <script>
+            function editExplain() {
+                document.getElementById('explanationText').style.display = 'none';
+                document.getElementById('editButton').style.display = 'none';
+                document.getElementById('explanationForm').style.display = 'block';
+            }
+
             document.getElementById('editButton').addEventListener('click', function () {
                 // "수정하기" 버튼 클릭 시 편집 폼을 표시하고 버튼을 업데이트 버튼으로 변경
                 document.getElementById('explanationText').style.display = 'none';
@@ -169,15 +191,13 @@
                 document.getElementById('explanationForm').style.display = 'block';
             });
 
-            document.getElementById('cancelButton').addEventListener('click', function () {
-                // "취소" 버튼 클릭 시 편집 폼을 숨기고 버튼을 "수정하기"로 변경
+            function cancelButton() {
                 document.getElementById('explanationForm').style.display = 'none';
                 document.getElementById('explanationText').style.display = 'block';
                 document.getElementById('editButton').style.display = 'block';
-            });
+            }
 
-            document.getElementById('updateButton').addEventListener('click', function () {
-                // "저장" 버튼 클릭 시 입력된 설명을 서버로 전송
+            function updateButton() {
                 var newExplanation = document.getElementById('explanationInput').value;
 
                 fetch('/user/updateExplanation', {
@@ -203,7 +223,9 @@
                     .catch(error => {
                         console.error('오류 발생:', error);
                     });
-            });
+            }
+
+
 
         </script>
     </div>
