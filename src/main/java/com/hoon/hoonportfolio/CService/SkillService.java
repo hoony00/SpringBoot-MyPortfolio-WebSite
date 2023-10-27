@@ -61,6 +61,8 @@ public class SkillService {
         return skillNameList;
     }
 
+    // sid와 skillName으로 skill 업데이트
+
 
 
 

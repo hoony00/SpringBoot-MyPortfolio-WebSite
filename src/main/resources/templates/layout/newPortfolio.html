@@ -56,18 +56,18 @@
 <!-- 첫번쨰 섹션 ----------------------------------------->
 <!-- Masthead-->
 <header class="masthead bg-hoon2 text-white text-center">
- <!--   <style>
-        /* CSS로 <header> 태그의 배경 이미지 설정 */
-        header {
-            background-image: url("../../bootstrap/assets/img/portfolio/header.png"); /* 배경 이미지 경로 설정 */
-            background-size: cover; /* 이미지를 <header> 요소에 맞춥니다. */
-            background-repeat: no-repeat; /* 이미지 반복 없음 */
-            background-position: center center; /* 이미지 중앙 정렬 */
-            height: 1000px; /* <header> 높이 조절 (원하는 높이로 설정) */
-            color: white; /* 텍스트 색상 설정 (배경 이미지 위에 텍스트가 잘 보이게) */
-            text-align: center; /* 텍스트 가운데 정렬 */
-        }
-    </style>-->
+    <!--   <style>
+           /* CSS로 <header> 태그의 배경 이미지 설정 */
+           header {
+               background-image: url("../../bootstrap/assets/img/portfolio/header.png"); /* 배경 이미지 경로 설정 */
+               background-size: cover; /* 이미지를 <header> 요소에 맞춥니다. */
+               background-repeat: no-repeat; /* 이미지 반복 없음 */
+               background-position: center center; /* 이미지 중앙 정렬 */
+               height: 1000px; /* <header> 높이 조절 (원하는 높이로 설정) */
+               color: white; /* 텍스트 색상 설정 (배경 이미지 위에 텍스트가 잘 보이게) */
+               text-align: center; /* 텍스트 가운데 정렬 */
+           }
+       </style>-->
     <script>
         // 현재 프로필의 이메일을 전역 변수로 설정
         userEmail = '[[${userExplanation.email}]]';
@@ -78,14 +78,16 @@
         <div id="userExplanation" data-user-explanation="${userExplanation}"></div>
         <div class="col-md-6 col-lg-4 mb-5">
             <!-- 미리보기 이미지를 표시할 img 요소 -->
-            <img id="previewImage" onclick="getImageSize()" class="masthead-avatar mb-5" src="../../bootstrap/assets/img/portfolio/people.png"
+            <img id="previewImage" onclick="getImageSize()" class="masthead-avatar mb-5"
+                 src="../../bootstrap/assets/img/portfolio/people.png"
                  alt="프로필 사진"/>
 
             <div></div>
             <form id="uploadForm" th:action="@{/user/uploadProfileImage}" method="post" enctype="multipart/form-data"
                   style="display: flex; align-items: center;">
                 <!-- 파일 선택 input -->
-                <input type="file" id="fileInput" name="file" accept="image/*" required style="flex: 1;" onchange="fileInput()">
+                <input type="file" id="fileInput" name="file" accept="image/*" required style="flex: 1;"
+                       onchange="fileInput()">
                 <!-- 이메일을 숨겨진 필드로 추가 -->
                 <input type="hidden" id="email" name="email" th:value="${userExplanation.email}" required>
                 <!-- 파일 저장 버튼 -->
@@ -100,7 +102,8 @@
                 var image = document.getElementById(img);
 
             }
-            function fileInput (){
+
+            function fileInput() {
 
             }
 
@@ -178,8 +181,6 @@
         </div>
 
 
-
-
         <script>
             function editExplain() {
                 document.getElementById('explanationText').style.display = 'none';
@@ -229,7 +230,6 @@
             }
 
 
-
         </script>
     </div>
 </header>
@@ -265,7 +265,7 @@
         <!-- 프젝 추가 모달 ----- 프젝 추가 모달 ----------- 프젝 추가 모달 ----------- 프젝 추가 모달 ----------- 프젝 추가 모달 ----------- 프젝 추가 모달 ------------------->
         <!-- 프젝 추가 모달 ----- 프젝 추가 모달 ----------- 프젝 추가 모달 ----------- 프젝 추가 모달 ----------- 프젝 추가 모달 ----------- 프젝 추가 모달 ------------------->
         <div class="modal fade" id="createProjectModal" tabindex="-1" aria-labelledby="createProjectModalLabel"
-             aria-hidden="true" >
+             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -287,7 +287,8 @@
 
                             <div>
                                 <label for="github">Github</label>
-                                <input type="text" class="form-control" id="github" name="projectDTO.github" placeholder="https://github.com/hoony00/SpringBoot-MyPortfolio-WebSite">
+                                <input type="text" class="form-control" id="github" name="projectDTO.github"
+                                       placeholder="https://github.com/hoony00/SpringBoot-MyPortfolio-WebSite">
                             </div>
 
 
@@ -295,7 +296,8 @@
 
                             <div class="form-group">
                                 <label for="projectImage">Main Image</label>
-                                <input type="file" class="form-control-file" id="projectImage" name="projectImage" onchange="checkFileSize(this)">
+                                <input type="file" class="form-control-file" id="projectImage" name="projectImage"
+                                       onchange="checkFileSize(this)">
                             </div>
                             <span id="fileSizeError" style="color: red; display: none;">파일 크기가 너무 큽니다. 1MB 이하의 파일을 업로드해 주세요.</span>
 
@@ -311,10 +313,9 @@
         </div>
 
 
-
-<!-- 모달을 위한 자바스크립트 ----------------->
-<!-- 모달을 위한 자바스크립트 ----------------->
-<!-- 모달을 위한 자바스크립트 ----------------->
+        <!-- 모달을 위한 자바스크립트 ----------------->
+        <!-- 모달을 위한 자바스크립트 ----------------->
+        <!-- 모달을 위한 자바스크립트 ----------------->
         <script>
 
             // 프로젝트 추가 모달을 표시
@@ -322,7 +323,6 @@
                 var myModal = new bootstrap.Modal(document.getElementById('createProjectModal'));
                 myModal.show();
             }
-
 
 
             // 파일 크기를 체크하는 함수
@@ -372,8 +372,8 @@
                             throw new Error("프로젝트 저장에 실패했습니다.");
                         }
                     }).catch((error) => {
-                        alert("오류 발생: " + error);
-                    });
+                    alert("오류 발생: " + error);
+                });
 
 
                 // 모달을 닫습니다.
@@ -543,7 +543,7 @@
             `;
                             projectItem.style.border = '1px solid #ccc'; // 보더 스타일 및 색상을 설정하세요
 
-                           // projectItem.style.marginRight = '1px'; // 원하는 간격(px)을 지정하세요
+                            // projectItem.style.marginRight = '1px'; // 원하는 간격(px)을 지정하세요
 
                             projectList.appendChild(projectItem);
                             // 모달을 동적으로 생성
@@ -559,7 +559,7 @@
             }
         </script>
 
-<!-- 작업공간 ----------------------------------->
+        <!-- 작업공간 ----------------------------------->
 
 
     </div>
@@ -611,16 +611,26 @@
                         if (data && data.length > 0) {
                             // 받아온 스킬 리스트를 ul 요소에 추가
                             certificationList.innerHTML = '';
-                            var i =0;
+                            var i = 0;
                             data.forEach(certification => {
                                 const li = document.createElement('li');
                                 const h5 = document.createElement('h5');
-                                h5.textContent = certification;
+
+                                certificates[i] = certification.slice(0, -1);
+                                cid[i] = certification.slice(-1)
+
+                                h5.textContent = certificates[i];
                                 li.appendChild(h5);
                                 certificationList.appendChild(li);
-                                cid[i] = certification.slice(0, -1).slice(0, -1);
 
-                                document.getElementById('certificateInput'+i).value = cid[i];
+
+                                //null이거나 빈 문자열 처리
+                                if (certificates[i] == null || certificates[i] == "") {
+                                    certificates[i] = "null";
+                                    console.log(certifications[i] + "null");
+                                }
+
+                                document.getElementById('certificateInput' + i).value = certificates[i];
                                 i++;
                             });
                         } else {
@@ -646,90 +656,109 @@
             <script>
                 var skills = [];
                 var sid = [];
-                    // AJAX를 사용하여 "/skill/select" 엔드포인트로 요청을 보냅니다.
-                 const skillsList = document.getElementById('skillsList');
-                    fetch(`/skill/select?email=${userEmail}`)
-                        .then(response => response.json()) // JSON 응답 파싱
-                        .then(data => {
-                            var i = 0;
-                            if (data && data.length > 0) {
-                                // 받아온 스킬 리스트를 ul 요소에 추가
-                                skillsList.innerHTML = '';
-                                data.forEach(skill => {
-                                    const li = document.createElement('li');
-                                    const h5 = document.createElement('h5');
-                                    h5.textContent = skill;
-                                    li.appendChild(h5);
-                                    skillsList.appendChild(li);
+                // AJAX를 사용하여 "/skill/select" 엔드포인트로 요청을 보냅니다.
+                const skillsList = document.getElementById('skillsList');
+                fetch(`/skill/select?email=${userEmail}`)
+                    .then(response => response.json()) // JSON 응답 파싱
+                    .then(data => {
+                        var i = 0;
+                        if (data && data.length > 0) {
+                            // 받아온 스킬 리스트를 ul 요소에 추가
+                            skillsList.innerHTML = '';
+                            data.forEach(skill => {
+                                const li = document.createElement('li');
+                                const h5 = document.createElement('h5');
 
-                                    document.getElementById('Main Skills'+i).value = skill.slice(0, -1);
-                                    i++;
-                                });
-                            } else {
-                                // 스킬 리스트가 비어있는 경우 메시지 표시
-                                skillsList.innerHTML = '<li>No skills found.</li>';
-                            }
-                        })
-                        .catch(error => {
-                            skillsList.innerHTML = '<li>기술스택이 없습니다.</li>';
-                        });
+                                skills[i] = skill.slice(0, -1);
+                                sid[i] = skill.slice(-1)
+                                //null이거나 빈 문자열 처리
+                                if (skills[i] == null || skills[i] == "") {
+                                    skills[i] = "null";
+                                    console.log(skills[i] + "null");
+                                }
+
+                                h5.textContent = skills[i];
+                                li.appendChild(h5);
+                                skillsList.appendChild(li);
+
+                                document.getElementById('Main Skills' + i).value = skills[i];
+                                i++;
+                            });
+                        } else {
+                            // 스킬 리스트가 비어있는 경우 메시지 표시
+                            skillsList.innerHTML = '<li>No skills found.</li>';
+                        }
+                    })
+                    .catch(error => {
+                        skillsList.innerHTML = '<li>기술스택이 없습니다.</li>';
+                    });
             </script>
 
-<div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
-    <!-- 핛력 -->
-    <p class="lead">
-    <h2>Career</h2>
-    <ul id="eduList">
-    </ul>
-    </p>
-</div>
+            <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
+                <!-- 핛력 -->
+                <p class="lead">
+                <h2>Career</h2>
+                <ul id="eduList">
+                </ul>
+                </p>
             </div>
         </div>
+    </div>
 
-        <script>
-            var eid = [];
-            var educations = [];
-            // AJAX를 사용하여 "/education/select" 엔드포인트로 요청을 보냅니다.
-            const educationList = document.getElementById('eduList');
-            fetch(`/education/select?email=${userEmail}`)
-                .then(response => response.json()) // JSON 응답 파싱
-                .then(data => {
-                    var i = 0;
-                    if (data && data.length > 0) {
-                        // 받아온 스킬 리스트를 ul 요소에 추가
-                        educationList.innerHTML = '';
-                        data.forEach(education => {
-                            const li = document.createElement('li');
-                            const h5 = document.createElement('h5');
-                            h5.textContent = education;
-                            li.appendChild(h5);
-                            educationList.appendChild(li);
+    <script>
+        var eid = [];
+        var educations = [];
+        // AJAX를 사용하여 "/education/select" 엔드포인트로 요청을 보냅니다.
+        const educationList = document.getElementById('eduList');
+        fetch(`/education/select?email=${userEmail}`)
+            .then(response => response.json()) // JSON 응답 파싱
+            .then(data => {
+                var i = 0;
+                if (data && data.length > 0) {
+                    // 받아온 스킬 리스트를 ul 요소에 추가
+                    educationList.innerHTML = '';
+                    data.forEach(education => {
+                        const li = document.createElement('li');
+                        const h5 = document.createElement('h5');
 
-                            document.getElementById('Education'+i).value = education.slice(0, -1);
-                            i++;
+                        educations[i] = education.slice(0, -1);
+                        eid[i] = education.slice(-1)
+                        //null이거나 빈 문자열 처리
+                        if (educations[i] == null || educations[i] == "") {
+                            educations[i] = "null";
+                            console.log(educations[i] + "null");
+                        }
+
+                        h5.textContent = educations[i];
+                        li.appendChild(h5);
+                        educationList.appendChild(li);
+
+                        document.getElementById('Education' + i).value = educations[i];
+                        i++;
 
 
-                        });
-                    } else {
-                        // 스킬 리스트가 비어있는 경우 메시지 표시
-                        educationList.innerHTML = '<li>No skills found.</li>';
-                    }
-                })
-                .catch(error => {
-                    educationList.innerHTML = '<li>경력이 없습니다.</li>';
-                });
-        </script>
+                    });
+                } else {
+                    // 스킬 리스트가 비어있는 경우 메시지 표시
+                    educationList.innerHTML = '<li>No skills found.</li>';
+                }
+            })
+            .catch(error => {
+                educationList.innerHTML = '<li>경력이 없습니다.</li>';
+            });
+    </script>
 
-        <!-- About Section Button (수정하기 버튼) -->
-        <div class="text-center mt-4">
-            <a class="btn btn-xl btn-outline-light" onclick="editIntro(userEmail)">
-                <i class="fa-regular fa-pen-to-square"></i>
-                Update
-            </a>
-        </div>
+    <!-- About Section Button (수정하기 버튼) -->
+    <div class="text-center mt-4">
+        <a class="btn btn-xl btn-outline-light" onclick="editIntro(userEmail)">
+            <i class="fa-regular fa-pen-to-square"></i>
+            Update
+        </a>
+    </div>
 
     <!-- 소개 업데이트 모달 -->
-    <div class="modal fade modal-lg" id="updateIntroModal" tabindex="-1" aria-labelledby="updateIntroModalLabel" aria-hidden="true">
+    <div class="modal fade modal-lg" id="updateIntroModal" tabindex="-1" aria-labelledby="updateIntroModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -742,37 +771,46 @@
                             <div class="row">
                                 <h5 class="modal-title2" style=""> Certificate</h5>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="certificateInput0" rows="3" placeholder="정보처리산업기사"></textarea>
+                                    <textarea class="form-control" id="certificateInput0" rows="3"
+                                              placeholder="정보처리산업기사"></textarea>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="certificateInput1" rows="3" placeholder="SQLD"></textarea>
+                                    <textarea class="form-control" id="certificateInput1" rows="3"
+                                              placeholder="SQLD"></textarea>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="certificateInput2" rows="3" placeholder="리눅스 마스터"></textarea>
+                                    <textarea class="form-control" id="certificateInput2" rows="3"
+                                              placeholder="리눅스 마스터"></textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <h5 class="modal-title2" style=""> Main Skills</h5>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="Main Skills0" rows="3" placeholder="Flutter"></textarea>
+                                    <textarea class="form-control" id="Main Skills0" rows="3"
+                                              placeholder="Flutter"></textarea>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="Main Skills1" rows="3" placeholder="SpringBoot"></textarea>
+                                    <textarea class="form-control" id="Main Skills1" rows="3"
+                                              placeholder="SpringBoot"></textarea>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="Main Skills2" rows="3" placeholder="Python"></textarea>
+                                    <textarea class="form-control" id="Main Skills2" rows="3"
+                                              placeholder="Python"></textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <h5 class="modal-title2" style=""> Education</h5>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="Education0" rows="3" placeholder="인하공업전문대학"></textarea>
+                                    <textarea class="form-control" id="Education0" rows="3"
+                                              placeholder="인하공업전문대학"></textarea>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="Education1" rows="3" placeholder="인하대학원"></textarea>
+                                    <textarea class="form-control" id="Education1" rows="3"
+                                              placeholder="인하대학원"></textarea>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="Education2" rows="3" placeholder="Naver 부트캠프"></textarea>
+                                    <textarea class="form-control" id="Education2" rows="3"
+                                              placeholder="Naver 부트캠프"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -780,19 +818,19 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="saveIntroButton" onclick="saveIntro()">Save</button>
+                    <button type="button" class="btn btn-primary" id="saveIntroButton" onclick="saveIntro()">Save
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
 
-
 </section>
 
 <script>
     function editIntro(userEmail) {
-        console.log("editIntro  눌림"+ userEmail);
+        console.log("editIntro  눌림" + userEmail);
         var updateIntroModal = new bootstrap.Modal(document.getElementById('updateIntroModal'));
         updateIntroModal.show();
     }
@@ -800,44 +838,20 @@
     function saveIntro() {
         // 수정된 정보를 포문으로 배열로 가져오기
 
-        var certificates = [];
-        var cid = [];
-        var skills = [];
-        var sid = [];
-        var educations = [];
-        var eid = [];
 
         for (var i = 0; i < 3; i++) {
-            var certificate = document.getElementById('certificateInput' + i).value;
-            var skill = document.getElementById('Main Skills' + i).value;
-            var education = document.getElementById('Education' + i).value;
-            certificates[i] = certificate.slice(0, -1);
-            cid[i] = certificate.slice(-1);
-
-            skills[i] = skill.slice(0, -1);
-            sid[i] = skill.slice(-1);
-            console.log("skills[i]: ", skills[i]);
-            console.log("sid[i]: ", sid[i]);
-
-            educations[i] = education.slice(0, -1);
-            eid[i] = education.slice(-1);
-            console.log("educations[i]: ", educations[i]);
-            console.log("eid[i]: ", eid[i]);
-            // 빈 값은 null 대입
-            if (certificates[i] === '' || certificates[i] === undefined) {
-                certificates[i] = null;
-            }
-
-
-
-
+            console.log("saveIntro  눌림" + i);
+            console.log(sid[i] + " : " + skills[i]);
+            console.log(cid[i] + " : " + certificates[i]);
+            console.log(eid[i] + " : " + educations[i]);
         }
+
 
 
         // 이후 저장 로직을 추가하세요.
 
         // 모달을 닫기
-        location.reload();
+        //      location.reload();
 
     }
 </script>
@@ -1025,7 +1039,7 @@
 
         const div = document.getElementById(modalCounter); // 해당 div 요소를 가져옵니다.
         const proid = div.textContent; // div의 내부 텍스트 값을 가져옵니다.
-        console.log(proid+"삭제");
+        console.log(proid + "삭제");
 
         const confirmation = window.confirm('정말 삭제하시겠습니까?'); // 확인 메시지 표시
 
@@ -1053,7 +1067,6 @@
         }
 
 
-
     }
 
     // 수정하기 버튼 클릭 시
@@ -1073,7 +1086,7 @@
         const cancelButton = document.getElementById('mydescancelButton' + modalCounter);
         const descriptionTextarea = document.getElementById('mydescription' + modalCounter);
         const deleteBtn = document.getElementById('delete' + modalCounter);
-        const gitButton = document.getElementById('mygitButton'+modalCounter);
+        const gitButton = document.getElementById('mygitButton' + modalCounter);
 
         // 텍스트 에리어 수정 가능하도록 변경
         descriptionTextarea.readOnly = false;
@@ -1096,7 +1109,7 @@
         saveButton.addEventListener('click', function () {
             // proid 는 프로젝트 번호
             // descriptionTextarea.value 는 수정된 내용
-            console.log("내용" +descriptionTextarea.value);
+            console.log("내용" + descriptionTextarea.value);
             console.log("번호" + proid);
 
             // API 엔드포인트 정의
@@ -1122,9 +1135,6 @@
                 }).catch((error) => {
                 alert("오류 발생: " + error);
             });
-
-
-
 
 
             // 저장 후 작업 (예: 수정 완료 후 버튼 변경, 텍스트 에리어 읽기 전용으로 변경 등)

@@ -187,5 +187,22 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("user/updateIntroduce")
+    public ResponseEntity<Map<String, String>> updateIntroduce(@RequestBody ExplanationRequestDTO request) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            String email = request.getEmail();
+            String introduce = request.getExplanation();
+
+            // 이메일을 사용하여 사용자의 자기소개 업데이트
+            userService.updateExplanation(email, introduce);
+            response.put("result", "success");
+        } catch (Exception e) {
+            response.put("result", "error");
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
 
 }
