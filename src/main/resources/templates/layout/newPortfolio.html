@@ -4,7 +4,7 @@
     /// todo : 가로세로 비율 맞춰서 자동으로 올라가게 기능 만들기 (가로 1150 세로 770) 가로 1350 세로 1800
     /// todo : 프로젝트 수정, 삭제 만들기
     /// todo : 시큐리티 공부
-    
+
 </script>
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
@@ -157,7 +157,7 @@
                th:text="${userExplanation.explanation}"></p>
         </div>
         <button id="editButton">수정하기</button>
-
+기
         <div id="explanationForm" style="display: none;">
             <form id="updateForm">
                 <div class="form-floating mb-3">
@@ -437,6 +437,7 @@
                             const saveButtonId = 'mydessaveButton' + modalCounter;
                             const cancelButtonId = 'mydescancelButton' + modalCounter;
                             const descriptionTextareaId = 'mydescription' + modalCounter;
+                            const deleteId = 'delete' + modalCounter;
                             const gitButton = 'mygitButton' + modalCounter;
                             const PortfolioInput = 'PortfolioInput' + modalCounter;
                             const projectModal = document.createElement('div');
@@ -455,12 +456,6 @@
 
                             // 프로젝트 아이템을 프로젝트 목록에 추가
                             projectItem.appendChild(projectModal);
-                            projectItem.style.border = '1px solid #ccc'; // 보더 스타일 및 색상을 설정하세요
-                           // projectItem.style.marginRight = '1px'; // 원하는 간격(px)을 지정하세요
-
-                            projectList.appendChild(projectItem);
-
-                            // 모달을 동적으로 생성
                             const modalContent = `
 <div class="portfolio-modal modal fade" id="${modalId}" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
@@ -480,6 +475,10 @@
                                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                 <div class="divider-custom-line"></div>
                             </div>
+                            <button id ="${gitButton}" onclick="window.location.href = '${projectGithub}'" class="btn btn-primary" data-bs-dismiss="modal">
+                                <i class="fa-brands fa-github"></i>
+                                Visit GitHub
+                            </button>
                             <!-- Portfolio Modal - Image -->
                             <img class="img-fluid rounded mb-5" src="${projectImage.src}" id="${PortfolioInput}" />
                             <!-- Portfolio Modal - Text -->
@@ -496,15 +495,20 @@
                                  <i class="fa-regular fa-check-square"></i>
                                     저장하기
                             </button>
-                               <button id="${cancelButtonId}" class="btn btn-danger edit-des" style="display: none;">
+                            <button id="${deleteId}" class="btn btn-danger edit-des" style="display: none;" onclick="deletePort('${modalCounter}')">
+                                 <i class="fa-solid fa-trash"></i>
+                                    삭제
+                            </button>
+
+                               <p></p>
+                            <button id="${cancelButtonId}" class="btn btn-secondary edit-des" style="display: none;">
                                  <i class="fa-regular fa-times-circle"></i>
                                     취소
-                                 </button>
-
-                            <button id ="${gitButton}" onclick="window.location.href = '${projectGithub}'" class="btn btn-primary" data-bs-dismiss="modal">
-                                <i class="fa-brands fa-github"></i>
-                                Visit GitHub
                             </button>
+
+
+
+
                             <div id="${modalCounter}" style="display: none" >${proid}</div>
 
                         </div>
@@ -515,6 +519,12 @@
     </div>
 </div>
             `;
+                            projectItem.style.border = '1px solid #ccc'; // 보더 스타일 및 색상을 설정하세요
+
+                           // projectItem.style.marginRight = '1px'; // 원하는 간격(px)을 지정하세요
+
+                            projectList.appendChild(projectItem);
+                            // 모달을 동적으로 생성
                             // 모달을 HTML에 추가
                             document.body.insertAdjacentHTML('beforeend', modalContent);
 
@@ -532,6 +542,29 @@
 <!-- 작업공간 ----------------------------------->
 <!-- 작업공간 ----------------------------------->
         <script>
+            function deletePort(modalCounter) {
+                const modalId = 'delete' + modalCounter;
+
+                const div = document.getElementById(modalCounter); // 해당 div 요소를 가져옵니다.
+                const proid = div.textContent; // div의 내부 텍스트 값을 가져옵니다.
+                console.log(proid+"삭제");
+
+                const confirmation = window.confirm('정말 삭제하시겠습니까?'); // 확인 메시지 표시
+
+                if (confirmation) {
+                    // 사용자가 확인을 클릭한 경우
+                    console.log(proid + " 삭제됨");
+                    // 여기에 삭제 로직을 추가하세요.
+                } else {
+                    // 사용자가 취소를 클릭한 경우
+                    console.log(proid + " 삭제 취소");
+                    // 삭제 취소 또는 다른 작업을 수행하는 코드를 추가하세요.
+                }
+
+
+
+            }
+
             // 수정하기 버튼 클릭 시
             function edit(modalCounter) {
                 // 수정하기 버튼의 모달 ID를 생성
@@ -548,6 +581,7 @@
                 const saveButton = document.getElementById('mydessaveButton' + modalCounter);
                 const cancelButton = document.getElementById('mydescancelButton' + modalCounter);
                 const descriptionTextarea = document.getElementById('mydescription' + modalCounter);
+                const deleteBtn = document.getElementById('delete' + modalCounter);
                 const gitButton = document.getElementById('mygitButton'+modalCounter);
 
                 // 텍스트 에리어 수정 가능하도록 변경
@@ -557,6 +591,7 @@
                 editButton.style.display = 'none';
                 saveButton.style.display = 'inline';
                 cancelButton.style.display = 'inline';
+                deleteBtn.style.display = 'inline';
                 gitButton.style.display = 'none';
 
                 //커서 이동
@@ -613,6 +648,7 @@
                     saveButton.style.display = 'none';
                     cancelButton.style.display = 'none';
                     gitButton.style.display = 'inline';
+                    deleteBtn.style.display = 'none';
 
                 });
             }
@@ -779,8 +815,8 @@
 <section class="page-section" bg-hoon5 id="contact">
     <div class="container">
         <!-- Contact Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Search Email</h2>
-        <!-- Icon Divider-->
+        <h2 class="page-section-heading text-center text-secondary mb-0">Search Email</h2>
+        <!-- Icon Divider-->기
         <div class="divider-custom">
             <div class="divider-custom-line"></div>
             <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
