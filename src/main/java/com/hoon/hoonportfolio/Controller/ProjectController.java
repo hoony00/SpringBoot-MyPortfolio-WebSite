@@ -39,6 +39,16 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.OK).body(projects);
     }
 
+    @GetMapping("/projects/delete")
+    public ResponseEntity<String> deleteProject(String proid) {
+        try {
+            projectService.deleteProject(proid);
+            return ResponseEntity.ok("프로젝트 삭제 완료");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("프로젝트 삭제 중 오류가 발생했습니다.");
+        }
+    }
+
     @GetMapping("/projects/select")
     public ResponseEntity<List<String>> getProjectsByEmail(String email) {
         List<byte[]> images = projectService.getProjectImagesByEmail(email);

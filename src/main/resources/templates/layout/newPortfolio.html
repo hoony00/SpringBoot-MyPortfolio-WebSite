@@ -81,7 +81,7 @@
             <img id="previewImage" onclick="getImageSize()" class="masthead-avatar mb-5" src="../../bootstrap/assets/img/portfolio/people.png"
                  alt="프로필 사진"/>
 
-
+            <div></div>
             <form id="uploadForm" th:action="@{/user/uploadProfileImage}" method="post" enctype="multipart/form-data"
                   style="display: flex; align-items: center;">
                 <!-- 파일 선택 input -->
@@ -89,12 +89,11 @@
                 <!-- 이메일을 숨겨진 필드로 추가 -->
                 <input type="hidden" id="email" name="email" th:value="${userExplanation.email}" required>
                 <!-- 파일 저장 버튼 -->
-                <button type="submit" id="uploadButton" style="flex: 0;">Update</button>
+                <button type="submit" id="uploadButton" style="flex: 0; display: none">Update</button>
             </form>
             <div id="errorMessage" class="text-danger"></div>
         </div>
 
-        <!-- JavaScript 코드 -->
         <script>
             function getImageSize(img) {
                 console.log(img);
@@ -104,8 +103,10 @@
             function fileInput (){
 
             }
+
             // 파일 입력란 변경 이벤트 감지
             document.getElementById('fileInput').addEventListener('change', function () {
+                var uploadButton = document.getElementById('uploadButton');
                 var fileInput = this;
                 var previewImage = document.getElementById('previewImage');
                 var width = previewImage.naturalWidth; // 이미지의 원본 가로 크기
@@ -121,6 +122,7 @@
                     if (fileSize > maxSize) {
                         errorMessage.textContent = '파일 크기가 너무 큽니다. 1MB 이하의 파일을 업로드해 주세요.';
                         fileInput.value = ''; // 파일 선택 취소
+                        uploadButton.style.display = 'none';
                     } else {
                         errorMessage.textContent = ''; // 에러 메시지 초기화
                     }
@@ -128,6 +130,7 @@
 
                     reader.onload = function (e) {
                         previewImage.src = e.target.result;
+                        uploadButton.style.display = 'block';
                     };
 
                     reader.readAsDataURL(fileInput.files[0]);
@@ -557,121 +560,7 @@
         </script>
 
 <!-- 작업공간 ----------------------------------->
-<!-- 작업공간 ----------------------------------->
-<!-- 작업공간 ----------------------------------->
-<!-- 작업공간 ----------------------------------->
-        <script>
-            function deletePort(modalCounter) {
-                const modalId = 'delete' + modalCounter;
 
-                const div = document.getElementById(modalCounter); // 해당 div 요소를 가져옵니다.
-                const proid = div.textContent; // div의 내부 텍스트 값을 가져옵니다.
-                console.log(proid+"삭제");
-
-                const confirmation = window.confirm('정말 삭제하시겠습니까?'); // 확인 메시지 표시
-
-                if (confirmation) {
-                    // 사용자가 확인을 클릭한 경우
-                    console.log(proid + " 삭제됨");
-                    // 여기에 삭제 로직을 추가하세요.
-                } else {
-                    // 사용자가 취소를 클릭한 경우
-                    console.log(proid + " 삭제 취소");
-                    // 삭제 취소 또는 다른 작업을 수행하는 코드를 추가하세요.
-                }
-
-
-
-            }
-
-            // 수정하기 버튼 클릭 시
-            function edit(modalCounter) {
-                // 수정하기 버튼의 모달 ID를 생성
-                const modalId = 'portfolioModal' + modalCounter;
-
-                // 프로젝트 id 값 받기
-                const div = document.getElementById(modalCounter); // 해당 div 요소를 가져옵니다.
-                const proid = div.textContent; // div의 내부 텍스트 값을 가져옵니다.
-
-
-                // 모달 내의 요소를 조작
-                const modal = document.getElementById(modalId);
-                const editButton = document.getElementById('editDes' + modalCounter);
-                const saveButton = document.getElementById('mydessaveButton' + modalCounter);
-                const cancelButton = document.getElementById('mydescancelButton' + modalCounter);
-                const descriptionTextarea = document.getElementById('mydescription' + modalCounter);
-                const deleteBtn = document.getElementById('delete' + modalCounter);
-                const gitButton = document.getElementById('mygitButton'+modalCounter);
-
-                // 텍스트 에리어 수정 가능하도록 변경
-                descriptionTextarea.readOnly = false;
-
-                // 버튼 표시/숨김 조작
-                editButton.style.display = 'none';
-                saveButton.style.display = 'inline';
-                cancelButton.style.display = 'inline';
-                deleteBtn.style.display = 'inline';
-                gitButton.style.display = 'none';
-
-                //커서 이동
-                descriptionTextarea.focus();
-                const textLength = descriptionTextarea.value.length;
-                descriptionTextarea.setSelectionRange(textLength, textLength);
-
-                console.log("수정하기 버튼 클릭")
-
-                // TODO: 수정 내용 저장 기능 구현
-                saveButton.addEventListener('click', function () {
-                    // proid 는 프로젝트 번호
-                    // descriptionTextarea.value 는 수정된 내용
-                    console.log("내용" +descriptionTextarea.value);
-                    console.log("번호" + proid);
-
-                    // API 엔드포인트 정의
-                    const apiUrl = '/project/update'; // 실제 API 엔드포인트로 대체해야 합니다
-
-                    // 요청 데이터 생성
-                    const requestData = new FormData();
-                    requestData.append('proid', proid);
-                    requestData.append('des', descriptionTextarea.value);
-
-                    // API에 POST 요청 보내기
-                    fetch(apiUrl, {
-                        method: 'POST',
-                        body: requestData,
-                    })
-                        .then((response) => {
-                            if (response.ok) {
-                                console.log("프로젝트 수정 성공!");
-                                location.reload();
-                            } else {
-                                throw new Error("프로젝트 수정 실패.");
-                            }
-                        }).catch((error) => {
-                        alert("오류 발생: " + error);
-                    });
-
-
-
-
-
-                    // 저장 후 작업 (예: 수정 완료 후 버튼 변경, 텍스트 에리어 읽기 전용으로 변경 등)
-                });
-
-                // 취소 버튼 클릭 시 원래 상태로 복구
-                cancelButton.addEventListener('click', function () {
-                    descriptionTextarea.readOnly = true;
-
-                    // 버튼 표시/숨김 조작
-                    editButton.style.display = 'inline';
-                    saveButton.style.display = 'none';
-                    cancelButton.style.display = 'none';
-                    gitButton.style.display = 'inline';
-                    deleteBtn.style.display = 'none';
-
-                });
-            }
-        </script>
 
     </div>
 </section>
@@ -818,12 +707,89 @@
                 Update
             </a>
         </div>
+
+    <!-- 소개 업데이트 모달 -->
+    <div class="modal fade modal-lg" id="updateIntroModal" tabindex="-1" aria-labelledby="updateIntroModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title2" style="">Update Introduce</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body2">
+                    <form id="updateIntroForm">
+                        <div class="mb-3">
+                            <div class="row">
+                                <!-- 3x3 텍스트 에어리어를 생성 -->
+                                <div class="col-md-4 mb-3">
+                                    <textarea class="form-control" id="certificateInput1" rows="3" placeholder="Certificate 1"></textarea>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <textarea class="form-control" id="certificateInput2" rows="3" placeholder="Certificate 2"></textarea>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <textarea class="form-control" id="certificateInput3" rows="3" placeholder="Certificate 3"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <textarea class="form-control" id="certificateInput4" rows="3" placeholder="Certificate 4"></textarea>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <textarea class="form-control" id="certificateInput5" rows="3" placeholder="Certificate 5"></textarea>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <textarea class="form-control" id="certificateInput6" rows="3" placeholder="Certificate 6"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <textarea class="form-control" id="certificateInput7" rows="3" placeholder="Certificate 7"></textarea>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <textarea class="form-control" id="certificateInput8" rows="3" placeholder="Certificate 8"></textarea>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <textarea class="form-control" id="certificateInput9" rows="3" placeholder="Certificate 9"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveIntroButton" onclick="saveIntro()">Save</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+
 </section>
 
 <script>
     function editIntro(userEmail) {
         console.log("editIntro  눌림"+ userEmail);
+        var updateIntroModal = new bootstrap.Modal(document.getElementById('updateIntroModal'));
+        updateIntroModal.show();
+    }
+
+    function saveIntro() {
+        // 수정된 정보를 저장하기 위한 JavaScript 코드
+        var certificate = document.getElementById('certificateInput').value;
+        var skills = document.getElementById('skillsInput').value;
+        var education = document.getElementById('educationInput').value;
+
+        // 이후 저장 로직을 추가하세요.
+        console.log("saveIntro  눌림"+ certificate);
+        console.log("certificate "+ certificate);
+        console.log("skills "+ skills);
+        console.log("education "+ education);
+
+        // 모달을 닫기
+        var updateIntroModal = new bootstrap.Modal(document.getElementById('updateIntroModal'));
+        updateIntroModal.hide();
     }
 </script>
 
@@ -835,7 +801,7 @@
     <div class="container">
         <!-- Contact Section Heading-->
         <h2 class="page-section-heading text-center text-secondary mb-0">Search Email</h2>
-        <!-- Icon Divider-->기
+        <!-- Icon Divider-->
         <div class="divider-custom">
             <div class="divider-custom-line"></div>
             <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
@@ -1005,7 +971,129 @@
             });
     });
 
+    function deletePort(modalCounter) {
+        const modalId = 'delete' + modalCounter;
 
+        const div = document.getElementById(modalCounter); // 해당 div 요소를 가져옵니다.
+        const proid = div.textContent; // div의 내부 텍스트 값을 가져옵니다.
+        console.log(proid+"삭제");
+
+        const confirmation = window.confirm('정말 삭제하시겠습니까?'); // 확인 메시지 표시
+
+        if (confirmation) {
+            // 사용자가 확인을 클릭한 경우제
+            fetch('/projects/delete?proid=' + proid, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        alert("프로젝트 삭제가 완료되었습니다.")
+                        location.reload();
+                    } else {
+                        throw new Error("프로젝트 삭제 실패.");
+                    }
+                }).catch((error) => {
+                alert("오류 발생: " + error);
+            });
+            // 여기에 삭제 로직을 추가하세요.
+        } else {
+            // 삭제 취소 또는 다른 작업을 수행하는 코드를 추가하세요.
+        }
+
+
+
+    }
+
+    // 수정하기 버튼 클릭 시
+    function edit(modalCounter) {
+        // 수정하기 버튼의 모달 ID를 생성
+        const modalId = 'portfolioModal' + modalCounter;
+
+        // 프로젝트 id 값 받기
+        const div = document.getElementById(modalCounter); // 해당 div 요소를 가져옵니다.
+        const proid = div.textContent; // div의 내부 텍스트 값을 가져옵니다.
+
+
+        // 모달 내의 요소를 조작
+        const modal = document.getElementById(modalId);
+        const editButton = document.getElementById('editDes' + modalCounter);
+        const saveButton = document.getElementById('mydessaveButton' + modalCounter);
+        const cancelButton = document.getElementById('mydescancelButton' + modalCounter);
+        const descriptionTextarea = document.getElementById('mydescription' + modalCounter);
+        const deleteBtn = document.getElementById('delete' + modalCounter);
+        const gitButton = document.getElementById('mygitButton'+modalCounter);
+
+        // 텍스트 에리어 수정 가능하도록 변경
+        descriptionTextarea.readOnly = false;
+
+        // 버튼 표시/숨김 조작
+        editButton.style.display = 'none';
+        saveButton.style.display = 'inline';
+        cancelButton.style.display = 'inline';
+        deleteBtn.style.display = 'inline';
+        gitButton.style.display = 'none';
+
+        //커서 이동
+        descriptionTextarea.focus();
+        const textLength = descriptionTextarea.value.length;
+        descriptionTextarea.setSelectionRange(textLength, textLength);
+
+        console.log("수정하기 버튼 클릭")
+
+        // TODO: 수정 내용 저장 기능 구현
+        saveButton.addEventListener('click', function () {
+            // proid 는 프로젝트 번호
+            // descriptionTextarea.value 는 수정된 내용
+            console.log("내용" +descriptionTextarea.value);
+            console.log("번호" + proid);
+
+            // API 엔드포인트 정의
+            const apiUrl = '/project/update'; // 실제 API 엔드포인트로 대체해야 합니다
+
+            // 요청 데이터 생성
+            const requestData = new FormData();
+            requestData.append('proid', proid);
+            requestData.append('des', descriptionTextarea.value);
+
+            // API에 POST 요청 보내기
+            fetch(apiUrl, {
+                method: 'POST',
+                body: requestData,
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        console.log("프로젝트 수정 성공!");
+                        location.reload();
+                    } else {
+                        throw new Error("프로젝트 수정 실패.");
+                    }
+                }).catch((error) => {
+                alert("오류 발생: " + error);
+            });
+
+
+
+
+
+            // 저장 후 작업 (예: 수정 완료 후 버튼 변경, 텍스트 에리어 읽기 전용으로 변경 등)
+        });
+
+        // 취소 버튼 클릭 시 원래 상태로 복구
+        cancelButton.addEventListener('click', function () {
+            descriptionTextarea.readOnly = true;
+
+            // 버튼 표시/숨김 조작
+            editButton.style.display = 'inline';
+            saveButton.style.display = 'none';
+            cancelButton.style.display = 'none';
+            gitButton.style.display = 'inline';
+            deleteBtn.style.display = 'none';
+
+        });
+    }
 
 
     window.onload = function () {

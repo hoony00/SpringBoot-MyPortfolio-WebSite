@@ -73,6 +73,14 @@ public class ProjectService {
 
     }
 
+    //프로젝트 proid로 삭제
+    public void deleteProject(String proid){
+        Optional<Project> project = projectRepository.findById(Long.parseLong(proid));
+        project.ifPresent(selectProject -> {
+            projectRepository.delete(selectProject);
+        });
+    }
+
 
 
 
