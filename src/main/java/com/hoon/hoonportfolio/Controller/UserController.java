@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,17 +32,66 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
     private final UserService userService;
 
-    @Autowired
     private final EducationService educationService;
 
-    @Autowired
     private final CertificationService certificationService;
 
-    @Autowired
     private final SkillService skillService;
+
+    private final PasswordEncoder passwordEncoder;
+
+    @GetMapping("/") //
+    public String index() { // 홈
+        return "index";
+    }
+
+    @GetMapping("/user/login")
+    public String showLoginForm(Model model) {
+        // UserDTO 객체를 사용하여 회원가입 폼을 초기화
+        model.addAttribute("userDTO", new UserDTO());
+        return "user/login";
+    }
+
+    @GetMapping("/user/join") // 회원가입 폼을 표시
+    public String showRegistrationForm(Model model) {
+        // UserDTO 객체를 사용하여 회원가입 폼을 초기화
+        model.addAttribute("userDTO", new UserDTO());
+        return "user/join";
+    }
+
+
+    // 로그아웃
+    @GetMapping("/user/logout")
+    public String logout() {
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/user/joinSuccess")
+    public String registerUser(@ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            // 폼 유효성 검사 오류가 있는 경우 회원가입 폼으로 다시 이동
+            log.info("회원가입 폼에 유효성 검사 오류가 있습니다.");
+            return "user/join";
+        }
+        try {
+            userService.registerNewUser(userDTO, passwordEncoder);
+            educationService.saveEducation(userDTO.getEmail());
+            certificationService.saveCertification(userDTO.getEmail());
+            skillService.saveSkill(userDTO.getEmail());
+            // 회원가입 성공 시 로그인 페이지로 리다이렉트
+            model.addAttribute("userExplanation", userDTO.getEmail());
+            System.out.println("회원가입 성공 -> 이메일 : " + userDTO.getEmail());
+            // 회원가입 성공 시 로그인 페이지로 리다이렉트
+            return "alert/suc";
+        } catch (IllegalStateException e) {
+            // 회원가입 중 오류 발생 시 오류 메시지와 함께 회원가입 폼으로 다시 이동
+            model.addAttribute("errorMessage", e.getMessage());
+            return "user/join";
+        }
+    }
 
 
     // 이름과 자기소개 가져오기
@@ -102,26 +152,6 @@ public class UserController {
     }
 
 
-    @GetMapping("/") // http://localhost
-    public String index() { // 홈
-
-        return "index";
-    }
-
-    @GetMapping("/user/login") // 회원가입 폼을 표시
-    public String showLoginForm(Model model) {
-        // UserDTO 객체를 사용하여 회원가입 폼을 초기화
-        model.addAttribute("userDTO", new UserDTO());
-        return "user/login";
-    }
-
-    @GetMapping("/user/join") // 회원가입 폼을 표시
-    public String showRegistrationForm(Model model) {
-        // UserDTO 객체를 사용하여 회원가입 폼을 초기화
-        model.addAttribute("userDTO", new UserDTO());
-        return "user/join";
-    }
-
     @GetMapping("/user/checkUser")
     public ResponseEntity<String> checkUser(@RequestParam("email") String email) {
         if (userService.isEmailExist(email)) {
@@ -136,37 +166,6 @@ public class UserController {
     }
 
 
-    @PostMapping("/user/joinSuccess")
-    public String registerUser(@ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            // 폼 유효성 검사 오류가 있는 경우 회원가입 폼으로 다시 이동
-            log.info("회원가입 폼에 유효성 검사 오류가 있습니다.");
-            return "user/join";
-        }
-        try {
-            userService.registerNewUser(userDTO);
-            educationService.saveEducation(userDTO.getEmail());
-            certificationService.saveCertification(userDTO.getEmail());
-            skillService.saveSkill(userDTO.getEmail());
-            // 회원가입 성공 시 로그인 페이지로 리다이렉트
-            model.addAttribute("userExplanation", userDTO.getEmail());
-            System.out.println("회원가입 성공 -> 이메일 : " + userDTO.getEmail());
-            // 회원가입 성공 시 로그인 페이지로 리다이렉트
-            return "alert/suc";
-        } catch (IllegalStateException e) {
-            // 회원가입 중 오류 발생 시 오류 메시지와 함께 회원가입 폼으로 다시 이동
-            model.addAttribute("errorMessage", e.getMessage());
-            return "user/join";
-        }
-    }
-
-
-    // 로그아웃
-    @GetMapping("/user/logout")
-    public String logout() {
-
-        return "redirect:/";
-    }
 
     @PostMapping("user/updateExplanation")
     public ResponseEntity<Map<String, String>> updateExplanation(@RequestBody ExplanationRequestDTO request) {
@@ -207,7 +206,6 @@ public class UserController {
         }
         return ResponseEntity.ok(response);
     }
-
 
 
 }

@@ -6,6 +6,11 @@ import com.hoon.hoonportfolio.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +27,8 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService  {
 
-    @Autowired
     private final UserRepository userRepository;
 
 
@@ -115,7 +119,7 @@ public class UserService {
 
 
 
-    public void registerNewUser(UserDTO userDTO) throws IllegalStateException {
+    public void registerNewUser(UserDTO userDTO, PasswordEncoder passwordEncoder) throws IllegalStateException {
         if (userDTO.getName().isEmpty() || userDTO.getEmail().isEmpty() || userDTO.getPassword().isEmpty() || userDTO.getPwcheck().isEmpty() || userDTO.getExplanation().isEmpty()) {
             throw new IllegalStateException("모든 항목을 입력해주세요.");
         }
@@ -143,12 +147,26 @@ public class UserService {
             UserEntity user = UserEntity.builder()
                     .name(userDTO.getName())
                     .email(userDTO.getEmail())
-                    .password(userDTO.getPassword())
+                    .password(passwordEncoder.encode(userDTO.getPassword()))
                     .explanation(userDTO.getExplanation())
                     .build();
 
             userRepository.save(user);
 
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity member = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("해당 사용자가 없습니다."));
+        log.info("현재 로그인 시도 사용자 --->" + member);
+
+        return User.builder()
+                .username(member.getEmail())
+                // 스프링 시큐리티에서 암호를 넣을 땐 꼭 암호화를 넣어야 함 -> 사용자가 입력한 비밀번호를 자동으로 암호화해서 비교함
+                .password(member.getPassword())
+                .build();
     }
 
 

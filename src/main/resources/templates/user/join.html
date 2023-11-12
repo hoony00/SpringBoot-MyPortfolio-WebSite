@@ -51,13 +51,9 @@
                 <!-- Contact Section Form-->
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-xl-7">
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- * * SB Forms Contact Form * *-->
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- This form is pre-integrated with SB Forms.-->
-                        <!-- To make this form functional, sign up at-->
-                        <!-- https://startbootstrap.com/solution/contact-forms-->
-                        <!-- to get an API token!-->
+                        <!-- 회원가입 폼 ------>
+
+
                         <form action="/user/joinSuccess" method="post" th:object="${userDTO}">
                             <!-- 에러 메시지 표시 -->
                             <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
@@ -101,7 +97,7 @@
                                 <label for="explain">Explain</label>
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('explanation')}" th:errors="*{explanation}"></div>
                             </div>
-
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                             <!-- Submit Button -->
                             <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Register</button>
                         </form>
