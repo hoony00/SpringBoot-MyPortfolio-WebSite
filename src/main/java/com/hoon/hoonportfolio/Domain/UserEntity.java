@@ -1,5 +1,6 @@
 package com.hoon.hoonportfolio.Domain;
 
+import com.hoon.hoonportfolio.constant.Role;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,11 +40,15 @@ public class UserEntity {
     @OneToMany(mappedBy = "user")
     private List<Certification> certifications;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
 
 
     @Builder
-    public UserEntity(String name, String email, String password, String explanation) {
+    public UserEntity(String name, Role role, String email, String password, String explanation) {
         this.name = name;
+        this.role = role;
         this.email = email;
         this.password = password;
         this.explanation = explanation;

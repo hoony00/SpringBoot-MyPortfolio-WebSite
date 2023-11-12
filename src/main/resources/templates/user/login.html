@@ -55,7 +55,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-xl-7">
                         <!-- email을 가지고 user/new/+email 로 이동 -->
-                        <form th:action="@{'/user/loginAction/' + ${email}}" method="get" th:object="${userDTO}">
+                        <form action="/user/login" method="post" th:object="${userDTO}">
                             <!-- 에러 메시지 표시 -->
                             <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
 
@@ -74,9 +74,9 @@
                                 <label for="password">Password</label>
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                             </div>
-
                             <!-- Submit Button -->
                             <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Login</button>
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                         </form>
 
                     </div>

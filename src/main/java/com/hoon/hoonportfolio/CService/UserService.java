@@ -3,6 +3,7 @@ package com.hoon.hoonportfolio.CService;
 import com.hoon.hoonportfolio.DTO.UserDTO;
 import com.hoon.hoonportfolio.Domain.UserEntity;
 import com.hoon.hoonportfolio.Repository.UserRepository;
+import com.hoon.hoonportfolio.constant.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,10 +150,9 @@ public class UserService implements UserDetailsService  {
                     .email(userDTO.getEmail())
                     .password(passwordEncoder.encode(userDTO.getPassword()))
                     .explanation(userDTO.getExplanation())
+                    .role(Role.USER)
                     .build();
-
             userRepository.save(user);
-
     }
 
 
@@ -166,6 +166,7 @@ public class UserService implements UserDetailsService  {
 
         return User.builder()
                 .username(member.getEmail())
+                .roles("USER")
                 // 스프링 시큐리티에서 암호를 넣을 땐 꼭 암호화를 넣어야 함 -> 사용자가 입력한 비밀번호를 자동으로 암호화해서 비교함
                 .password(member.getPassword())
                 .build();

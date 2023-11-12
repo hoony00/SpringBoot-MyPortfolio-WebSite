@@ -121,12 +121,15 @@ public class UserController {
         return "layout/newPortfolio";
     }
 
-    @GetMapping("/user/loginAction/{email}")
-    public String getSelect(@RequestParam String email, Model model) {
-        model.addAttribute("userExplanation", userService.getNameAndExplanation(email));
+   @GetMapping("/user/loginAction")
+    public String getSelect( Model model, Authentication authentication) {
+       if (authentication != null) {
+           String email = authentication.getName();
+           model.addAttribute("userExplanation", userService.getNameAndExplanation(email));
+       }
 
+       return "layout/newPortfolio";
 
-        return "layout/newPortfolio";
     }
 
 

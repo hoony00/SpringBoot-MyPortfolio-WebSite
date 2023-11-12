@@ -206,12 +206,13 @@
                 fetch('/user/updateExplanation', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({explanation: newExplanation, email: userEmail}) // 이메일과 설명 데이터 전송
                 })
                     .then(response => response.json())
                     .then(result => {
+                        console.log("업데이트 결과:", result.result);
                         // 업데이트 결과 처리
                         if (result.result === 'success') {
                             console.log("업데이트 성공");
