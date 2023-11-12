@@ -160,7 +160,9 @@ public class UserService implements UserDetailsService  {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserEntity member = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("해당 사용자가 없습니다."));
+        log.info("=============================");
         log.info("현재 로그인 시도 사용자 --->" + member);
+        log.info("=============================");
 
         return User.builder()
                 .username(member.getEmail())

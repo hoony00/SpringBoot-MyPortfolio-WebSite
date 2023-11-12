@@ -7,6 +7,8 @@ import com.hoon.hoonportfolio.CService.UserService;
 import com.hoon.hoonportfolio.DTO.ExplanationRequestDTO;
 import com.hoon.hoonportfolio.DTO.IntroduceDTO;
 import com.hoon.hoonportfolio.DTO.UserDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,6 +49,10 @@ public class UserController {
 
     @GetMapping("/") //
     public String index() { // 홈
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            log.info("루트 authentication.getName() : " + authentication.getName());
+        }
         return "index";
     }
 
@@ -64,8 +73,13 @@ public class UserController {
 
     // 로그아웃
     @GetMapping("/user/logout")
-    public String logout() {
-
+    public String performLogout(HttpServletRequest request, HttpServletResponse response) {
+        // .. perform logout
+        log.info("===============> logout");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        }
         return "redirect:/";
     }
 
@@ -98,15 +112,19 @@ public class UserController {
     @GetMapping("/user/getNameAndExplanation/{email}")
     public String getNameAndExplanation(@PathVariable String email, Model model) {
         System.out.println("가져온 이메일: " + email);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            log.info("authentication.getName() : " + authentication.getName());
+        }
         model.addAttribute("userExplanation", userService.getNameAndExplanation(email));
 
         return "layout/newPortfolio";
     }
 
-    @GetMapping("/user/new/{email}")
+    @GetMapping("/user/loginAction/{email}")
     public String getSelect(@RequestParam String email, Model model) {
-        System.out.println("새로운 계정 이메일: " + email);
         model.addAttribute("userExplanation", userService.getNameAndExplanation(email));
+
 
         return "layout/newPortfolio";
     }

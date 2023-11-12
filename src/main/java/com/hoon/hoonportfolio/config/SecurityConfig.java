@@ -19,7 +19,7 @@ public class SecurityConfig {
         http.formLogin(form -> form
                 .loginPage("/user/login") // 로그인 페이지
                 .defaultSuccessUrl("/") // 로그인 성공 후 이동 페이지
-                .failureUrl("/member/login/error")
+                .failureUrl("/user/login/error")
                 .usernameParameter("email") // 로그인 페이지의 아이디 파라미터
                 .passwordParameter("password") // 로그인 페이지의 비밀번호 파라미터
                 .permitAll() //모든 사용자가 접근할 수 있음
@@ -31,7 +31,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(request -> request // 인가 정책
                 // 루트와 /member/** 경로는 모든 사용자가 접근 가능
                 .requestMatchers("/bootstrap/**").permitAll()
-                .requestMatchers("/", "/user/**", "/layout/**", "/images/**").permitAll()
+                .requestMatchers("/", "/other-public-pages", "/user/**", "/layout/**", "/images/**").permitAll()
                 .anyRequest().authenticated()); //authorizeHttpRequests
 
 
