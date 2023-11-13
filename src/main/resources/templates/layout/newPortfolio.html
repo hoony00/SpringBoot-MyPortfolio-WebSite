@@ -619,11 +619,25 @@
                                 cName[i] = certification.slice(0, -1);
                                 cid[i] = certification.slice(-1)
 
-                                h5.textContent = cName[i];
-                                li.appendChild(h5);
-                                certificationList.appendChild(li);
+                                console.log("cid----")
+                                console.log(cid[i]);
 
-                                document.getElementById('certificateInput' + i).value = cName[i];
+                                h5.textContent = cName[i];
+
+                                if (!(h5.textContent === "" || h5.textContent == null || h5.textContent === " ")) {
+                                    li.appendChild(h5);
+                                    certificationList.appendChild(li);
+
+                                    if (cName[i] === "" || cName[i] == null || cName[i] === undefined || cName[i] === " ") {
+                                        document.getElementById('certificateInput' + i).value = ' ';
+                                    }else{
+                                        document.getElementById('certificateInput' + i).value = cName[i];
+                                    }
+                                } else {
+                                    // h5.textContent가 비어있는 경우 li를 추가하지 않음
+                                    console.log("Skipping empty h5 certification");
+                                }
+
                                 i++;
                             });
                         } else {
@@ -655,6 +669,7 @@
                     .then(response => response.json()) // JSON 응답 파싱
                     .then(data => {
                         var i = 0;
+                        console.log(userEmail+ " 님의데이터 ");
                         if (data && data.length > 0) {
                             // 받아온 스킬 리스트를 ul 요소에 추가
                             skillsList.innerHTML = '';
@@ -665,12 +680,25 @@
                                 sName[i] = skill.slice(0, -1);
                                 sid[i] = skill.slice(-1)
 
+                                console.log("sid----")
+                                console.log(sid[i]);
+
 
                                 h5.textContent = sName[i];
-                                li.appendChild(h5);
-                                skillsList.appendChild(li);
+                                if (!(h5.textContent === "" || h5.textContent == null || h5.textContent === " ")) {
+                                    li.appendChild(h5);
+                                    skillsList.appendChild(li);
 
-                                document.getElementById('Main Skills' + i).value = sName[i];
+                                    if (sName[i] === "" || sName[i] == null || sName[i] === undefined || sName[i] === " ") {
+                                        document.getElementById('Main Skills' + i).value = ' ';
+                                    }else{
+                                        document.getElementById('Main Skills' + i).value = sName[i];
+                                    }
+                                } else {
+                                    // h5.textContent가 비어있는 경우 li를 추가하지 않음
+                                    console.log("Skipping empty h5. Main Skills");
+                                }
+
                                 i++;
                             });
                         } else {
@@ -713,11 +741,25 @@
                         eName[i] = education.slice(0, -1);
                         eid[i] = education.slice(-1)
 
-                        h5.textContent = eName[i];
-                        li.appendChild(h5);
-                        educationList.appendChild(li);
+                        console.log("eid----")
+                        console.log(eid[i]);
 
-                        document.getElementById('Education' + i).value = eName[i];
+
+                        h5.textContent = eName[i];
+                        if (!(h5.textContent === "" || h5.textContent == null || h5.textContent === " ")) {
+                            li.appendChild(h5);
+                            educationList.appendChild(li);
+
+                            if (eName[i] === "" || eName[i] == null || eName[i] === undefined || eName[i] === " ") {
+                                document.getElementById('Education' + i).value = ' ';
+                            }else{
+                                document.getElementById('Education' + i).value = eName[i];
+                            }
+                        } else {
+                            // h5.textContent가 비어있는 경우 li를 추가하지 않음
+                            console.log("Skipping empty h5. Education");
+                        }
+
                         i++;
 
 
@@ -820,24 +862,29 @@
     }
 
     function saveIntro() {
-        // 사용자가 입력한 데이터를 JavaScript 변수에 저장
-        for (var i = 0; i < 3; i++) {
-            console.log("saveIntro  눌림" + i);
-            console.log("sid"+ sid[i] + "번 : " + sName[i]);
-            console.log("cid"+cid[i] + "번 : " + cName[i]);
-            console.log("eid"+eid[i] + "번 : " + eName[i]);
-        }
+        let i;
+        let j;
+// 사용자가 입력한 데이터를 JavaScript 변수에 저장
+        for (i = 0; i < 3; i++) {
+            console.log("sid "+ sid[i] + "번 : " + sName[i]);
+            console.log("cid "+cid[i] + "번 : " + cName[i]);
+            console.log("eid "+eid[i] + "번 : " + eName[i]);
 
-        for (var i = 0; i < 3; i++) {
             var certificateInput = document.getElementById('certificateInput' + i).value;
             var mainSkillsInput = document.getElementById('Main Skills' + i).value;
             var educationInput = document.getElementById('Education' + i).value;
 
+
+            console.log(i+"번째 입력값 : " + certificateInput + " " + mainSkillsInput + " " + educationInput);
             // sName, cName, eName 배열에 값 추가
             cName[i] = certificateInput;
+            console.log(cName[i])
             sName[i] = mainSkillsInput;
+            console.log(sName[i])
             eName[i] = educationInput;
+            console.log(eName[i])
         }
+
         // 데이터를 서버로 전송
         fetch('/user/updateIntroduce', {
             method: 'POST',
@@ -878,6 +925,8 @@
                     location.reload();
                     // 성공적으로 업데이트되었을 때의 동작
                 } else {
+                    console.log("에러발생")
+                    console.error(data.message);
                     // 에러가 발생했을 때의 동작
                 }
             })

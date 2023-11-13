@@ -34,8 +34,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(request -> request // 인가 정책
                 // 루트와 /member/** 경로는 모든 사용자가 접근 가능
 
-                .requestMatchers("/bootstrap/**").permitAll()
-                .requestMatchers("/", "/other-public-pages", "/user/**", "/layout/**", "/images/**").permitAll()
+                .requestMatchers("/bootstrap/**", "/js/**").permitAll()
+                .requestMatchers("/",  "/user/**", "/layout/**", "/images/**").permitAll()
                 .anyRequest().authenticated()); //authorizeHttpRequests
 
         http.csrf(AbstractHttpConfigurer::disable);

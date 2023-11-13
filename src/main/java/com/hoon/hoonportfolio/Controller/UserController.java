@@ -49,10 +49,7 @@ public class UserController {
 
     @GetMapping("/") //
     public String index() { // 홈
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            log.info("루트 authentication.getName() : " + authentication.getName());
-        }
+
         return "index";
     }
 
@@ -212,11 +209,8 @@ public class UserController {
         Map<String, String> response = new HashMap<>();
         try {
             for (IntroduceDTO dto : introduceDto) {
-                System.out.println("dto = " + dto);
-                if (dto.getSkillName() == null) {
-                    continue;
-                }
-                System.out.println("introduceDto = " + dto);
+
+                System.out.println("받은 데이터 = " + dto);
                 skillService.updateSkill(dto.getSid(), dto.getSkillName());
                 certificationService.updateCertification(dto.getCid(), dto.getCertificationName());
                 educationService.updateEducation(dto.getEid(), dto.getEducationName());

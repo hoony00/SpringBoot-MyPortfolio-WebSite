@@ -53,9 +53,6 @@ public class SkillService {
         List<Skill> skillList = skillRepository.findAllByUserEmail(email);
         List<String> skillNameList = new ArrayList<>();
         for (Skill skill : skillList) {
-            if(skill.getSkillName().equals(" ") || skill.getSkillName().equals("")){
-                continue;
-            }
             skillNameList.add(skill.getSkillName()+skill.getSid());
         }
         return skillNameList;
