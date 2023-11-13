@@ -53,11 +53,10 @@ public class CertificationService {
         List<Certification> cerficationList = certificationRepository.findAllByUserEmail(email);
         List<String> CerNameList = new ArrayList<>();
         for (Certification certification : cerficationList) {
-            //빈 문자열이나 Null 값이 들어오면 추가하지않음
-      /*      if(certification.getCerName().equals(" ") || certification.getCerName().equals("")){
-                continue;
-            }*/
-            CerNameList.add(certification.getCerName()+certification.getCerid());
+            CerNameList.add(String.valueOf(certification.getCerid()));
+        }
+        for(Certification certification : cerficationList) {
+            CerNameList.add(certification.getCerName());
         }
 
         return CerNameList;

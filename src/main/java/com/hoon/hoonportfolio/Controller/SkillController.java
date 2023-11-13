@@ -23,15 +23,13 @@ public class SkillController {
     @GetMapping("/skill/select")
     public ResponseEntity<List<String>> selectCertifications(String email) {
         List<String> skillList = skillService.findSkillByEmail(email);
+        System.out.println("skllList =========== " + skillList);
+            // 최대 3개의 항목만 선택==============
 
-        if (skillList.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        } else {
-            // 최대 3개의 항목만 선택
-            int maxCount = Math.min(3, skillList.size());
-            List<String> selectedSkills = skillList.subList(0, maxCount);
-            return ResponseEntity.ok(selectedSkills);
-        }
+
+
+            return ResponseEntity.ok(skillList);
+
     }
 
 

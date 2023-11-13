@@ -55,6 +55,11 @@ public class UserController {
 
     @GetMapping("/user/login")
     public String showLoginForm(Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null){
+            log.info("로그인 페이지에서 authentication.getName() : " + authentication.getName());
+        }
         // UserDTO 객체를 사용하여 회원가입 폼을 초기화
         model.addAttribute("userDTO", new UserDTO());
         return "user/login";
@@ -111,7 +116,7 @@ public class UserController {
         System.out.println("가져온 이메일: " + email);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
-            log.info("authentication.getName() : " + authentication.getName());
+            log.info("이메일 검색에서 authentication.getName() : " + authentication.getName());
         }
         model.addAttribute("userExplanation", userService.getNameAndExplanation(email));
 

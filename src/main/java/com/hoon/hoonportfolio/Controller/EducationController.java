@@ -22,14 +22,11 @@ public class EducationController {
     @GetMapping("/education/select")
     public ResponseEntity<List<String>> selectSkill(String email){
         List<String> educationList = educationService.findEducationByEmail(email);
-        if(educationList.isEmpty()){
-            return ResponseEntity.noContent().build();
-        }else{
-            int maxCount = Math.min(3, educationList.size());
-            List<String> selectedEducation = educationList.subList(0, maxCount);
+        System.out.println("educationList =========== " + educationList);
 
-        return ResponseEntity.ok(selectedEducation);
-        }
+
+        return ResponseEntity.ok(educationList);
+
 
     }
 

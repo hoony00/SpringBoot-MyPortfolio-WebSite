@@ -613,8 +613,6 @@
             </div>
 
             <script>
-
-
                 var cName = [];
                 var cid = [];
 
@@ -633,30 +631,28 @@
                                 const li = document.createElement('li');
                                 const h5 = document.createElement('h5');
 
-                                cName[i] = certification.slice(0, -1);
-                                cid[i] = certification.slice(-1)
+                                cid[i] = certification
 
-                                console.log("cid==>")
-                                console.log(cid[i]);
+                                if (i > 2) {
+                                    h5.textContent = cid[i];
+                                    if (!(h5.textContent === "" || h5.textContent == null)) {
+                                        li.appendChild(h5);
+                                        certificationList.appendChild(li);
 
-                                h5.textContent = cName[i];
-
-                                if (!(h5.textContent === "" || h5.textContent == null || h5.textContent === " ")) {
-                                    li.appendChild(h5);
-                                    certificationList.appendChild(li);
-
-                                    if (cName[i] === "" || cName[i] == null || cName[i] === undefined || cName[i] === " ") {
-                                        document.getElementById('certificateInput' + i).value = ' ';
-                                    }else{
-                                        document.getElementById('certificateInput' + i).value = cName[i];
+                                        if (cid[i] === "" || cid[i] == null || cid[i] === undefined || cid[i] === " ") {
+                                            document.getElementById('certificateInput' + i).value = ' ';
+                                        } else {
+                                            document.getElementById('certificateInput' + i).value = cid[i];
+                                        }
+                                    } else {
+                                        // h5.textContent가 비어있는 경우 li를 추가하지 않음
+                                        console.log("Skipping empty h5. Main Skills");
                                     }
-                                } else {
-                                    // h5.textContent가 비어있는 경우 li를 추가하지 않음
-                                    console.log("Skipping empty h5 certification");
                                 }
 
                                 i++;
                             });
+
                         } else {
                             // 스킬 리스트가 비어있는 경우 메시지 표시
                             certificationList.innerHTML = '<li>No certificate found.</li>';
@@ -686,7 +682,6 @@
                     .then(response => response.json()) // JSON 응답 파싱
                     .then(data => {
                         var i = 0;
-                        console.log(userEmail+ " 님의데이터 ");
                         if (data && data.length > 0) {
                             // 받아온 스킬 리스트를 ul 요소에 추가
                             skillsList.innerHTML = '';
@@ -694,26 +689,23 @@
                                 const li = document.createElement('li');
                                 const h5 = document.createElement('h5');
 
-                                sName[i] = skill.slice(0, -1);
-                                sid[i] = skill.slice(-1)
+                                sid[i] = skill
 
-                                console.log("sid==>")
-                                console.log(sid[i]);
+                                if (i > 2) {
+                                    h5.textContent = sid[i];
+                                    if (!(h5.textContent === "" || h5.textContent == null)) {
+                                        li.appendChild(h5);
+                                        skillsList.appendChild(li);
 
-
-                                h5.textContent = sName[i];
-                                if (!(h5.textContent === "" || h5.textContent == null || h5.textContent === " ")) {
-                                    li.appendChild(h5);
-                                    skillsList.appendChild(li);
-
-                                    if (sName[i] === "" || sName[i] == null || sName[i] === undefined || sName[i] === " ") {
-                                        document.getElementById('Main Skills' + i).value = ' ';
-                                    }else{
-                                        document.getElementById('Main Skills' + i).value = sName[i];
+                                        if (sid[i] === "" || sid[i] == null || sid[i] === undefined || sid[i] === " ") {
+                                            document.getElementById('Main Skills' + i).value = ' ';
+                                        } else {
+                                            document.getElementById('Main Skills' + i).value = sid[i];
+                                        }
+                                    } else {
+                                        // h5.textContent가 비어있는 경우 li를 추가하지 않음
+                                        console.log("Skipping empty h5. Main Skills");
                                     }
-                                } else {
-                                    // h5.textContent가 비어있는 경우 li를 추가하지 않음
-                                    console.log("Skipping empty h5. Main Skills");
                                 }
 
                                 i++;
@@ -755,31 +747,27 @@
                         const li = document.createElement('li');
                         const h5 = document.createElement('h5');
 
-                        eName[i] = education.slice(0, -1);
-                        eid[i] = education.slice(-1)
+                        eid[i] = education
 
-                        console.log("eid==>")
-                        console.log(eid[i]);
+                        if (i > 2) {
+                            console.log("if문 eid==>" + eid[i])
+                            h5.textContent = eid[i];
+                            if (!(h5.textContent === "" || h5.textContent == null)) {
+                                li.appendChild(h5);
+                                educationList.appendChild(li);
 
-
-                        h5.textContent = eName[i];
-                        if (!(h5.textContent === "" || h5.textContent == null || h5.textContent === " ")) {
-                            li.appendChild(h5);
-                            educationList.appendChild(li);
-
-                            if (eName[i] === "" || eName[i] == null || eName[i] === undefined || eName[i] === " ") {
-                                document.getElementById('Education' + i).value = ' ';
-                            }else{
-                                document.getElementById('Education' + i).value = eName[i];
+                                if (eid[i] === "" || eid[i] == null || eid[i] === undefined || eid[i] === " ") {
+                                    document.getElementById('Education' + i).value = ' ';
+                                } else {
+                                    document.getElementById('Education' + i).value = eid[i];
+                                }
+                            } else {
+                                // h5.textContent가 비어있는 경우 li를 추가하지 않음
+                                console.log("Skipping empty h5. Education");
                             }
-                        } else {
-                            // h5.textContent가 비어있는 경우 li를 추가하지 않음
-                            console.log("Skipping empty h5. Education");
                         }
 
                         i++;
-
-
                     });
                 } else {
                     // 스킬 리스트가 비어있는 경우 메시지 표시
@@ -814,45 +802,45 @@
                             <div class="row">
                                 <h5 class="modal-title2" style=""> Certificate</h5>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="certificateInput0" rows="3"
+                                    <textarea class="form-control" id="certificateInput3" rows="3"
                                               placeholder="정보처리산업기사"></textarea>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="certificateInput1" rows="3"
+                                    <textarea class="form-control" id="certificateInput4" rows="3"
                                               placeholder="SQLD"></textarea>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="certificateInput2" rows="3"
+                                    <textarea class="form-control" id="certificateInput5" rows="3"
                                               placeholder="리눅스 마스터"></textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <h5 class="modal-title2" style=""> Main Skills</h5>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="Main Skills0" rows="3"
+                                    <textarea class="form-control" id="Main Skills3" rows="3"
                                               placeholder="Flutter"></textarea>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="Main Skills1" rows="3"
+                                    <textarea class="form-control" id="Main Skills4" rows="3"
                                               placeholder="SpringBoot"></textarea>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="Main Skills2" rows="3"
+                                    <textarea class="form-control" id="Main Skills5" rows="3"
                                               placeholder="Python"></textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <h5 class="modal-title2" style=""> Education</h5>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="Education0" rows="3"
+                                    <textarea class="form-control" id="Education3" rows="3"
                                               placeholder="인하공업전문대학"></textarea>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="Education1" rows="3"
+                                    <textarea class="form-control" id="Education4" rows="3"
                                               placeholder="인하대학원"></textarea>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <textarea class="form-control" id="Education2" rows="3"
+                                    <textarea class="form-control" id="Education5" rows="3"
                                               placeholder="Naver 부트캠프"></textarea>
                                 </div>
                             </div>
@@ -879,27 +867,25 @@
     }
 
     function saveIntro() {
-        let i;
-        let j;
 // 사용자가 입력한 데이터를 JavaScript 변수에 저장
-        for (i = 0; i < 3; i++) {
-            console.log("sid "+ sid[i] + "번 : " + sName[i]);
-            console.log("cid "+cid[i] + "번 : " + cName[i]);
-            console.log("eid "+eid[i] + "번 : " + eName[i]);
+        for (i = 3; i < 6; i++) {
+            console.log("sid "+ sid[i-3] + "번 : " + sid[i]);
+            console.log("cid "+cid[i-3] + "번 : " + cid[i]);
+            console.log("eid "+eid[i-3] + "번 : " + eid[i]);
 
             var certificateInput = document.getElementById('certificateInput' + i).value;
             var mainSkillsInput = document.getElementById('Main Skills' + i).value;
             var educationInput = document.getElementById('Education' + i).value;
 
 
-            console.log(i+"번째 입력값 : " + certificateInput + " " + mainSkillsInput + " " + educationInput);
+            console.log(i-3+"번째 입력값 : " + certificateInput + " " + mainSkillsInput + " " + educationInput);
             // sName, cName, eName 배열에 값 추가
-            cName[i] = certificateInput;
-            console.log(cName[i])
-            sName[i] = mainSkillsInput;
-            console.log(sName[i])
-            eName[i] = educationInput;
-            console.log(eName[i])
+            cName[i-3] = certificateInput;
+            console.log(cName[i-3])
+            sName[i-3] = mainSkillsInput;
+            console.log(sName[i-3])
+            eName[i-3] = educationInput;
+            console.log(eName[i-3])
         }
 
         // 데이터를 서버로 전송

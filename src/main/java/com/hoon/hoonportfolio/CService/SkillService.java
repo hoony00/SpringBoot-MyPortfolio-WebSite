@@ -53,10 +53,17 @@ public class SkillService {
         List<Skill> skillList = skillRepository.findAllByUserEmail(email);
         List<String> skillNameList = new ArrayList<>();
         for (Skill skill : skillList) {
-            skillNameList.add(skill.getSkillName()+skill.getSid());
+            skillNameList.add(String.valueOf(skill.getSid()));
+        }
+        for (Skill skill : skillList) {
+            skillNameList.add(String.valueOf(skill.getSkillName()));
         }
         return skillNameList;
     }
+
+
+
+
 
     // sid와 skillName으로 skill 업데이트
     public void updateSkill(String sid, String skillName) {

@@ -23,13 +23,10 @@ public class CertificationController {
     @GetMapping("/certification/select")
     public ResponseEntity<List<String>> selectSkill(String email){
         List<String> certification = certificationService.findCertificationByEmail(email);
-        if(certification.isEmpty()){
-            return ResponseEntity.noContent().build();
-        }else{
-            int maxCount = Math.min(3, certification.size());
-            List<String> selectedCertifications = certification.subList(0, maxCount);
-        return ResponseEntity.ok(selectedCertifications);
-        }
+        System.out.println("certification =========== " + certification);
+
+        return ResponseEntity.ok(certification);
+
 
     }
 

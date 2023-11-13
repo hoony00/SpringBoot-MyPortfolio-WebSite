@@ -53,11 +53,10 @@ public class EducationService {
         List<Education> cerficationList = educationRepository.findAllByUserEmail(email);
         List<String> list = new ArrayList<>();
         for (Education education : cerficationList) {
-            //빈 문자열이나 Null 값이 들어오면 추가하지않음
-          /*  if(education.getName().equals(" ") || education.getName().equals("")){
-                continue;
-            }*/
-            list.add(education.getName()+education.getEid());
+            list.add(String.valueOf(education.getEid()));
+        }
+        for(Education education : cerficationList) {
+            list.add(education.getName());
         }
 
         return list;
