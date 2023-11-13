@@ -635,20 +635,21 @@
 
                                 if (i > 2) {
                                     h5.textContent = cid[i];
-                                    if (!(h5.textContent === "" || h5.textContent == null)) {
+                                    if (h5.textContent === "" || h5.textContent == null || h5.textContent === " " || h5.textContent === "new") {
+                                        // h5.textContent가 비어있는 경우 li를 추가하지 않음
+                                        certificationList.innerHTML = '<li>경력이 없습니다.</li>';
+                                        console.log("Skipping empty h5. certificateInput");
+                                    } else {
                                         li.appendChild(h5);
                                         certificationList.appendChild(li);
 
                                         if (cid[i] === "" || cid[i] == null || cid[i] === undefined || cid[i] === " ") {
-                                            document.getElementById('certificateInput' + i).value = ' ';
                                         } else {
                                             document.getElementById('certificateInput' + i).value = cid[i];
                                         }
-                                    } else {
-                                        // h5.textContent가 비어있는 경우 li를 추가하지 않음
-                                        console.log("Skipping empty h5. Main Skills");
                                     }
                                 }
+
 
                                 i++;
                             });
@@ -693,18 +694,18 @@
 
                                 if (i > 2) {
                                     h5.textContent = sid[i];
-                                    if (!(h5.textContent === "" || h5.textContent == null)) {
+                                    if (h5.textContent === "" || h5.textContent == null || h5.textContent === " " || h5.textContent === "new") {
+                                        // h5.textContent가 비어있는 경우 li를 추가하지 않음
+                                        skillsList.innerHTML = '<li>기술 스택이 없습니다.</li>';
+                                        console.log("Skipping empty h5. Main Skills");
+                                    } else {
                                         li.appendChild(h5);
                                         skillsList.appendChild(li);
 
                                         if (sid[i] === "" || sid[i] == null || sid[i] === undefined || sid[i] === " ") {
-                                            document.getElementById('Main Skills' + i).value = ' ';
                                         } else {
                                             document.getElementById('Main Skills' + i).value = sid[i];
                                         }
-                                    } else {
-                                        // h5.textContent가 비어있는 경우 li를 추가하지 않음
-                                        console.log("Skipping empty h5. Main Skills");
                                     }
                                 }
 
@@ -749,21 +750,22 @@
 
                         eid[i] = education
 
+
+
                         if (i > 2) {
-                            console.log("if문 eid==>" + eid[i])
                             h5.textContent = eid[i];
-                            if (!(h5.textContent === "" || h5.textContent == null)) {
+                            if (h5.textContent === "" || h5.textContent == null || h5.textContent === " " || h5.textContent === "new") {
+                                // h5.textContent가 비어있는 경우 li를 추가하지 않음
+                                console.log("Skipping empty h5. Education");
+                                educationList.innerHTML = '<li>학력이 없습니다.</li>';
+                            } else {
                                 li.appendChild(h5);
                                 educationList.appendChild(li);
 
                                 if (eid[i] === "" || eid[i] == null || eid[i] === undefined || eid[i] === " ") {
-                                    document.getElementById('Education' + i).value = ' ';
                                 } else {
                                     document.getElementById('Education' + i).value = eid[i];
                                 }
-                            } else {
-                                // h5.textContent가 비어있는 경우 li를 추가하지 않음
-                                console.log("Skipping empty h5. Education");
                             }
                         }
 

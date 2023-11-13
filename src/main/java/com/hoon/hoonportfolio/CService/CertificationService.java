@@ -41,7 +41,7 @@ public class CertificationService {
         for(int i=0; i<3; i++){
             Certification career = Certification.builder()
                     .user(user.get())
-                    .cerName(" ")
+                    .cerName("new")
                     .build();
             certificationRepository.save(career);
         }

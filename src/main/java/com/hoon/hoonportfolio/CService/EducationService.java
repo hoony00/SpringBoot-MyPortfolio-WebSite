@@ -41,7 +41,7 @@ public class EducationService {
         for(int i=0; i<3; i++){
             Education education = Education.builder()
                     .user(user.get())
-                    .name(" ")
+                    .name("new")
                     .build();
             educationRepository.save(education);
         }

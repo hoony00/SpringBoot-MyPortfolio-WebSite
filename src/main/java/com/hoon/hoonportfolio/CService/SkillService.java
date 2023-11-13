@@ -41,7 +41,7 @@ public class SkillService {
         for(int i=0; i<3; i++){
             Skill career = Skill.builder()
                     .user(user.get())
-                    .skillName(" ")
+                    .skillName("new")
                     .build();
             skillRepository.save(career);
         }
