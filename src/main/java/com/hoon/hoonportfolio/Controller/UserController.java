@@ -96,7 +96,7 @@ public class UserController {
             model.addAttribute("userExplanation", userDTO.getEmail());
             System.out.println("회원가입 성공 -> 이메일 : " + userDTO.getEmail());
             // 회원가입 성공 시 로그인 페이지로 리다이렉트
-            return "alert/suc";
+            return "user/login";
         } catch (IllegalStateException e) {
             // 회원가입 중 오류 발생 시 오류 메시지와 함께 회원가입 폼으로 다시 이동
             model.addAttribute("errorMessage", e.getMessage());
@@ -212,8 +212,14 @@ public class UserController {
 
                 System.out.println("받은 데이터 = " + dto);
                 skillService.updateSkill(dto.getSid(), dto.getSkillName());
+                System.out.println("dto.getSid() = " + dto.getSid());
+                System.out.println("dto.getSkillName() = " + dto.getSkillName());
                 certificationService.updateCertification(dto.getCid(), dto.getCertificationName());
+                System.out.println("dto.getCid() = " + dto.getCid());
+                System.out.println("dto.getCertificationName() = " + dto.getCertificationName());
                 educationService.updateEducation(dto.getEid(), dto.getEducationName());
+                System.out.println("dto.getEid() = " + dto.getEid());
+                System.out.println("dto.getEducationName() = " + dto.getEducationName());
             }
             response.put("result", "success");
         } catch (Exception e) {
