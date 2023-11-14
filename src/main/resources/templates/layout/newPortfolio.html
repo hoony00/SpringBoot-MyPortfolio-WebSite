@@ -430,7 +430,6 @@
                 try {
                     const response = await fetch('/projects/select?email=' + userEmail);
                     if (!response.ok) {
-                        console.error('프로젝트 조회 중 오류 발생:', response.status, response.statusText);
                         return;
                     }
 
@@ -567,7 +566,7 @@
                         });
                     }
                 } catch (error) {
-                    console.error('프로젝트 조회 오류:', error);
+                    console.error('프로젝트 없음 오류!', error);
                 }
             }
         </script>
@@ -627,18 +626,20 @@
                             // 받아온 스킬 리스트를 ul 요소에 추가
                             certificationList.innerHTML = '';
                             var i = 0;
+                            var j = 0;
                             data.forEach(certification => {
                                 const li = document.createElement('li');
                                 const h5 = document.createElement('h5');
 
                                 cid[i] = certification
+                                console.log("cid[i] : " + cid[i]);
+
 
                                 if (i > 2) {
                                     h5.textContent = cid[i];
-                                    if (h5.textContent === "" || h5.textContent == null || h5.textContent === " " || h5.textContent === "new") {
+                                    if (h5.textContent == null || h5.textContent === "new" || h5.textContent === " " || h5.textContent === "") {
                                         // h5.textContent가 비어있는 경우 li를 추가하지 않음
-                                        certificationList.innerHTML = '<li>경력이 없습니다.</li>';
-                                        console.log("Skipping empty h5. certificateInput");
+                                        j++;
                                     } else {
                                         li.appendChild(h5);
                                         certificationList.appendChild(li);
@@ -649,7 +650,9 @@
                                         }
                                     }
                                 }
-
+                                if(j === 3){
+                                    certificationList.innerHTML = '<li>No certificate found.</li>';
+                                }
 
                                 i++;
                             });
@@ -691,12 +694,12 @@
                                 const h5 = document.createElement('h5');
 
                                 sid[i] = skill
+                                console.log("sid[i] : " + sid[i]);
 
                                 if (i > 2) {
                                     h5.textContent = sid[i];
-                                    if (h5.textContent === "" || h5.textContent == null || h5.textContent === " " || h5.textContent === "new") {
+                                    if (h5.textContent == null || h5.textContent === "new") {
                                         // h5.textContent가 비어있는 경우 li를 추가하지 않음
-                                        skillsList.innerHTML = '<li>기술 스택이 없습니다.</li>';
                                         console.log("Skipping empty h5. Main Skills");
                                     } else {
                                         li.appendChild(h5);
@@ -749,15 +752,14 @@
                         const h5 = document.createElement('h5');
 
                         eid[i] = education
+                        console.log("eid[i] : " + eid[i])
 
 
 
                         if (i > 2) {
                             h5.textContent = eid[i];
-                            if (h5.textContent === "" || h5.textContent == null || h5.textContent === " " || h5.textContent === "new") {
+                            if (h5.textContent == null || h5.textContent === "new") {
                                 // h5.textContent가 비어있는 경우 li를 추가하지 않음
-                                console.log("Skipping empty h5. Education");
-                                educationList.innerHTML = '<li>학력이 없습니다.</li>';
                             } else {
                                 li.appendChild(h5);
                                 educationList.appendChild(li);
@@ -882,12 +884,15 @@
 
             console.log(i-3+"번째 입력값 : " + certificateInput + " " + mainSkillsInput + " " + educationInput);
             // sName, cName, eName 배열에 값 추가
-            cName[i-3] = certificateInput;
-            console.log(cName[i-3])
-            sName[i-3] = mainSkillsInput;
-            console.log(sName[i-3])
-            eName[i-3] = educationInput;
-            console.log(eName[i-3])
+            cName[i-3] = certificateInput === '' || certificateInput === null ? 'new' : certificateInput;
+            console.log(cName[i-3]);
+
+            sName[i-3] = mainSkillsInput === '' || mainSkillsInput === null ? 'new' : mainSkillsInput;
+            console.log(sName[i-3]);
+
+            eName[i-3] = educationInput === '' || educationInput === null ? 'new' : educationInput;
+            console.log(eName[i-3]);
+
         }
 
         // 데이터를 서버로 전송
@@ -1073,7 +1078,7 @@
                 if (response.ok) {
                     return response.blob();
                 } else {
-                    console.error('Error loading profile image:', response.status, response.statusText);
+                    console.log("이미지 없음, 기본 이미지 적용")
                     // 이미지가 없는 경우 기본 이미지 경로 설정
                     document.getElementById('previewImage').src = '../../bootstrap/assets/img/portfolio/people.png';
 
@@ -1115,7 +1120,7 @@
                 }
             })
             .catch(function (error) {
-                alert('오류가 발생했습니다: ' + error);
+                alert('프로젝트 사진 없음! : ' + error);
             });
     });
 
