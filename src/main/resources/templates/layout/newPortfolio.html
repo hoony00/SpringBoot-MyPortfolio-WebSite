@@ -92,16 +92,27 @@
         console.log("현재 프로필의 이메일 : " + userEmail);
         console.log("로그인한 이메일 : " + loginEmail);
 
-       
 
-        function checkAndToggleFileInput() {
+
+        function checkAndLoginInfo() {
             console.log("checkAndToggleFileInput() 실행됨");
             // userEmail과 loginEmail을 비교하여 일치하면 파일 입력 요소를 보이게 함
             if (userEmail === loginEmail || loginEmail === 'admin') {
+                // 파일 업로드 요소를 보이게 함
                 document.getElementById('fileInput').style.display = 'block';
+                // 자기소개 수정 버튼
+                document.getElementById('editButton').style.display = 'block';
+                // 프로젝트 등록 버튼
+                document.getElementById('createProjet').style.display = 'block';
+                // 기술스택 수정 버튼 
+                document.getElementById('IntroduceEdit').style.display = 'block';
                 console.log("일치함")
             } else {
+                // 파일 업로드
                 document.getElementById('fileInput').style.display = 'none';
+                document.getElementById('editButton').style.display = 'none';
+                document.getElementById('createProjet').style.display = 'none';
+                document.getElementById('IntroduceEdit').style.display = 'none';
                 console.log("일치하지 않음")
             }
         }
@@ -192,7 +203,7 @@
         <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
 
             <!-- About Section Button (수정하기 버튼) -->
-            <div class="text-center mt-4" id="editButton">
+            <div class="text-center mt-4" id="editButton" style="display: none">
                 <a class="btn btn-xl btn-outline-light" onclick="editExplain()">
                     <i class="fa-regular fa-pen-to-square"></i>
                     자기소개 수정
@@ -286,7 +297,7 @@
 
         <div class="col-lg-4 mx-auto text-center"> <!-- 중앙 정렬을 위해 mx-auto를 추가합니다 -->
             <!-- About Section Button (수정하기 버튼) -->
-            <div class="text-center mt-4">
+            <div class="text-center mt-4" id="createProjet" style="display: none">
                 <a class="btn btn-xl btn-outline-black" onclick="showModal()">
                     <i class="fa-solid fa-square-plus"></i>
                     Create New Project
@@ -816,7 +827,7 @@
     </script>
 
     <!-- About Section Button (수정하기 버튼) -->
-    <div class="text-center mt-4">
+    <div class="text-center mt-4" id="IntroduceEdit" style="display: none">
         <a class="btn btn-xl btn-outline-light" onclick="editIntro(userEmail)">
             <i class="fa-regular fa-pen-to-square"></i>
             Update
@@ -1278,7 +1289,7 @@
 
 
     window.onload = function () {
-        checkAndToggleFileInput();
+        checkAndLoginInfo();
         // fetchProjects 함수 호출
         fetchProjects();
         loadProfileImage();
