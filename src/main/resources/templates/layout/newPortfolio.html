@@ -686,6 +686,8 @@
                     .then(response => response.json()) // JSON 응답 파싱
                     .then(data => {
                         var i = 0;
+                        var j = 0;
+
                         if (data && data.length > 0) {
                             // 받아온 스킬 리스트를 ul 요소에 추가
                             skillsList.innerHTML = '';
@@ -698,9 +700,9 @@
 
                                 if (i > 2) {
                                     h5.textContent = sid[i];
-                                    if (h5.textContent == null || h5.textContent === "new") {
+                                    if (h5.textContent == null || h5.textContent === "new" || h5.textContent === " " || h5.textContent === "") {
                                         // h5.textContent가 비어있는 경우 li를 추가하지 않음
-                                        console.log("Skipping empty h5. Main Skills");
+                                        j++;
                                     } else {
                                         li.appendChild(h5);
                                         skillsList.appendChild(li);
@@ -710,6 +712,10 @@
                                             document.getElementById('Main Skills' + i).value = sid[i];
                                         }
                                     }
+                                }
+
+                                if(j === 3){
+                                    skillsList.innerHTML = '<li>No Main Skills found.</li>';
                                 }
 
                                 i++;
@@ -744,6 +750,7 @@
             .then(response => response.json()) // JSON 응답 파싱
             .then(data => {
                 var i = 0;
+                var j = 0;
                 if (data && data.length > 0) {
                     // 받아온 스킬 리스트를 ul 요소에 추가
                     educationList.innerHTML = '';
@@ -758,7 +765,8 @@
 
                         if (i > 2) {
                             h5.textContent = eid[i];
-                            if (h5.textContent == null || h5.textContent === "new") {
+                            if (h5.textContent == null || h5.textContent === "new" || h5.textContent === " " || h5.textContent === "") {
+                                j++
                                 // h5.textContent가 비어있는 경우 li를 추가하지 않음
                             } else {
                                 li.appendChild(h5);
@@ -769,6 +777,10 @@
                                     document.getElementById('Education' + i).value = eid[i];
                                 }
                             }
+                        }
+
+                        if(j === 3){
+                            educationList.innerHTML = '<li>No Careers found.</li>';
                         }
 
                         i++;
