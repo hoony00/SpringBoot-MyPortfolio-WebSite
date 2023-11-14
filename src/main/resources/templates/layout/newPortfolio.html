@@ -30,9 +30,9 @@
 <!-- Top Navigation-->
 <nav class="navbar navbar-expand-lg bg-hoon1 text-uppercase fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand" >우리의 포토폴리오</a>
+        <a class="navbar-brand">우리의 포토폴리오</a>
         <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button"
-                data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"성
+                data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" 성
                 aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars"></i>
@@ -40,7 +40,8 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <!-- 상단 네비게이션 목록 -->
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/user/loginAction">MyPage</a>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                                     href="/user/loginAction">MyPage</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Portfolio</a>
                 </li>
@@ -84,7 +85,27 @@
     <script>
         // 현재 프로필의 이메일을 전역 변수로 설정
         userEmail = '[[${userExplanation.email}]]';
+        loginEmail = 'default';
+       if(!('[[${login}]]' == null || '[[${login}]]' == '' || '[[${login}]]' == 'null' || '[[${login}]]' == 'undefined')) {
+           loginEmail = '[[${login}]]';
+       }
         console.log("현재 프로필의 이메일 : " + userEmail);
+        console.log("로그인한 이메일 : " + loginEmail);
+
+       
+
+        function checkAndToggleFileInput() {
+            console.log("checkAndToggleFileInput() 실행됨");
+            // userEmail과 loginEmail을 비교하여 일치하면 파일 입력 요소를 보이게 함
+            if (userEmail === loginEmail || loginEmail === 'admin') {
+                document.getElementById('fileInput').style.display = 'block';
+                console.log("일치함")
+            } else {
+                document.getElementById('fileInput').style.display = 'none';
+                console.log("일치하지 않음")
+            }
+        }
+
     </script>
 
     <div class="container d-flex align-items-center flex-column">
@@ -99,7 +120,7 @@
             <form id="uploadForm" th:action="@{/user/uploadProfileImage}" method="post" enctype="multipart/form-data"
                   style="display: flex; align-items: center;">
                 <!-- 파일 선택 input -->
-                <input type="file" id="fileInput" name="file" accept="image/*" required style="flex: 1;"
+                <input type="file" id="fileInput" name="file" accept="image/*" required style="flex: 1; display: none;"
                        onchange="fileInput()">
                 <!-- 이메일을 숨겨진 필드로 추가 -->
                 <input type="hidden" id="email" name="email" th:value="${userExplanation.email}" required>
@@ -620,7 +641,7 @@
                     .then(response => response.json()) // JSON 응답 파싱
                     .then(data => {
 
-                        console.log(" 인트로듀스 소개 에서 userEmail==>"+ userEmail);
+                        console.log(" 인트로듀스 소개 에서 userEmail==>" + userEmail);
 
                         if (data && data.length > 0) {
                             // 받아온 스킬 리스트를 ul 요소에 추가
@@ -650,7 +671,7 @@
                                         }
                                     }
                                 }
-                                if(j === 3){
+                                if (j === 3) {
                                     certificationList.innerHTML = '<li>No certificate found.</li>';
                                 }
 
@@ -714,7 +735,7 @@
                                     }
                                 }
 
-                                if(j === 3){
+                                if (j === 3) {
                                     skillsList.innerHTML = '<li>No Main Skills found.</li>';
                                 }
 
@@ -762,7 +783,6 @@
                         console.log("eid[i] : " + eid[i])
 
 
-
                         if (i > 2) {
                             h5.textContent = eid[i];
                             if (h5.textContent == null || h5.textContent === "new" || h5.textContent === " " || h5.textContent === "") {
@@ -779,7 +799,7 @@
                             }
                         }
 
-                        if(j === 3){
+                        if (j === 3) {
                             educationList.innerHTML = '<li>No Careers found.</li>';
                         }
 
@@ -885,25 +905,25 @@
     function saveIntro() {
 // 사용자가 입력한 데이터를 JavaScript 변수에 저장
         for (i = 3; i < 6; i++) {
-            console.log("sid "+ sid[i-3] + "번 : " + sid[i]);
-            console.log("cid "+cid[i-3] + "번 : " + cid[i]);
-            console.log("eid "+eid[i-3] + "번 : " + eid[i]);
+            console.log("sid " + sid[i - 3] + "번 : " + sid[i]);
+            console.log("cid " + cid[i - 3] + "번 : " + cid[i]);
+            console.log("eid " + eid[i - 3] + "번 : " + eid[i]);
 
             var certificateInput = document.getElementById('certificateInput' + i).value;
             var mainSkillsInput = document.getElementById('Main Skills' + i).value;
             var educationInput = document.getElementById('Education' + i).value;
 
 
-            console.log(i-3+"번째 입력값 : " + certificateInput + " " + mainSkillsInput + " " + educationInput);
+            console.log(i - 3 + "번째 입력값 : " + certificateInput + " " + mainSkillsInput + " " + educationInput);
             // sName, cName, eName 배열에 값 추가
-            cName[i-3] = certificateInput === '' || certificateInput === null ? 'new' : certificateInput;
-            console.log(cName[i-3]);
+            cName[i - 3] = certificateInput === '' || certificateInput === null ? 'new' : certificateInput;
+            console.log(cName[i - 3]);
 
-            sName[i-3] = mainSkillsInput === '' || mainSkillsInput === null ? 'new' : mainSkillsInput;
-            console.log(sName[i-3]);
+            sName[i - 3] = mainSkillsInput === '' || mainSkillsInput === null ? 'new' : mainSkillsInput;
+            console.log(sName[i - 3]);
 
-            eName[i-3] = educationInput === '' || educationInput === null ? 'new' : educationInput;
-            console.log(eName[i-3]);
+            eName[i - 3] = educationInput === '' || educationInput === null ? 'new' : educationInput;
+            console.log(eName[i - 3]);
 
         }
 
@@ -1258,6 +1278,7 @@
 
 
     window.onload = function () {
+        checkAndToggleFileInput();
         // fetchProjects 함수 호출
         fetchProjects();
         loadProfileImage();

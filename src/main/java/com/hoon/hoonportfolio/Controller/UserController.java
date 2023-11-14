@@ -128,6 +128,7 @@ public class UserController {
        if (authentication != null) {
            String email = authentication.getName();
            model.addAttribute("userExplanation", userService.getNameAndExplanation(email));
+           model.addAttribute("login", email);
        }
 
        return "layout/newPortfolio";
