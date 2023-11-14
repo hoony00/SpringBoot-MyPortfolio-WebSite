@@ -179,9 +179,6 @@ public class UserController {
     @GetMapping("/user/checkUser")
     public ResponseEntity<String> checkUser(@RequestParam("email") String email) {
         if (userService.isEmailExist(email)) {
-            // 사용자가 존재하는 경우, 여기서 추가적인 로직을 수행하거나 다른 API를 호출할 수 있습니다.
-            // 예를 들어, 다른 API 호출이 필요한 경우, 그 API를 호출하고 결과를 클라이언트에 반환할 수 있습니다.
-            // 이 예제에서는 간단하게 "success" 문자열을 반환합니다.
             return new ResponseEntity<>("success", HttpStatus.OK);
         } else {
             // 사용자가 존재하지 않는 경우
