@@ -461,7 +461,13 @@
             async function fetchProjects() {
                 try {
                     const response = await fetch('/projects/select?email=' + userEmail);
-                    if (!response.ok) {
+                    if (response.status === 204) {
+                        console.log("프로젝트 없음 --- 204 ")
+                        const projectList = document.getElementById('projectList');
+                        const noProjectDiv = document.createElement('div');
+                        noProjectDiv.className = 'col-lg-4 mx-auto text-center';
+                        noProjectDiv.innerHTML = '<p>등록된 프로젝트가 없습니다.</p>';
+                        projectList.appendChild(noProjectDiv);
                         return;
                     }
 
@@ -478,6 +484,10 @@
                     });
 
                     if (infoResponse.ok) {
+                        if (infoResponse.status === 204) {
+                            console.log('프로젝트 없음');
+                            return;
+                        }
                         const anotherData = await infoResponse.json();
 
                         // 프로젝트 목록을 표시할 요소
@@ -598,8 +608,8 @@
                         });
                     }
                 } catch (error) {
+                    console.log("프로젝트 조회 오류:,", error);
 
-                    console.error('프로젝트 없음 오류!', error);
                 }
             }
         </script>
