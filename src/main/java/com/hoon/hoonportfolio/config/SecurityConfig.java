@@ -18,6 +18,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig {
+
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -30,13 +33,16 @@ public class SecurityConfig {
                 .permitAll() //모든 사용자가 접근할 수 있음
         ); //formLogin
 
+        http.exceptionHandling(exception -> exception
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
+
 
         http.logout(Customizer.withDefaults()); // 로그아웃 설정
 
         http.authorizeHttpRequests(request -> request // 인가 정책
                 // 루트와 /member/** 경로는 모든 사용자가 접근 가능
 
-                .requestMatchers("/bootstrap/**", "/js/**").permitAll()
+                .requestMatchers("/bootstrap/**", "/images/**","/js/**").permitAll()
                 .requestMatchers("/",  "/user/**", "/layout/**", "/images/**").permitAll()
                 .anyRequest().authenticated()); //authorizeHttpRequests
 

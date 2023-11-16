@@ -73,17 +73,21 @@ public class UserController {
     }
 
 
-    // 로그아웃
-    @GetMapping("/user/logout")
-    public String performLogout(HttpServletRequest request, HttpServletResponse response) {
-        // .. perform logout
-        log.info("===============> logout");
+
+    @GetMapping("/user/login/error")
+    public String loginError(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        if(authentication != null) {
+            log.info("로그인 에러 페이지에서 authentication.getName() : " + authentication.getName());
         }
-        return "redirect:/";
+
+        model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요");
+        // UserDTO 객체를 사용하여 회원가입 폼을 초기화
+        model.addAttribute("userDTO", new UserDTO());
+
+        return "user/login";
     }
+
 
     @PostMapping("/user/joinSuccess")
     public String registerUser(@ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model) {
@@ -185,6 +189,8 @@ public class UserController {
             return new ResponseEntity<>("not_found", HttpStatus.NOT_FOUND);
         }
     }
+
+
 
 
 

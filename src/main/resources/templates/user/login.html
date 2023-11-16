@@ -57,7 +57,7 @@
                         <!-- email을 가지고 user/new/+email 로 이동 -->
                         <form action="/user/login" method="post" th:object="${userDTO}">
                             <!-- 에러 메시지 표시 -->
-                            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+                            <div th:if="${loginErrorMsg}" class="alert alert-danger" th:text="${loginErrorMsg}"></div>
 
                             <!-- email input -->
                             <div class="form-floating mb-3">
