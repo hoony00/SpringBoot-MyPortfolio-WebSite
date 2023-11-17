@@ -34,6 +34,7 @@ public class ProjectController {
     public ResponseEntity<List<ProjectDTO>> getProjectsInfoByEmail(String email) {
         List<ProjectDTO> projects = projectService.getProjectsByEmail(email);
         if (projects.isEmpty()) {
+            log.info("프로젝트가 없습니다.");
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Collections.emptyList());
         }
         return ResponseEntity.status(HttpStatus.OK).body(projects);
