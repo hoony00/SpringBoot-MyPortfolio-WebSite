@@ -20,6 +20,7 @@ public class Project {
     private Long proid;
 
     private String title;
+
     private String description;
 
     private String githubLink;

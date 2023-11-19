@@ -21,8 +21,8 @@ public class UserEntity {
     private String email;
 
     private String name;
-    private String password;
 
+    private String password;
 
     private byte[] profileImage;
 
@@ -42,7 +42,6 @@ public class UserEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
 
 
     @Builder
