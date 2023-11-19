@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SessionAttributes("userExplanation")
 @Controller
 @Slf4j // 로그를 위한 어노테이션
 @RequiredArgsConstructor
@@ -63,6 +62,16 @@ public class UserController {
         // UserDTO 객체를 사용하여 회원가입 폼을 초기화
         model.addAttribute("userDTO", new UserDTO());
         return "user/login";
+    }
+
+    @GetMapping("/user/logout")
+    public String performLogout(HttpServletRequest request, HttpServletResponse response) {
+        log.info("===============> logout");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        }
+        return "redirect:/";
     }
 
     @GetMapping("/user/join") // 회원가입 폼을 표시
