@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SkillController {
 
-    @Autowired
     private final SkillService skillService;
 
     //조회하기
@@ -24,12 +23,7 @@ public class SkillController {
     public ResponseEntity<List<String>> selectCertifications(String email) {
         List<String> skillList = skillService.findSkillByEmail(email);
         System.out.println("skllList =========== " + skillList);
-            // 최대 3개의 항목만 선택==============
-
-
-
             return ResponseEntity.ok(skillList);
-
     }
 
 

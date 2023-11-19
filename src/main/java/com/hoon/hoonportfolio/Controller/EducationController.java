@@ -15,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EducationController {
 
-    @Autowired
     private final EducationService educationService;
 
     //조회하기
@@ -23,7 +22,6 @@ public class EducationController {
     public ResponseEntity<List<String>> selectSkill(String email){
         List<String> educationList = educationService.findEducationByEmail(email);
         System.out.println("educationList =========== " + educationList);
-
 
         return ResponseEntity.ok(educationList);
 

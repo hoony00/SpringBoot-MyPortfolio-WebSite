@@ -26,17 +26,12 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class CertificationService {
-    @Autowired
     private final CertificationRepository certificationRepository;
 
-    @Autowired
     private final UserRepository userRepository;
-
-
 
     public void saveCertification(String email) {
        Optional<UserEntity> user = userRepository.findByEmail(email);
-
        //자격증 저장 3번 반복
         for(int i=0; i<3; i++){
             Certification career = Certification.builder()
@@ -45,7 +40,6 @@ public class CertificationService {
                     .build();
             certificationRepository.save(career);
         }
-
     }
 
     //email로 certificate 조회
@@ -58,9 +52,7 @@ public class CertificationService {
         for(Certification certification : cerficationList) {
             CerNameList.add(certification.getCerName());
         }
-
         return CerNameList;
-
     }
 
     // cid 와 cname을 받아서 cname을 수정하는 메소드
@@ -69,8 +61,5 @@ public class CertificationService {
         certification.get().setCerName(cname);
         certificationRepository.save(certification.get());
     }
-
-
-
 
 }

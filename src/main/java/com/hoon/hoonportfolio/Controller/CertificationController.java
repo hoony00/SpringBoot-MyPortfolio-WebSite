@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CertificationController {
 
-    @Autowired
     private final CertificationService certificationService;
 
     //조회하기
@@ -26,8 +25,6 @@ public class CertificationController {
         System.out.println("certification =========== " + certification);
 
         return ResponseEntity.ok(certification);
-
-
     }
 
 

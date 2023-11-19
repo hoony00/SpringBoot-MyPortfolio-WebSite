@@ -52,6 +52,8 @@ public class UserController {
         return "index";
     }
 
+
+
     @GetMapping("/user/login")
     public String showLoginForm(Model model) {
 
@@ -64,25 +66,18 @@ public class UserController {
         return "user/login";
     }
 
-    @GetMapping("/user/logout")
-    public String performLogout(HttpServletRequest request, HttpServletResponse response) {
-        log.info("===============> logout");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    //로그인 성공 url
+    @GetMapping("/user/loginAction")
+    public String getSelect( Model model, Authentication authentication) {
         if (authentication != null) {
-            new SecurityContextLogoutHandler().logout(request, response, authentication);
+            String email = authentication.getName();
+            model.addAttribute("userExplanation", userService.getNameAndExplanation(email));
+            model.addAttribute("login", email);
         }
-        return "redirect:/";
+        return "layout/newPortfolio";
     }
 
-    @GetMapping("/user/join") // 회원가입 폼을 표시
-    public String showRegistrationForm(Model model) {
-        // UserDTO 객체를 사용하여 회원가입 폼을 초기화
-        model.addAttribute("userDTO", new UserDTO());
-        return "user/join";
-    }
-
-
-
+    //로그인 실패 url
     @GetMapping("/user/login/error")
     public String loginError(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -97,7 +92,27 @@ public class UserController {
         return "user/login";
     }
 
+    //로그아웃
+    @GetMapping("/user/logout")
+    public String performLogout(HttpServletRequest request, HttpServletResponse response) {
+        log.info("===============> logout");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        }
+        return "redirect:/";
+    }
 
+    //회원가입
+    @GetMapping("/user/join")
+    public String showRegistrationForm(Model model) {
+        // UserDTO 객체를 사용하여 회원가입 폼을 초기화
+        model.addAttribute("userDTO", new UserDTO());
+        return "user/join";
+    }
+
+
+    //회원가입 성공
     @PostMapping("/user/joinSuccess")
     public String registerUser(@ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -136,17 +151,6 @@ public class UserController {
         return "layout/newPortfolio";
     }
 
-   @GetMapping("/user/loginAction")
-    public String getSelect( Model model, Authentication authentication) {
-       if (authentication != null) {
-           String email = authentication.getName();
-           model.addAttribute("userExplanation", userService.getNameAndExplanation(email));
-           model.addAttribute("login", email);
-       }
-
-       return "layout/newPortfolio";
-
-    }
 
 
     // 이미지 업로드 API
@@ -189,6 +193,7 @@ public class UserController {
     }
 
 
+    //검색가능한 유저인지 확인
     @GetMapping("/user/checkUser")
     public ResponseEntity<String> checkUser(@RequestParam("email") String email) {
         if (userService.isEmailExist(email)) {
@@ -200,9 +205,7 @@ public class UserController {
     }
 
 
-
-
-
+    //이메일로 유저 기술 스택 가져오기
     @PostMapping("user/updateExplanation")
     public ResponseEntity<Map<String, String>> updateExplanation(@RequestBody ExplanationRequestDTO request) {
         Map<String, String> response = new HashMap<>();
@@ -221,7 +224,7 @@ public class UserController {
     }
 
 
-    //객체를 받아서 업데이트
+    //객체를 받아서 기술스택 수정
     @PostMapping("user/updateIntroduce")
     public ResponseEntity<Map<String, String>> updateIntroduce(@RequestBody List<IntroduceDTO> introduceDto) {
         Map<String, String> response = new HashMap<>();

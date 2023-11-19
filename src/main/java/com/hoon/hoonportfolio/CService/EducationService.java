@@ -26,19 +26,13 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class EducationService {
-    @Autowired
     private final EducationRepository educationRepository;
 
-    @Autowired
     private final UserRepository userRepository;
 
-
-
     public void saveEducation(String email) {
-       Optional<UserEntity> user = userRepository.findByEmail(email);
-
-       //자격증 저장 3번 반복
-        for(int i=0; i<3; i++){
+        Optional<UserEntity> user = userRepository.findByEmail(email);
+        for (int i = 0; i < 3; i++) {
             Education education = Education.builder()
                     .user(user.get())
                     .name("new")
@@ -47,7 +41,6 @@ public class EducationService {
         }
 
     }
-
     //email로 certificate 조회
     public List<String> findEducationByEmail(String email) {
         List<Education> cerficationList = educationRepository.findAllByUserEmail(email);
@@ -55,12 +48,10 @@ public class EducationService {
         for (Education education : cerficationList) {
             list.add(String.valueOf(education.getEid()));
         }
-        for(Education education : cerficationList) {
+        for (Education education : cerficationList) {
             list.add(education.getName());
         }
-
         return list;
-
     }
 
     public void updateEducation(String eid, String eName) {
@@ -68,9 +59,6 @@ public class EducationService {
         education.get().setName(eName);
         educationRepository.save(education.get());
     }
-
-
-
 
 
 }

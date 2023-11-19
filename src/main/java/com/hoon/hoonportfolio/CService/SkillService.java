@@ -26,13 +26,9 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class SkillService {
-    @Autowired
     private final SkillRepository skillRepository;
 
-    @Autowired
     private final UserRepository userRepository;
-
-
 
     public void saveSkill(String email) {
        Optional<UserEntity> user = userRepository.findByEmail(email);
@@ -45,7 +41,6 @@ public class SkillService {
                     .build();
             skillRepository.save(career);
         }
-
     }
 
     //email로 기술스택 조회
@@ -61,10 +56,6 @@ public class SkillService {
         return skillNameList;
     }
 
-
-
-
-
     // sid와 skillName으로 skill 업데이트
     public void updateSkill(String sid, String skillName) {
         Optional<Skill> skill = skillRepository.findById(Long.valueOf(sid));
@@ -72,8 +63,5 @@ public class SkillService {
         skill.get().setSkillName(skillName);
         skillRepository.save(skill.get());
     }
-
-
-
 
 }

@@ -34,10 +34,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjectService {
 
-    @Autowired
     private ProjectRepository projectRepository;
 
-    @Autowired
     private UserRepository userRepository;
 
     // 프로젝트 정보 조회
@@ -47,7 +45,6 @@ public class ProjectService {
         if (projects.isEmpty()) {
             return Collections.emptyList();
         }
-
         return projects.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
@@ -70,7 +67,6 @@ public class ProjectService {
                 selectProject.setDescription(des);
                 projectRepository.save(selectProject);
             });
-
     }
 
     //프로젝트 proid로 삭제
@@ -80,10 +76,6 @@ public class ProjectService {
             projectRepository.delete(selectProject);
         });
     }
-
-
-
-
 
     // 프로젝트 이미지 조회
     public List<byte[]> getProjectImagesByEmail(String email) {
@@ -100,8 +92,6 @@ public class ProjectService {
         return images;
     }
 
-
-
     /// 프로젝트 저장
     public void saveProject(String email, ProjectDTO projectDTO, MultipartFile image) throws IOException {
         UserEntity user = userRepository.findById(email).orElseThrow(() -> new IllegalStateException("회원 정보를 찾을 수 없습니다."));
@@ -113,8 +103,6 @@ public class ProjectService {
                 .githubLink(projectDTO.getGithub())
                 .mainImage(image.getBytes())
                 .build();
-
       projectRepository.save(project);
     }
-
 }

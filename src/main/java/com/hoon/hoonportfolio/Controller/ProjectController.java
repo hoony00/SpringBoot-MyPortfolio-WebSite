@@ -24,9 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectController {
 
-    @Autowired
     private final ProjectService projectService;
-
 
 
     // 이메일을 받아서 프로젝트 리스트 리턴
@@ -53,16 +51,13 @@ public class ProjectController {
     @GetMapping("/projects/select")
     public ResponseEntity<List<String>> getProjectsByEmail(String email) {
         List<byte[]> images = projectService.getProjectImagesByEmail(email);
-        // 리턴 내용 찍어보기
         System.out.println(email + "의 프로젝트를 조회합니다.");
-
         if (images.isEmpty()) {
             System.out.println("프로젝트가 없습니다.");
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Collections.emptyList());
         }
         List<String> base64Images = new ArrayList<>();
         for (byte[] image : images) {
-            // 이미지의 URL을 가져와서 리스트에 추가
             base64Images.add(java.util.Base64.getEncoder().encodeToString(image));
         }
         return ResponseEntity.status(HttpStatus.OK).body(base64Images);
@@ -70,7 +65,7 @@ public class ProjectController {
     }
 
     @PostMapping("/project/update")
-    public ResponseEntity<String> updateProject(String proid, String des){
+    public ResponseEntity<String> updateProject(String proid, String des) {
         try {
             // 업데이트 작업 수행
             projectService.updateProject(proid, des);
@@ -84,32 +79,17 @@ public class ProjectController {
     }
 
 
-
     @PostMapping("/project/save")
     public ResponseEntity<String> saveProject(@RequestParam("email") String email,
                                               @ModelAttribute ProjectDTO projectDTO,
                                               @RequestParam("projectImage") MultipartFile image) {
         try {
-            System.out.println("====+++===프로젝트 저장 요청====+++=====");
-            System.out.println(projectDTO);
-            System.out.println("이메일: " + email);
-             projectService.saveProject(email, projectDTO, image);
-            System.out.println("====+++===프로젝트 저장 완료====+++=====");
-
+            projectService.saveProject(email, projectDTO, image);
             return ResponseEntity.ok("프로젝트 저장 완료");
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("프로젝트 저장 중 오류가 발생했습니다.");
         }
     }
-
-
-
-
-
-
-
-
-
 
 }
