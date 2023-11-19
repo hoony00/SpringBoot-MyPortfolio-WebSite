@@ -15,13 +15,10 @@ public class Certification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cerid;
-
     private String cerName;
-
     @ManyToOne
     @JoinColumn(name = "email")
     private UserEntity user;
-
     @Builder
     public Certification(String cerName, UserEntity user) {
         this.cerName = cerName;
