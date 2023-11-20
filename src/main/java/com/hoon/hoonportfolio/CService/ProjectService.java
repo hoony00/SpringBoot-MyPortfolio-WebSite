@@ -34,8 +34,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjectService {
 
+    @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
     private UserRepository userRepository;
 
     // 프로젝트 정보 조회

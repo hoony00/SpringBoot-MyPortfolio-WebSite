@@ -40,7 +40,6 @@ WebSecurityConfigurerAdapter deprecated 된 설정을 제거해야 합니다.
 @EnableWebSecurity
 //@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @AllArgsConstructor
-@RequiredArgsConstructor
 // Secured Annotation 활성화, preAuthorize Annotation 활성화
 public class SecurityConfig {
 
