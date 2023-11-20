@@ -205,10 +205,11 @@ public class UserController {
     }
 
 
-    //이메일로 유저 기술 스택 가져오기
+    // 유저 자기소개 수정
     @PostMapping("user/updateExplanation")
     public ResponseEntity<Map<String, String>> updateExplanation(@RequestBody ExplanationRequestDTO request) {
         Map<String, String> response = new HashMap<>();
+
         try {
             String email = request.getEmail();
             String explanation = request.getExplanation();

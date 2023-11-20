@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
+
     <title>포토폴리오 관리 사이트</title>
     <!-- Favicon--> <!-- 경로 수정 -->
     <link rel="icon" type="image/x-icon" href="../bootstrap/assets/favicon.ico"/>
@@ -24,6 +25,12 @@
           type="text/css"/>
     <!-- Core theme CSS (includes Bootstrap)--> <!-- 경로 수정 -->
     <link href="/bootstrap/css/styles.css" rel="stylesheet"/>
+
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+
 </head>
 <body id="page-top">
 
@@ -83,15 +90,20 @@
            }
        </style>-->
     <script>
+
+
+        var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+
+
+
         // 현재 프로필의 이메일을 전역 변수로 설정
         userEmail = '[[${userExplanation.email}]]';
         loginEmail = 'default';
-       if(!('[[${login}]]' == null || '[[${login}]]' == '' || '[[${login}]]' == 'null' || '[[${login}]]' == 'undefined')) {
-           loginEmail = '[[${login}]]';
-       }
+        if (!('[[${login}]]' == null || '[[${login}]]' == '' || '[[${login}]]' == 'null' || '[[${login}]]' == 'undefined')) {
+            loginEmail = '[[${login}]]';
+        }
         console.log("현재 프로필의 이메일 : " + userEmail);
         console.log("로그인한 이메일 : " + loginEmail);
-
 
 
         function checkAndLoginInfo() {
@@ -137,6 +149,7 @@
                 <input type="hidden" id="email" name="email" th:value="${userExplanation.email}" required>
                 <!-- 파일 저장 버튼 -->
                 <button type="submit" id="uploadButton" style="flex: 0; display: none">Update</button>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
             </form>
             <div id="errorMessage" class="text-danger"></div>
         </div>
@@ -220,6 +233,7 @@
                         취소</a>
                     <a class="btn btn-xl btn-outline-light" onclick="updateButton()">
                         저장</a>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                 </form>
             </div>
         </div>
@@ -252,6 +266,7 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
                     },
                     body: JSON.stringify({explanation: newExplanation, email: userEmail}) // 이메일과 설명 데이터 전송
                 })
@@ -345,6 +360,7 @@
                                        onchange="checkFileSize(this)">
                             </div>
                             <span id="fileSizeError" style="color: red; display: none;">파일 크기가 너무 큽니다. 1MB 이하의 파일을 업로드해 주세요.</span>
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
                         </form>
                     </div>
@@ -407,6 +423,9 @@
                 // 서버에 프로젝트 정보 전송
                 fetch("/project/save", {
                     method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
                     body: formData,
                 })
                     .then((response) => {
@@ -460,7 +479,13 @@
         <script>
             async function fetchProjects() {
                 try {
-                    const response = await fetch('/projects/select?email=' + userEmail);
+                    const response = await fetch('/projects/select?email=' + userEmail,
+                        {
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken
+                            },
+                        },
+                    );
                     if (response.status === 204) {
                         console.log("프로젝트 없음 --- 204 ")
                         const projectList = document.getElementById('projectList');
@@ -479,7 +504,7 @@
                     const infoResponse = await fetch('/projects/selectInfo?email=' + userEmail, {
                         method: 'GET',
                         headers: {
-                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken
                         },
                     });
 
@@ -659,7 +684,13 @@
                 var cid = [];
 
                 const certificationList = document.getElementById('cerList');
-                fetch(`/certification/select?email=${userEmail}`)
+                fetch(`/certification/select?email=${userEmail}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+
+                })
                     .then(response => response.json()) // JSON 응답 파싱
                     .then(data => {
 
@@ -725,7 +756,12 @@
                 var sid = [];
                 // AJAX를 사용하여 "/skill/select" 엔드포인트로 요청을 보냅니다.
                 const skillsList = document.getElementById('skillsList');
-                fetch(`/skill/select?email=${userEmail}`)
+                fetch(`/skill/select?email=${userEmail}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                })
                     .then(response => response.json()) // JSON 응답 파싱
                     .then(data => {
                         var i = 0;
@@ -789,7 +825,12 @@
         var eName = [];
         // AJAX를 사용하여 "/education/select" 엔드포인트로 요청을 보냅니다.
         const educationList = document.getElementById('eduList');
-        fetch(`/education/select?email=${userEmail}`)
+        fetch(`/education/select?email=${userEmail}`, {
+            method: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+        })
             .then(response => response.json()) // JSON 응답 파싱
             .then(data => {
                 var i = 0;
@@ -903,6 +944,7 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -953,7 +995,8 @@
         fetch('/user/updateIntroduce', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
             },
             body: JSON.stringify([
                 {
@@ -1041,6 +1084,7 @@
                     </div>
                     <!-- Submit Button-->
                     <button class="btn btn-primary btn-xl " id="SearchButton" type="submit">search</button>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                 </form>
 
                 <script>
@@ -1050,14 +1094,16 @@
 
                         // 입력된 이메일 값을 가져오기
 
-                        if(document.getElementById('userEmail').value === loginEmail){
+                        if (document.getElementById('userEmail').value === loginEmail) {
                             alert("본인은 검색할 수 없습니다.")
                             return;
-r                        }else{
+                            r
+                        } else {
                             var email = document.getElementById('userEmail').value;
 
                             fetch('/user/checkUser?email=' + email, {
-                                method: 'GET'
+                                method: 'GET',
+                                'X-CSRF-TOKEN': csrfToken
                             })
                                 .then(response => response.text())
                                 .then(result => {
@@ -1135,7 +1181,11 @@ r                        }else{
 <script>
     function loadProfileImage() {
         // 이메일을 사용하여 프로필 이미지 가져오기
-        fetch('/user/profileImage/' + userEmail)
+        fetch('/user/profileImage/' + userEmail, {
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            }
+        })
             .then(response => {
                 if (response.ok) {
                     return response.blob();
@@ -1169,6 +1219,9 @@ r                        }else{
         // 파일을 업로드하고 성공적으로 완료되면 이미지를 다시 로드
         fetch('/user/uploadProfileImage', {
             method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
             body: formData
         })
             .then(function (response) {
@@ -1201,6 +1254,7 @@ r                        }else{
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
                 },
             })
                 .then((response) => {
@@ -1274,6 +1328,9 @@ r                        }else{
 
             // API에 POST 요청 보내기
             fetch(apiUrl, {
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
                 method: 'POST',
                 body: requestData,
             })
