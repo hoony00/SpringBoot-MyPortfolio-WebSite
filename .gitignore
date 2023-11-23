@@ -6,7 +6,6 @@ build/
 !**/src/test/**/build/
 
 ### Query DSL ###
-/src/main/generated
 
 ### STS ###
 .apt_generated
