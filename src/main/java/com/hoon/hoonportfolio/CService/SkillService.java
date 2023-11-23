@@ -1,11 +1,8 @@
 package com.hoon.hoonportfolio.CService;
 
-import com.hoon.hoonportfolio.Domain.QUserEntity;
+import com.hoon.hoonportfolio.Domain.QSkill;
 import com.hoon.hoonportfolio.Domain.Skill;
 import com.hoon.hoonportfolio.Domain.UserEntity;
-import com.hoon.hoonportfolio.Repository.SkillRepository;
-import com.hoon.hoonportfolio.Repository.UserRepository;
-import com.querydsl.core.QueryFactory;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -33,13 +30,16 @@ import static com.hoon.hoonportfolio.Domain.QUserEntity.userEntity;
 @Transactional
 @RequiredArgsConstructor
 public class SkillService {
-    private final SkillRepository skillRepository;
-
 
     @Autowired
     EntityManager em;
 
-    JPAQueryFactory queryFactory ;
+    JPAQueryFactory queryFactory;
+
+    @Autowired
+    public void setQueryFactory(EntityManager em) {
+        this.queryFactory = new JPAQueryFactory(em);
+    }
 
     public void saveSkill(String email) {
         queryFactory = new JPAQueryFactory(em);
@@ -49,15 +49,13 @@ public class SkillService {
                 .where(userEntity.email.eq(email))
                 .fetchOne());
 
-     //   Optional<UserEntity> user = userRepository.findByEmail(email);
-
-       //자격증 저장 3번 반복
-        for(int i=0; i<3; i++){
+        for (int i = 0; i < 3; i++) {
             Skill career = Skill.builder()
                     .user(user.get())
                     .skillName("new")
                     .build();
-            skillRepository.save(career);
+
+            em.merge(career);
         }
     }
 
@@ -69,7 +67,7 @@ public class SkillService {
                 .where(skill.user.email.eq(email))
                 .fetch();
 
-      //  List<Skill> skillList = skillRepository.findAllByUserEmail(email);
+        //  List<Skill> skillList = skillRepository.findAllByUserEmail(email);
         List<String> skillNameList = new ArrayList<>();
         for (Skill skill : skillList) {
             skillNameList.add(String.valueOf(skill.getSid()));
@@ -82,10 +80,21 @@ public class SkillService {
 
     // sid와 skillName으로 skill 업데이트
     public void updateSkill(String sid, String skillName) {
-        Optional<Skill> skill = skillRepository.findById(Long.valueOf(sid));
-        System.out.println("서비스에서 skill.get().getSkillName() = " + skill.get().getSkillName());
-        skill.get().setSkillName(skillName);
-        skillRepository.save(skill.get());
-    }
 
+        QSkill qSkill = QSkill.skill;
+
+        Skill skill = queryFactory
+                .selectFrom(qSkill)
+                .where(qSkill.sid.eq(Long.valueOf(sid)))
+                .fetchOne();
+
+        if (skill != null) {
+            skill.setSkillName(skillName);
+
+            // 엔터티 수정
+            em.merge(skill);
+
+        }
+
+    }
 }

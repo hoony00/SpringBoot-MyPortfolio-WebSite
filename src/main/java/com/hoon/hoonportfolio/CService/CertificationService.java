@@ -1,11 +1,6 @@
 package com.hoon.hoonportfolio.CService;
 
-import com.hoon.hoonportfolio.Domain.Certification;
-import com.hoon.hoonportfolio.Domain.QCertification;
-import com.hoon.hoonportfolio.Domain.Skill;
-import com.hoon.hoonportfolio.Domain.UserEntity;
-import com.hoon.hoonportfolio.Repository.CertificationRepository;
-import com.hoon.hoonportfolio.Repository.UserRepository;
+import com.hoon.hoonportfolio.Domain.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.hoon.hoonportfolio.Domain.QCertification.certification;
-import static com.hoon.hoonportfolio.Domain.QSkill.skill;
 import static com.hoon.hoonportfolio.Domain.QUserEntity.userEntity;
 
 /**
@@ -34,18 +28,19 @@ import static com.hoon.hoonportfolio.Domain.QUserEntity.userEntity;
 @Transactional
 @RequiredArgsConstructor
 public class CertificationService {
-    private final CertificationRepository certificationRepository;
-
-    private final UserRepository userRepository;
 
     @Autowired
     EntityManager em;
 
     JPAQueryFactory queryFactory ;
 
+    @Autowired
+    public void setQueryFactory(EntityManager em) {
+        this.queryFactory = new JPAQueryFactory(em);
+    }
+
     public void saveCertification(String email) {
 
-        queryFactory = new JPAQueryFactory(em);
 
         Optional<UserEntity> user = Optional.ofNullable(queryFactory
                 .selectFrom(userEntity)
@@ -57,13 +52,13 @@ public class CertificationService {
                     .user(user.get())
                     .cerName("new")
                     .build();
-            certificationRepository.save(career);
+
+            em.merge(career);
         }
     }
 
     //email로 certificate 조회
     public List<String> findCertificationByEmail(String email) {
-        queryFactory = new JPAQueryFactory(em);
         List<Certification> cerficationList = queryFactory
                 .selectFrom(certification)
                 .where(certification.user.email.eq(email))
@@ -82,9 +77,22 @@ public class CertificationService {
 
     // cid 와 cname을 받아서 cname을 수정하는 메소드
     public void updateCertification(String cid, String cname) {
-        Optional<Certification> certification = certificationRepository.findById(Long.valueOf(cid));
-        certification.get().setCerName(cname);
-        certificationRepository.save(certification.get());
+
+            QCertification qCertification = QCertification.certification;
+
+            Certification certification = queryFactory
+                    .selectFrom(qCertification)
+                    .where(qCertification.cerid.eq(Long.valueOf(cid)))
+                    .fetchOne();
+
+            if (certification != null) {
+                certification.setCerName(cname);
+
+                // 엔터티 수정
+                em.merge(certification);
+            }
+
     }
+
 
 }
