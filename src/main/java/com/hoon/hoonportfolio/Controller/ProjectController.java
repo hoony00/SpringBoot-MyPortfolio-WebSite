@@ -2,10 +2,8 @@ package com.hoon.hoonportfolio.Controller;
 
 import com.hoon.hoonportfolio.CService.ProjectService;
 import com.hoon.hoonportfolio.DTO.ProjectDTO;
-import com.hoon.hoonportfolio.Domain.Project;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

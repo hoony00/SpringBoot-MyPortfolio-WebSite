@@ -26,18 +26,4 @@ public class EducationController {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
