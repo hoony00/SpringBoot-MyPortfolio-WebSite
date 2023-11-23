@@ -4,6 +4,8 @@ import com.hoon.hoonportfolio.Domain.Education;
 import com.hoon.hoonportfolio.Domain.UserEntity;
 import com.hoon.hoonportfolio.Repository.EducationRepository;
 import com.hoon.hoonportfolio.Repository.UserRepository;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.hoon.hoonportfolio.Domain.QUserEntity.userEntity;
 
 /**
  * 경력 관련 기능을 담당하는 Service
@@ -26,12 +30,25 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class EducationService {
+
+    @Autowired
+    EntityManager em;
+
+    JPAQueryFactory queryFactory ;
+
     private final EducationRepository educationRepository;
 
     private final UserRepository userRepository;
 
     public void saveEducation(String email) {
-        Optional<UserEntity> user = userRepository.findByEmail(email);
+
+        queryFactory = new JPAQueryFactory(em);
+
+        Optional<UserEntity> user = Optional.ofNullable(queryFactory
+                .selectFrom(userEntity)
+                .where(userEntity.email.eq(email))
+                .fetchOne());
+
         for (int i = 0; i < 3; i++) {
             Education education = Education.builder()
                     .user(user.get())

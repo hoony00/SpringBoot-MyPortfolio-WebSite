@@ -1,5 +1,6 @@
 package com.hoon.hoonportfolio.CService;
 
+import com.hoon.hoonportfolio.Domain.QUserEntity;
 import com.hoon.hoonportfolio.Domain.Skill;
 import com.hoon.hoonportfolio.Domain.UserEntity;
 import com.hoon.hoonportfolio.Repository.SkillRepository;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.hoon.hoonportfolio.Domain.QSkill.skill;
+import static com.hoon.hoonportfolio.Domain.QUserEntity.userEntity;
 
 /**
  * 기술스택 관련 기능을 담당하는 Service
@@ -33,7 +35,6 @@ import static com.hoon.hoonportfolio.Domain.QSkill.skill;
 public class SkillService {
     private final SkillRepository skillRepository;
 
-    private final UserRepository userRepository;
 
     @Autowired
     EntityManager em;
@@ -41,7 +42,14 @@ public class SkillService {
     JPAQueryFactory queryFactory ;
 
     public void saveSkill(String email) {
-       Optional<UserEntity> user = userRepository.findByEmail(email);
+        queryFactory = new JPAQueryFactory(em);
+
+        Optional<UserEntity> user = Optional.ofNullable(queryFactory
+                .selectFrom(userEntity)
+                .where(userEntity.email.eq(email))
+                .fetchOne());
+
+     //   Optional<UserEntity> user = userRepository.findByEmail(email);
 
        //자격증 저장 3번 반복
         for(int i=0; i<3; i++){
@@ -60,8 +68,6 @@ public class SkillService {
                 .selectFrom(skill)
                 .where(skill.user.email.eq(email))
                 .fetch();
-
-        log.info("skillList=========>> = " + skillList);
 
       //  List<Skill> skillList = skillRepository.findAllByUserEmail(email);
         List<String> skillNameList = new ArrayList<>();

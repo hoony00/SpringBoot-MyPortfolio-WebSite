@@ -4,6 +4,8 @@ import com.hoon.hoonportfolio.Domain.Certification;
 import com.hoon.hoonportfolio.Domain.UserEntity;
 import com.hoon.hoonportfolio.Repository.CertificationRepository;
 import com.hoon.hoonportfolio.Repository.UserRepository;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.hoon.hoonportfolio.Domain.QUserEntity.userEntity;
 
 /**
  * 자격증 관련 기능을 담당하는 Service
@@ -30,9 +34,20 @@ public class CertificationService {
 
     private final UserRepository userRepository;
 
+    @Autowired
+    EntityManager em;
+
+    JPAQueryFactory queryFactory ;
+
     public void saveCertification(String email) {
-       Optional<UserEntity> user = userRepository.findByEmail(email);
-       //자격증 저장 3번 반복
+
+        queryFactory = new JPAQueryFactory(em);
+
+        Optional<UserEntity> user = Optional.ofNullable(queryFactory
+                .selectFrom(userEntity)
+                .where(userEntity.email.eq(email))
+                .fetchOne());       //자격증 저장 3번 반복
+
         for(int i=0; i<3; i++){
             Certification career = Certification.builder()
                     .user(user.get())
