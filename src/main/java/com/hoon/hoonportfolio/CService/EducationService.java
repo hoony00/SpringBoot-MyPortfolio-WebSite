@@ -1,6 +1,8 @@
 package com.hoon.hoonportfolio.CService;
 
 import com.hoon.hoonportfolio.Domain.Education;
+import com.hoon.hoonportfolio.Domain.QEducation;
+import com.hoon.hoonportfolio.Domain.Skill;
 import com.hoon.hoonportfolio.Domain.UserEntity;
 import com.hoon.hoonportfolio.Repository.EducationRepository;
 import com.hoon.hoonportfolio.Repository.UserRepository;
@@ -16,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.hoon.hoonportfolio.Domain.QEducation.education;
+import static com.hoon.hoonportfolio.Domain.QSkill.skill;
 import static com.hoon.hoonportfolio.Domain.QUserEntity.userEntity;
 
 /**
@@ -36,10 +40,6 @@ public class EducationService {
 
     JPAQueryFactory queryFactory ;
 
-    private final EducationRepository educationRepository;
-
-    private final UserRepository userRepository;
-
     public void saveEducation(String email) {
 
         queryFactory = new JPAQueryFactory(em);
@@ -54,13 +54,19 @@ public class EducationService {
                     .user(user.get())
                     .name("new")
                     .build();
-            educationRepository.save(education);
+            em.merge(education);
         }
 
     }
+
     //email로 certificate 조회
     public List<String> findEducationByEmail(String email) {
-        List<Education> cerficationList = educationRepository.findAllByUserEmail(email);
+        queryFactory = new JPAQueryFactory(em);
+        List<Education> cerficationList = queryFactory
+                .selectFrom(education)
+                .where(education.user.email.eq(email))
+                .fetch();
+
         List<String> list = new ArrayList<>();
         for (Education education : cerficationList) {
             list.add(String.valueOf(education.getEid()));
@@ -72,9 +78,21 @@ public class EducationService {
     }
 
     public void updateEducation(String eid, String eName) {
-        Optional<Education> education = educationRepository.findById(Long.valueOf(eid));
-        education.get().setName(eName);
-        educationRepository.save(education.get());
+        queryFactory = new JPAQueryFactory(em);
+
+        QEducation qEducation = QEducation.education;
+
+        Education education = queryFactory
+                .selectFrom(qEducation)
+                .where(qEducation.eid.eq(Long.valueOf(eid)))
+                .fetchOne();
+
+        if (education != null) {
+            education.setName(eName);
+
+            // 엔터티 수정
+            em.merge(education);
+        }
     }
 
 

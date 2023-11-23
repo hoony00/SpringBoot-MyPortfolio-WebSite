@@ -1,6 +1,8 @@
 package com.hoon.hoonportfolio.CService;
 
 import com.hoon.hoonportfolio.Domain.Certification;
+import com.hoon.hoonportfolio.Domain.QCertification;
+import com.hoon.hoonportfolio.Domain.Skill;
 import com.hoon.hoonportfolio.Domain.UserEntity;
 import com.hoon.hoonportfolio.Repository.CertificationRepository;
 import com.hoon.hoonportfolio.Repository.UserRepository;
@@ -16,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.hoon.hoonportfolio.Domain.QCertification.certification;
+import static com.hoon.hoonportfolio.Domain.QSkill.skill;
 import static com.hoon.hoonportfolio.Domain.QUserEntity.userEntity;
 
 /**
@@ -59,7 +63,13 @@ public class CertificationService {
 
     //email로 certificate 조회
     public List<String> findCertificationByEmail(String email) {
-        List<Certification> cerficationList = certificationRepository.findAllByUserEmail(email);
+        queryFactory = new JPAQueryFactory(em);
+        List<Certification> cerficationList = queryFactory
+                .selectFrom(certification)
+                .where(certification.user.email.eq(email))
+                .fetch();
+
+
         List<String> CerNameList = new ArrayList<>();
         for (Certification certification : cerficationList) {
             CerNameList.add(String.valueOf(certification.getCerid()));

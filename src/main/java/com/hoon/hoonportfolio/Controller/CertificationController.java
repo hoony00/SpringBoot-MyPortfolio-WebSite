@@ -22,7 +22,6 @@ public class CertificationController {
     @GetMapping("/certification/select")
     public ResponseEntity<List<String>> selectSkill(String email){
         List<String> certification = certificationService.findCertificationByEmail(email);
-        System.out.println("certification =========== " + certification);
 
         return ResponseEntity.ok(certification);
     }

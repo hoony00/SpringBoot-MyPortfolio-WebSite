@@ -22,7 +22,6 @@ public class SkillController {
     @GetMapping("/skill/select")
     public ResponseEntity<List<String>> selectCertifications(String email) {
         List<String> skillList = skillService.findSkillByEmail(email);
-        System.out.println("skllList =========== " + skillList);
             return ResponseEntity.ok(skillList);
     }
 

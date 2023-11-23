@@ -21,7 +21,6 @@ public class EducationController {
     @GetMapping("/education/select")
     public ResponseEntity<List<String>> selectSkill(String email){
         List<String> educationList = educationService.findEducationByEmail(email);
-        System.out.println("educationList =========== " + educationList);
 
         return ResponseEntity.ok(educationList);
 

@@ -117,7 +117,7 @@ public class UserService implements UserDetailsService  {
             throw new IllegalStateException("모든 항목을 입력해주세요.");
         }
 
-        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
+      /*  if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
             throw new IllegalStateException("이미 존재하는 이메일입니다.");
         }
 
@@ -135,7 +135,7 @@ public class UserService implements UserDetailsService  {
 
         if (!userDTO.getPassword().equals(userDTO.getPwcheck())) {
             throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
-        }
+        }*/
 
             UserEntity user = UserEntity.builder()
                     .name(userDTO.getName())
