@@ -11,6 +11,7 @@ java {
 	sourceCompatibility = '17'
 }
 
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -45,11 +46,36 @@ dependencies {
 	runtimeOnly('io.jsonwebtoken:jjwt-orgjson:0.11.5')
 	testImplementation('io.jsonwebtoken:jjwt-jackson:0.11.5')
 
-
+	// QueryDSL Implementation
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
 
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+test {
+	useJUnitPlatform()
+}
+
+/**
+ * QueryDSL Build Options
+ */
+def querydslDir = "src/main/generated"
+
+sourceSets {
+	main.java.srcDirs += [ querydslDir ]
+}
+
+tasks.withType(JavaCompile) {
+	options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
+}
+
+clean.doLast {
+	file(querydslDir).deleteDir()
 }
