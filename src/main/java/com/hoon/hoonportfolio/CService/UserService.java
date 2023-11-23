@@ -121,7 +121,7 @@ public class UserService implements UserDetailsService  {
             throw new IllegalStateException("이미 존재하는 이메일입니다.");
         }
 
-/*        if (!userDTO.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+        if (!userDTO.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             throw new IllegalStateException("이메일 형식에 맞게 입력해주세요.");
         }
 
@@ -135,7 +135,7 @@ public class UserService implements UserDetailsService  {
 
         if (!userDTO.getPassword().equals(userDTO.getPwcheck())) {
             throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
-        }*/
+        }
 
             UserEntity user = UserEntity.builder()
                     .name(userDTO.getName())
