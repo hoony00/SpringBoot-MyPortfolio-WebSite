@@ -1,11 +1,13 @@
 server: # ?? ??
   port: 80
 
-jwt:
-  secret:
-     fszdw2324@gerlkafghjlsajglfsdalkgfjsagokhqWrhqiugdsfhdsf2323hsdgscdwgwdg3wodgIhLSKJVLJCopFEWUoIGWH
-
 spring:
+  mvc: # spring boot 2.6.0부터 요청 경로를 ControllerHandler에 매칭시키기 위한 전략의 기본값이 ant_path_matcher 전략 -> path_pattern_parser 전략으로 변경
+    path match:
+      matching-strategy: path_pattern_parser
+
+
+
 
   thymeleaf:
     cache: false
@@ -28,10 +30,23 @@ spring:
     username: portfolio
     password: portfolio
     driver-class-name: com.mysql.cj.jdbc.Driver
-  security:
-    oauth2:
-      resourceserver:
-
+    hikari:
+      maximum-pool-size: 20
+      #클라리언트가 커넥션을 기다리는 최대시간(ms)
+      connection-timeout: 10000
+      #커넥션이 유휴상태로 풀에 유지되는 최대시간(ms)
+      idle-timeout: 10000
+      #커넥션이 풀에 의해 폐기되기 전에 유휴상태로 풀에 유지되는 최소시간(ms)
+      max-lifetime: 580000
+      data-source-properties:
+        #캐쉬 사용 여부
+        cachePrepStmts: true
+        #드라이버가 연결당 cache할 statement 수
+        prepStmtCacheSize: 200
+        #캐쉬할 SQL의 최대 길이
+        prepStmtCacheSqlLimit: 2048
+        #최신 버전 지원 받는 설정
+        useServerPrepStmts: true
 
 logging:
   level:
@@ -40,4 +55,17 @@ logging:
         type:
           descriptor:
             sql: trace # SQL ?? ??
-
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  api-docs:
+    groups:
+      enabled: true
+  swagger-ui:
+    operations-sorter: alpha # alpha(알파벳 오름차순), method(HTTP메소드순)
+    tags-sorter: alpha # 태그 정렬 기준
+    path: /swagger-ui.html # html 문서 접속 경로
+    disable-swagger-default-url: true
+    doc-expansion: none # tag, operation 펼치는 방식
+  paths-to-match:
+    - /** #  해당 경로만 문서화

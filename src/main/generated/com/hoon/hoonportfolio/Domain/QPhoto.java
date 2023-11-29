@@ -22,8 +22,6 @@ public class QPhoto extends EntityPathBase<Photo> {
 
     public static final QPhoto photo = new QPhoto("photo");
 
-    public final ListPath<byte[], SimplePath<byte[]>> photoData = this.<byte[], SimplePath<byte[]>>createList("photoData", byte[].class, SimplePath.class, PathInits.DIRECT2);
-
     public final NumberPath<Long> photoId = createNumber("photoId", Long.class);
 
     public final QProject project;

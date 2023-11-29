@@ -52,7 +52,7 @@ public class UserController {
         return "index";
     }
 
-    @GetMapping
+    @GetMapping("/user/userInfoList")
     public ResponseEntity<List<UserInfoDTO>> getAllUserInfo(){
         List<UserInfoDTO> userInfoDTOList = userService.getAllUsersInfo();
         log.info("==========userInfoDTOList =========== " + userInfoDTOList.size());

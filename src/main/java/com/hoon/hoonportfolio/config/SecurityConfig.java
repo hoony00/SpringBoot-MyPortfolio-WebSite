@@ -1,5 +1,6 @@
 package com.hoon.hoonportfolio.config;
 
+import jakarta.websocket.OnClose;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -7,7 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -87,24 +90,20 @@ public class SecurityConfig {
         http.logout(Customizer.withDefaults())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request // 인가 정책
-                        .requestMatchers("/bootstrap/**", "/images/**","/js/**").permitAll()
-                        .requestMatchers("/",  "/user/**", "/layout/**", "/images/**").permitAll()
+                        .requestMatchers("/bootstrap/**", "/images/**","/js/**","/error/**").permitAll()
+                        .requestMatchers("/","/user/**", "/layout/**", "/images/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
                 // rest api에서는 권한이 필요한 요청 위해서 인증 정보를 포함시켜야 하나 서버에 인증정보를 저장하지 않기 때문에 csrf를 비활성화 시킴 (jwt를 쿠키에 저장 x)
-                .httpBasic(AbstractHttpConfigurer::disable);
-
 
         return http.build();
     } //filterChain
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web -> web.ignoring()
-                .requestMatchers("/error/**")
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()));
-    }
+    // swagger-ui.html 접근을 위한 설정
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
