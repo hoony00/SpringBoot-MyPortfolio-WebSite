@@ -54,9 +54,9 @@
                 var userEmail = '[[${email}]]';
 
                 // 서버에서 프로필 이미지를 가져오는 함수
-                function loadProfileImage() {
+                function loadProfileImage(email) {
                     // 이메일을 사용하여 프로필 이미지 가져오기
-                    fetch('/user/profileImage/' + userEmail)
+                    fetch('/user/profileImage/' + email)
                         .then(response => {
                             if (response.ok) {
                                 return response.blob();

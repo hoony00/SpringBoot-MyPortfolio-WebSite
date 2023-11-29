@@ -36,11 +36,11 @@ public class UserService implements UserDetailsService  {
 
 
     public List<UserInfoDTO> getAllUsersInfo(){
-      List<UserEntity> userInfoDTOList = userRepository.findAll();
+        List<UserEntity> userInfoDTOList = userRepository.findAll();
         return userInfoDTOList.stream()
                 .map(userEntity -> new UserInfoDTO(userEntity.getName(),
-                        userEntity.getProfileImage(),
-                        userEntity.getExplanation()))
+                        userEntity.getExplanation(),
+                        userEntity.getEmail()))
                 .collect(Collectors.toList());
     }
 
@@ -150,14 +150,14 @@ public class UserService implements UserDetailsService  {
             throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
         }*/
 
-            UserEntity user = UserEntity.builder()
-                    .name(userDTO.getName())
-                    .email(userDTO.getEmail())
-                    .password(passwordEncoder.encode(userDTO.getPassword()))
-                    .explanation(userDTO.getExplanation())
-                    .role(Role.USER)
-                    .build();
-            userRepository.save(user);
+        UserEntity user = UserEntity.builder()
+                .name(userDTO.getName())
+                .email(userDTO.getEmail())
+                .password(passwordEncoder.encode(userDTO.getPassword()))
+                .explanation(userDTO.getExplanation())
+                .role(Role.USER)
+                .build();
+        userRepository.save(user);
     }
 
 

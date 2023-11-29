@@ -14,6 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class UserInfoDTO implements Serializable {
     String name;
-    byte[] profileImage;
     String explanation;
+    private String email;
+
 }
