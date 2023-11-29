@@ -17,8 +17,7 @@ public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long photoId;
-    @Lob
-    private List<byte[]> photoData; // 사진의 BLOB 데이터
+
 
     @ManyToOne
     @JoinColumn(name = "proid")

@@ -24,6 +24,7 @@ public class UserEntity {
 
     private String password;
 
+    //@Lob
     private byte[] profileImage;
 
     private String explanation;

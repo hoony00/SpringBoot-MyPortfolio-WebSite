@@ -25,6 +25,7 @@ public class Project {
 
     private String githubLink;
 
+    //@Lob
     private byte[] mainImage;
 
     private String imageUrl;

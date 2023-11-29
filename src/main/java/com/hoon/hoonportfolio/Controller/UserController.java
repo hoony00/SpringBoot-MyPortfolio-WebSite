@@ -7,6 +7,7 @@ import com.hoon.hoonportfolio.CService.UserService;
 import com.hoon.hoonportfolio.DTO.ExplanationRequestDTO;
 import com.hoon.hoonportfolio.DTO.IntroduceDTO;
 import com.hoon.hoonportfolio.DTO.UserDTO;
+import com.hoon.hoonportfolio.DTO.UserInfoDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,14 @@ public class UserController {
     public String index() { // 홈
 
         return "index";
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserInfoDTO>> getAllUserInfo(){
+        List<UserInfoDTO> userInfoDTOList = userService.getAllUsersInfo();
+        log.info("==========userInfoDTOList =========== " + userInfoDTOList.size());
+
+        return ResponseEntity.ok(userInfoDTOList);
     }
 
     @GetMapping("/user/userList") //
