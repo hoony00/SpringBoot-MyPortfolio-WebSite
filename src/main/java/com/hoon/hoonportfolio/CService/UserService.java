@@ -1,6 +1,7 @@
 package com.hoon.hoonportfolio.CService;
 
 import com.hoon.hoonportfolio.DTO.UserDTO;
+import com.hoon.hoonportfolio.DTO.UserInfoDTO;
 import com.hoon.hoonportfolio.Domain.UserEntity;
 import com.hoon.hoonportfolio.Repository.UserRepository;
 import com.hoon.hoonportfolio.constant.Role;
@@ -14,7 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 유저 관련 기능을 담당하는 Service
@@ -31,6 +34,17 @@ public class UserService implements UserDetailsService  {
 
     private final UserRepository userRepository;
 
+
+    public List<UserInfoDTO> getAllUsersInfo(){
+      List<UserEntity> userInfoDTOList = userRepository.findAll();
+        return userInfoDTOList.stream()
+                .map(userEntity -> new UserInfoDTO(userEntity.getName(),
+                        userEntity.getProfileImage(),
+                        userEntity.getExplanation()))
+                .collect(Collectors.toList());
+    }
+
+
     //이메일 존재확인
     public boolean isEmailExist(String email) {
         return userRepository.findByEmail(email).isPresent();
@@ -38,8 +52,6 @@ public class UserService implements UserDetailsService  {
 
     //updateExplanation
     public void updateExplanation(String email, String explanation) {
-
-
         // 사용자를 찾아서 자기소개 업데이트
         Optional<UserEntity> userOptional = userRepository.findByEmail(email);
         if (userOptional.isPresent()) {

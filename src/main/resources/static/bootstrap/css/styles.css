@@ -10914,7 +10914,7 @@ html {
   }
 }
 
-.divider-custom {
+ .divider-custom {
   margin: 1.25rem 0 1.5rem;
   width: 100%;
   display: flex;
@@ -10945,6 +10945,15 @@ html {
 .divider-custom.divider-light .divider-custom-icon {
   color: #fff;
 }
+.divider-custom .divider-custom-line2 {
+  width: 100%;
+  max-width: 7rem;
+  height: 0.25rem;
+  background-color: white;
+  border-radius: 1rem;
+  border-color: white;
+}
+
 
 .btn-xl {
   padding: 1rem 1.75rem;
