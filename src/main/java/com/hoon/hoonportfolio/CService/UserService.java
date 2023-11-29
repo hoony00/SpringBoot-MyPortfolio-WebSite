@@ -38,6 +38,8 @@ public class UserService implements UserDetailsService  {
 
     //updateExplanation
     public void updateExplanation(String email, String explanation) {
+
+
         // 사용자를 찾아서 자기소개 업데이트
         Optional<UserEntity> userOptional = userRepository.findByEmail(email);
         if (userOptional.isPresent()) {

@@ -1,11 +1,5 @@
 <!-- 프젝 가로 1150 세로 770 -->
 <!-- 이력서 가로 1350 세로 1800 -->
-<script>
-    /// todo : 가로세로 비율 맞춰서 자동으로 올라가게 기능 만들기 (가로 1150 세로 770) 가로 1350 세로 1800
-    /// todo : 프로젝트 수정, 삭제 만들기
-    /// todo : 시큐리티 공부
-
-</script>
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -36,7 +30,7 @@
 
 <!-- Top Navigation-->
 <nav class="navbar navbar-expand-lg bg-hoon1 text-uppercase fixed-top" id="mainNav">
-    <div class="container">
+    <div class="container">의
         <a class="navbar-brand">우리의 포토폴리오</a>
         <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button"
                 data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" 성
@@ -47,6 +41,9 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <!-- 상단 네비게이션 목록 -->
             <ul class="navbar-nav ms-auto">
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                                     href="/user/userList">Another User</a>
+                </li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
                                                      href="/user/loginAction">MyPage</a>
                 </li>
@@ -136,8 +133,9 @@
         <div class="col-md-6 col-lg-4 mb-5">
             <!-- 미리보기 이미지를 표시할 img 요소 -->
             <img id="previewImage" onclick="getImageSize()" class="masthead-avatar mb-5"
-                 src="../../bootstrap/assets/img/portfolio/people.png"
+                 src="/bootstrap/assets/img/avataaars.svg"
                  alt="프로필 사진"/>
+
 
             <div></div>
             <form id="uploadForm" th:action="@{/user/uploadProfileImage}" method="post" enctype="multipart/form-data"
@@ -160,9 +158,6 @@
                 var image = document.getElementById(img);
             }
 
-            function fileInput() {
-
-            }
 
             // 파일 입력란 변경 이벤트 감지
             document.getElementById('fileInput').addEventListener('change', function () {
@@ -1192,7 +1187,9 @@
                 } else {
                     console.log("이미지 없음, 기본 이미지 적용")
                     // 이미지가 없는 경우 기본 이미지 경로 설정
-                    document.getElementById('previewImage').src = '../../bootstrap/assets/img/portfolio/people.png';
+                    document.getElementById('previewImage').src = "/bootstrap/assets/img/avataaars.svg";
+
+
 
                 }
             })

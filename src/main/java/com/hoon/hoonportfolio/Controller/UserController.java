@@ -51,6 +51,16 @@ public class UserController {
         return "index";
     }
 
+    @GetMapping("/user/userList") //
+    public String userList(Model model, Authentication authentication) { // 홈
+        if (authentication != null) {
+            String email = authentication.getName();
+            model.addAttribute("userExplanation", userService.getNameAndExplanation(email));
+            model.addAttribute("login", email);
+        }
+        return "layout/userList";
+    }
+
 
 
     @GetMapping("/user/login")

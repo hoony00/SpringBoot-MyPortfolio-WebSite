@@ -15,7 +15,6 @@ import java.util.List;
 
 public interface EducationRepository extends JpaRepository<Education, Long> {
 
-    List<Education> findAllByUserEmail(String email);
 
 
 }
