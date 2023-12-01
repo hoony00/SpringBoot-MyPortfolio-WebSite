@@ -2,10 +2,7 @@
 SpringBoot 포토폴리오 관리 사이트 
 
 
-# 홈 화면
-![mainPage](https://github.com/hoony00/SpringBoot-MyPortfolio-WebSite/assets/86902854/db253e95-8a05-48cf-8d16-a352c49ed300)
-
-# 포토폴리오
+# 자신만의 포토폴리오 관리
 ![main2](https://github.com/hoony00/SpringBoot-MyPortfolio-WebSite/assets/86902854/75001a8d-9c83-4ef0-88f5-e9db712bb9bf)
 
 
